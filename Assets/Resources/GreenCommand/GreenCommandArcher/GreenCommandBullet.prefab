@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 3680282065587421810}
   - component: {fileID: 3680282065587421821}
   m_Layer: 0
-  m_Name: PlayerBullet
+  m_Name: GreenCommandBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
