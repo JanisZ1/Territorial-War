@@ -455,7 +455,7 @@ MonoBehaviour:
   _spawnPosition: {fileID: 1592278593}
   _uiSpawnSlider: {fileID: 31564815}
   _spawnedUnits: []
-  list: []
+  _list: []
 --- !u!1 &179351540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1515,7 +1515,7 @@ GameObject:
   - component: {fileID: 1005512532}
   m_Layer: 5
   m_Name: Canvas(BuyUnits)
-  m_TagString: Untagged
+  m_TagString: GreenBase
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1802,7 +1802,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7221113315304893424, guid: b57f87757059cc845b0f168410797376, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7221113315304893424, guid: b57f87757059cc845b0f168410797376, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1858,10 +1858,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1402370833}
-  - component: {fileID: 1402370832}
   - component: {fileID: 1402370831}
   m_Layer: 0
-  m_Name: EnemyController
+  m_Name: QueueWarrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1883,21 +1882,7 @@ MonoBehaviour:
   _spawnPosition: {fileID: 179351541}
   _uiSpawnSlider: {fileID: 31564815}
   _spawnedUnits: []
-  list: []
---- !u!114 &1402370832
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1402370830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 737bb3df0ebd9d849905f8d03bd4457b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _queueWarrior: {fileID: 1402370831}
-  _spawnDelay: 3
+  _list: []
 --- !u!4 &1402370833
 Transform:
   m_ObjectHideFlags: 0
@@ -1905,13 +1890,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1402370830}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.3, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_Father: {fileID: 1766424366}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1417602116
 GameObject:
@@ -2221,9 +2206,10 @@ GameObject:
   - component: {fileID: 1766424364}
   - component: {fileID: 1766424363}
   - component: {fileID: 1766424367}
+  - component: {fileID: 1766424369}
   m_Layer: 0
   m_Name: RedBase
-  m_TagString: Untagged
+  m_TagString: RedBase
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2312,6 +2298,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 179351541}
+  - {fileID: 1402370833}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2327,6 +2314,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43dcb70a5f3b5344839d2427475aaa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1766424369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766424362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 737bb3df0ebd9d849905f8d03bd4457b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _queueWarrior: {fileID: 1402370831}
+  _spawnDelay: 3
 --- !u!1 &2105098255
 GameObject:
   m_ObjectHideFlags: 0

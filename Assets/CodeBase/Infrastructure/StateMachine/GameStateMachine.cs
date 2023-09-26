@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Assets.CodeBase.Infrastructure.Services;
+using Assets.CodeBase.Infrastructure.Services.Factory;
+using System;
 using System.Collections.Generic;
 
 namespace Assets.CodeBase.Infrastructure.StateMachine
@@ -9,12 +11,12 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
 
         private IExitableState _currentState;
 
-        public GameStateMachine(SceneLoader sceneLoader)
+        public GameStateMachine(SceneLoader sceneLoader, AllServices allServices)
         {
             _states = new Dictionary<Type, IExitableState>()
             {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader)
+                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, allServices),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IWarriorFactory>())
             };
         }
 
@@ -24,7 +26,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
             state.Enter();
         }
 
-        public void Enter<TState>(string scene) where TState : class, ILevelLoadState
+        public void Enter<TState>(string scene) where TState : class, ILoadLevelState
         {
             TState state = ChangeState<TState>();
             state.Enter(scene);

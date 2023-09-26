@@ -1,6 +1,6 @@
 ﻿namespace Assets.CodeBase.Infrastructure.StateMachine
 {
-    public interface ILevelLoadState : IExitableState
+    public interface ILoadLevelState : IExitableState
     {
         void Enter(string scene);
     }

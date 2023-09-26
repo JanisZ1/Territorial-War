@@ -4,34 +4,47 @@ public class PlayerArcher : PlayerUnit
 {
     [SerializeField] private Transform _spawn;
     [SerializeField] private PlayerBullet _bullet;
+    private EnemyUnit[] _enemyUnits;
     private EnemyUnit _enemyUnit;
     private float _shootingTime;
 
-    private void Start() =>
-        _enemyUnit = FindObjectOfType<EnemyUnit>();
-
-    private void Shoot()
+    private void Start()
     {
-        if (_enemyUnit)
-            Instantiate(_bullet, _spawn.transform.position, _spawn.localRotation);
+        _enemyUnits = FindObjectsOfType<EnemyUnit>();
+        _enemyUnit = ClosestEnemy();
+    }
+
+    private void Shoot() =>
+        Instantiate(_bullet, _spawn.transform.position, _spawn.localRotation);
+
+    private EnemyUnit ClosestEnemy()
+    {
+        EnemyUnit enemyUnit = null;
+        float minimumDistance = float.MaxValue;
+
+        for (int i = 0; i < _enemyUnits.Length; i++)
+        {
+            float distance = Vector3.Distance(transform.position, _enemyUnits[i].transform.position);
+
+            if (distance < minimumDistance)
+            {
+                minimumDistance = distance;
+                enemyUnit = _enemyUnits[i];
+            }
+        }
+
+        return enemyUnit;
     }
 
     public override void Update()
     {
-        //неправильная строчка - надо чтобы переменная заполнялась при определенной дистанции 
-        _enemyUnit = FindObjectOfType<EnemyUnit>();
         base.Update();
         if (_enemyUnit)
         {
             float distance = Vector3.Distance(transform.position, _enemyUnit.transform.position);
-            //Debug.Log(distance);
-            if (distance < 3)
-            {
-                return;
-            }
-            if (distance < 6)
-            {
 
+            if (distance > 1 && distance < 6)
+            {
                 _shootingTime += Time.deltaTime;
                 if (_shootingTime > 1)
                 {

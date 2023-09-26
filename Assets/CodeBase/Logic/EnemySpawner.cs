@@ -1,12 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnemyLogic : MonoBehaviour
+public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private QueueWarrior _queueWarrior;
     [SerializeField] private float _spawnDelay;
 
-    private void Start() => 
+    private void Start() =>
         StartCoroutine(SpawnEnemy());
 
     private IEnumerator SpawnEnemy()
