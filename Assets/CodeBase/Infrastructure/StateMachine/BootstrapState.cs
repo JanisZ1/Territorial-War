@@ -4,21 +4,33 @@ namespace Assets.CodeBase.Infrastructure
 {
     public class BootstrapState : IState
     {
-        private GameStateMachine _gameStateMachine;
+        private readonly GameStateMachine _gameStateMachine;
+        private readonly SceneLoader _sceneLoader;
 
-        public BootstrapState(GameStateMachine gameStateMachine)
+        private const string Bootstrap = "Bootstrap";
+        private const string Main = "Main";
+
+        public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader)
         {
             _gameStateMachine = gameStateMachine;
+            _sceneLoader = sceneLoader;
+
+            RegisterServices();
         }
 
-        public void Enter()
+        private void RegisterServices()
         {
-            throw new System.NotImplementedException();
+
         }
+
+        public void Enter() =>
+            _sceneLoader.Load(Bootstrap, EnterLoadLevel);
+
+        private void EnterLoadLevel() =>
+            _gameStateMachine.Enter<LoadLevelState>(Main);
 
         public void Exit()
         {
-            throw new System.NotImplementedException();
         }
     }
 }

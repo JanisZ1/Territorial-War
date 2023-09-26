@@ -13,7 +13,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
         {
             _states = new Dictionary<Type, IExitableState>()
             {
-                [typeof(BootstrapState)] = new BootstrapState(this),
+                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader)
             };
         }
@@ -23,8 +23,12 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
             TState state = ChangeState<TState>();
             state.Enter();
         }
-
-        public TState ChangeState<TState>() where TState: class, IExitableState
+        public void Enter<TState>(string scene) where TState : class, ILevelLoadState
+        {
+            TState state = ChangeState<TState>();
+            state.Enter(scene);
+        }
+        public TState ChangeState<TState>() where TState : class, IExitableState
         {
             _currentState?.Exit();
 
@@ -34,7 +38,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
             return state;
         }
 
-        public TState GetState<TState>() where TState : class, IExitableState => 
+        public TState GetState<TState>() where TState : class, IExitableState =>
             _states[typeof(TState)] as TState;
     }
 }

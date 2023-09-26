@@ -6,7 +6,7 @@ namespace Assets.CodeBase.Infrastructure
     {
         public GameStateMachine StateMachine;
 
-        public Game() =>
-            StateMachine = new GameStateMachine(new SceneLoader());
+        public Game(ICoroutinerRunner coroutinerRunner) =>
+            StateMachine = new GameStateMachine(new SceneLoader(coroutinerRunner));
     }
 }

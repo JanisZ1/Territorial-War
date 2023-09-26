@@ -1,29 +1,26 @@
-﻿using System;
-
-namespace Assets.CodeBase.Infrastructure.StateMachine
+﻿namespace Assets.CodeBase.Infrastructure.StateMachine
 {
-    public partial class GameStateMachine
+    public class LoadLevelState : ILevelLoadState
     {
-        public class LoadLevelState : IState
-    {
-            private GameStateMachine _gameStateMachine;
-            private SceneLoader _sceneLoader;
+        private readonly GameStateMachine _gameStateMachine;
+        private readonly SceneLoader _sceneLoader;
 
-            public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader)
-            {
-                _gameStateMachine = gameStateMachine;
-                _sceneLoader = sceneLoader;
-            }
-
-            public void Enter()
+        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader)
         {
-            throw new NotImplementedException();
+            _gameStateMachine = gameStateMachine;
+            _sceneLoader = sceneLoader;
+        }
+
+        public void Enter(string scene) =>
+            _sceneLoader.Load(scene, OnLoaded);
+
+        private void OnLoaded()
+        {
+
         }
 
         public void Exit()
         {
-            throw new NotImplementedException();
         }
-    }
     }
 }
