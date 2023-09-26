@@ -234,6 +234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 5958711661130588439}
+  _archerAnimator: {fileID: 3980815976511564295}
   _spawn: {fileID: 1956603636260968809}
   _bullet: {fileID: 3680282065587421810, guid: beba39191fe958f49b363465a8d4b6de, type: 3}
 --- !u!54 &4050240299749364378

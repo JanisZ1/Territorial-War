@@ -31,5 +31,5 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     }
 
     public void FullPlayerHealthVariable(Collider other) =>
-        _playerHealth = other.GetComponentInParent<PlayerHealth>();
+    _playerHealth = other.GetComponentInParent<PlayerHealth>();
 }

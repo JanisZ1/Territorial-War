@@ -1,4 +1,5 @@
 using Assets.CodeBase.Logic.Archer;
+using Assets.CodeBase.Logic.Warrior;
 using UnityEngine;
 
 public class PlayerUnit : MonoBehaviour
@@ -8,12 +9,12 @@ public class PlayerUnit : MonoBehaviour
 
     private PlayerUnitState _currentPlayerUnitState;
     [SerializeField] private Animator _animator;
-    private ArcherAnimator _warriorAnimator;
+    [SerializeField] private ArcherAnimator _archerAnimator;
+    [SerializeField] private WarriorAnimator _warriorAnimator;
 
     private void Awake()
     {
         _iMovable = GetComponent<PlayerUnitMover>();
-        _warriorAnimator = GetComponentInChildren<ArcherAnimator>();
         _animator = GetComponentInChildren<Animator>();
     }
 
@@ -32,19 +33,23 @@ public class PlayerUnit : MonoBehaviour
 
     public virtual void Update()
     {
-        RaycastHit hit;
         Vector3 direction = transform.right;
         float offset = 0.15f;
         Vector3 start = new Vector3(transform.position.x - offset, transform.position.y, transform.position.z);
         float maxDistance = 1f;
-        if (Physics.Raycast(start, direction, out hit, maxDistance))
+        if (Physics.Raycast(start, direction, out RaycastHit hit, maxDistance))
         {
             if (hit.collider.GetComponentInParent<EnemyUnit>())
             {
                 SetState(PlayerUnitState.InBattle);
-                _warriorAnimator.InitializeEnemyHealthVariable(hit.collider);
+
+                if (_archerAnimator)
+                    _archerAnimator.InitializeTarget(hit.collider);
+
+                if (_warriorAnimator)
+                    _warriorAnimator.InitializeTarget(hit.collider);
+
                 SetAttackTrigger();
-                Debug.Log("Enemy unit is attacked");
             }
             if (hit.collider.GetComponentInParent<EnemyBase>())
             {

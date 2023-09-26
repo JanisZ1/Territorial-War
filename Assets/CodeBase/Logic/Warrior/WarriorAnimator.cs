@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 
-namespace Assets.CodeBase.Logic.Archer
+namespace Assets.CodeBase.Logic.Warrior
 {
-    public class ArcherAnimator : MonoBehaviour
+    public class WarriorAnimator : MonoBehaviour
     {
         private IDamageable _damageable;
         private readonly int _damage = 1;
 
         public void MakeDamageFromAnimation() =>
-            _damageable.TakeDamage(_damage);
+        _damageable.TakeDamage(_damage);
 
         public void InitializeTarget(Collider other) =>
             _damageable = other.GetComponent<IDamageable>();

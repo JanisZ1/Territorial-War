@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4133240495615844424}
   - component: {fileID: 4430756208342024385}
   - component: {fileID: 2155121237626727843}
+  - component: {fileID: 3919259657673538861}
   m_Layer: 0
   m_Name: GreenCommandWarrior
   m_TagString: Untagged
@@ -29,6 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.74, y: 0.47, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2786019019006080514}
   m_Father: {fileID: 0}
@@ -60,6 +62,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 0}
+  _archerAnimator: {fileID: 0}
+  _warriorAnimator: {fileID: 8916819774281500739}
 --- !u!54 &2155121237626727843
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -67,15 +71,45 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4133240495615844789}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3919259657673538861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4133240495615844789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd756b24767b05442b59b04b706a45e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitHealth: 5
+  _onUnitDied:
+    m_PersistentCalls:
+      m_Calls: []
+  _onTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &9081095946275407576
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,8 +122,8 @@ GameObject:
   - component: {fileID: 8542626930090353031}
   - component: {fileID: 1785207641445180926}
   - component: {fileID: 2989681453371314248}
-  - component: {fileID: 2945220087207354925}
   - component: {fileID: 2398761363485731206}
+  - component: {fileID: 8916819774281500739}
   m_Layer: 0
   m_Name: PlayerWarrior
   m_TagString: Untagged
@@ -107,6 +141,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4133240495615844426}
   m_RootOrder: 0
@@ -130,6 +165,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -162,7 +198,7 @@ MeshRenderer:
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!95 &2989681453371314248
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -175,30 +211,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2945220087207354925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9081095946275407576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd756b24767b05442b59b04b706a45e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _unitHealth: 5
-  _onUnitDied:
-    m_PersistentCalls:
-      m_Calls: []
-  _onTakeDamage:
-    m_PersistentCalls:
-      m_Calls: []
-  _enemyHealth: {fileID: 0}
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!135 &2398761363485731206
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -207,8 +225,28 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9081095946275407576}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8916819774281500739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9081095946275407576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a68bb732bb55190489c032577d5f72a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
