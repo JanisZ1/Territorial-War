@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Assets.CodeBase.Infrastructure.StateMachine
 {
-    public partial class GameStateMachine
+    public class GameStateMachine
     {
         private Dictionary<Type, IExitableState> _states;
 
