@@ -18,19 +18,19 @@ namespace Assets.CodeBase.Infrastructure
             RegisterServices();
         }
 
+        public void Enter() =>
+            _sceneLoader.Load(Bootstrap, EnterLoadLevel);
+
+        public void Exit()
+        {
+        }
+
         private void RegisterServices()
         {
 
         }
 
-        public void Enter() =>
-            _sceneLoader.Load(Bootstrap, EnterLoadLevel);
-
         private void EnterLoadLevel() =>
             _gameStateMachine.Enter<LoadLevelState>(Main);
-
-        public void Exit()
-        {
-        }
     }
 }

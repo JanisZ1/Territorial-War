@@ -23,12 +23,14 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
             TState state = ChangeState<TState>();
             state.Enter();
         }
+
         public void Enter<TState>(string scene) where TState : class, ILevelLoadState
         {
             TState state = ChangeState<TState>();
             state.Enter(scene);
         }
-        public TState ChangeState<TState>() where TState : class, IExitableState
+
+        private TState ChangeState<TState>() where TState : class, IExitableState
         {
             _currentState?.Exit();
 
@@ -38,7 +40,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
             return state;
         }
 
-        public TState GetState<TState>() where TState : class, IExitableState =>
+        private TState GetState<TState>() where TState : class, IExitableState =>
             _states[typeof(TState)] as TState;
     }
 }
