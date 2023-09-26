@@ -6,8 +6,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [SerializeField] private uint _unitHealth = 5;
     public UnityEvent _onUnitDied;
     public UnityEvent _onTakeDamage;
-    [SerializeField] private EnemyHealth _enemyHealth;
-
+    
     public void TakeDamage(int damage)
     {
         _unitHealth -= (uint)damage;
@@ -17,15 +16,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             Die();
     }
 
-    public void MakeDamage(int damage) =>
-        _enemyHealth.TakeDamage(damage);
-
     private void Die()
     {
-        Destroy(transform.parent.gameObject);
+        Destroy(gameObject);
         _onUnitDied.Invoke();
     }
-
-    public void FullEnemyHealthVariable(Collider other) =>
-        _enemyHealth = other.GetComponent<EnemyHealth>();
 }

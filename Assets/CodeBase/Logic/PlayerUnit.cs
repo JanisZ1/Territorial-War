@@ -1,3 +1,4 @@
+using Assets.CodeBase.Logic.Archer;
 using UnityEngine;
 
 public class PlayerUnit : MonoBehaviour
@@ -7,12 +8,12 @@ public class PlayerUnit : MonoBehaviour
 
     private PlayerUnitState _currentPlayerUnitState;
     [SerializeField] private Animator _animator;
-    private PlayerHealth _playerHealth;
+    private ArcherAnimator _warriorAnimator;
 
     private void Awake()
     {
         _iMovable = GetComponent<PlayerUnitMover>();
-        _playerHealth = GetComponentInChildren<PlayerHealth>();
+        _warriorAnimator = GetComponentInChildren<ArcherAnimator>();
         _animator = GetComponentInChildren<Animator>();
     }
 
@@ -41,7 +42,7 @@ public class PlayerUnit : MonoBehaviour
             if (hit.collider.GetComponentInParent<EnemyUnit>())
             {
                 SetState(PlayerUnitState.InBattle);
-                _playerHealth.FullEnemyHealthVariable(hit.collider);
+                _warriorAnimator.InitializeEnemyHealthVariable(hit.collider);
                 SetAttackTrigger();
                 Debug.Log("Enemy unit is attacked");
             }
