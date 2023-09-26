@@ -1,35 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyUnit : MonoBehaviour
 {
     public IDamageable DamageableObject;
     [SerializeField] private Vector3Int _enemyPosition;
-    private EnemyUnitState CurrentEnemyUnitState;
+    private EnemyUnitState _currentEnemyUnitState;
     [SerializeField] private Animator _animator;
     private EnemyHealth _enemyHealth;
     private IMovable _iMovable;
+
     public enum EnemyUnitState
     {
         Moving,
         InBattle,
         Idle
     }
+
     private void Awake()
     {
         _iMovable = GetComponent<EnemyUnitMover>();
         _enemyHealth = GetComponentInChildren<EnemyHealth>();
         _animator = GetComponentInChildren<Animator>();
     }
-    private void SetAttackTrigger()
-    {
+
+    private void SetAttackTrigger() => 
         _animator.SetTrigger("Attack");
-    }
-    private void SetIdleTrigger()
-    {
+
+    private void SetIdleTrigger() => 
         _animator.SetTrigger("Idle");
-    }
+
     private void Update()
     {
         Vector3 direction = transform.TransformDirection(-transform.right);
@@ -63,21 +62,21 @@ public class EnemyUnit : MonoBehaviour
             SetState(EnemyUnitState.Moving);
         }
         Debug.DrawRay(transform.position, direction, Color.green, maxDistance);
-        if (CurrentEnemyUnitState == EnemyUnitState.Moving)
+        if (_currentEnemyUnitState == EnemyUnitState.Moving)
         {
             SetIdleTrigger();
             _iMovable.Move();
             //место под SetMovingTrigger; для которого пока нету анимации
         }
-        if (CurrentEnemyUnitState == EnemyUnitState.Idle)
+        if (_currentEnemyUnitState == EnemyUnitState.Idle)
         {
             SetIdleTrigger();
         }
     }
     private void SetState(EnemyUnitState enemyUnitState)
     {
-        CurrentEnemyUnitState = enemyUnitState;
-        if (CurrentEnemyUnitState == EnemyUnitState.Idle)
+        _currentEnemyUnitState = enemyUnitState;
+        if (_currentEnemyUnitState == EnemyUnitState.Idle)
         {
             _iMovable.StopMove();
         }

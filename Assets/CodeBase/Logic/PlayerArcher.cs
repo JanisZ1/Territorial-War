@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 public class PlayerArcher : PlayerUnit
 {
     [SerializeField] private Transform _spawn;
@@ -8,18 +7,15 @@ public class PlayerArcher : PlayerUnit
     private EnemyUnit _enemyUnit;
     private float _shootingTime;
 
-
-    private void Start()
-    {
+    private void Start() =>
         _enemyUnit = FindObjectOfType<EnemyUnit>();
-    }
+
     private void Shoot()
     {
         if (_enemyUnit)
-        {
-            PlayerBullet newpBullet = Instantiate(_bullet, _spawn.transform.position, _spawn.localRotation);
-        }
+            Instantiate(_bullet, _spawn.transform.position, _spawn.localRotation);
     }
+
     public override void Update()
     {
         //неправильная строчка - надо чтобы переменная заполнялась при определенной дистанции 
@@ -35,7 +31,7 @@ public class PlayerArcher : PlayerUnit
             }
             if (distance < 6)
             {
-                
+
                 _shootingTime += Time.deltaTime;
                 if (_shootingTime > 1)
                 {

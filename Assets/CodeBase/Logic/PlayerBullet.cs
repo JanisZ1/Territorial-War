@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class PlayerBullet : MonoBehaviour
 {
     [SerializeField] private Transform p0;
@@ -11,7 +11,6 @@ public class PlayerBullet : MonoBehaviour
     private EnemyUnit _enemyUnit;
     private List<Transform> _bezierPointsToDelete = new List<Transform>();
     private EnemyHealth _enemyHealth;
-    private float _bulletDestroyDelay;
 
     private void Awake()
     {
@@ -30,6 +29,7 @@ public class PlayerBullet : MonoBehaviour
         _bezierPointsToDelete.Add(p2);
         p2.position = _enemyUnit.transform.position;
     }
+
     private void Update()
     {
         if (_enemyUnit)
@@ -44,6 +44,7 @@ public class PlayerBullet : MonoBehaviour
         transform.position = GetPoint(p0.position, p1.position, p2.position, t);
         
     }
+
     public Vector3 GetPoint(Vector3 p0, Vector3 p1, Vector3 p2, float t)
     {
         Vector3 p01 = Vector3.Lerp(p0, p1, t);
@@ -51,6 +52,7 @@ public class PlayerBullet : MonoBehaviour
         Vector3 p0112 = Vector3.Lerp(p01, p12, t);
         return p0112;
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<EnemyHealth>())
@@ -59,6 +61,7 @@ public class PlayerBullet : MonoBehaviour
             _enemyHealth.TakeDamage(1);
         }
     }
+
     private void DestroyBezierPoints()
     {
         for (int i = 0; i < _bezierPointsToDelete.Count; i++)

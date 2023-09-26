@@ -1,34 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 public class PlayerUnit : MonoBehaviour
 {
     public IDamageable DamageableObject;
     private IMovable _iMovable;
 
-    private PlayerUnitState CurrentPlayerUnitState;
+    private PlayerUnitState _currentPlayerUnitState;
     [SerializeField] private Animator _animator;
     private PlayerHealth _playerHealth;
+
     private void Awake()
     {
         _iMovable = GetComponent<PlayerUnitMover>();
         _playerHealth = GetComponentInChildren<PlayerHealth>();
         _animator = GetComponentInChildren<Animator>();
     }
-    private void SetAttackTrigger()
-    {
+
+    private void SetAttackTrigger() =>
         _animator.SetTrigger("Attack");
-    }
-    private void SetIdleTrigger()
-    {
+
+    private void SetIdleTrigger() =>
         _animator.SetTrigger("Idle");
-    }
+
     public enum PlayerUnitState
     {
         Moving,
         InBattle,
         Idle
     }
+
     public virtual void Update()
     {
         RaycastHit hit;
@@ -61,23 +61,23 @@ public class PlayerUnit : MonoBehaviour
         }
 
         Debug.DrawRay(transform.position, direction, Color.green, maxDistance);
-        if (CurrentPlayerUnitState == PlayerUnitState.Moving)
+        if (_currentPlayerUnitState == PlayerUnitState.Moving)
         {
             SetIdleTrigger();
             _iMovable.Move();
             //место под SetMovingTrigger; для которого пока нету анимации
         }
-        if (CurrentPlayerUnitState == PlayerUnitState.Idle)
+        if (_currentPlayerUnitState == PlayerUnitState.Idle)
         {
             SetIdleTrigger();
         }
     }
+
     private void SetState(PlayerUnitState playerUnitState)
     {
-        CurrentPlayerUnitState = playerUnitState;
-        if (CurrentPlayerUnitState == PlayerUnitState.Idle)
-        {
+        _currentPlayerUnitState = playerUnitState;
+
+        if (_currentPlayerUnitState == PlayerUnitState.Idle)
             _iMovable.StopMove();
-        }
     }
 }

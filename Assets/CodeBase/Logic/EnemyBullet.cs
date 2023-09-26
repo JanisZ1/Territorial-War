@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class EnemyBullet : MonoBehaviour
 {
     [SerializeField] private Transform p0;
@@ -10,6 +10,7 @@ public class EnemyBullet : MonoBehaviour
     [SerializeField] private float t;
     private PlayerUnit _playerUnit;
     private List<Transform> _objectsToDelete = new List<Transform>();
+
     private void Awake()
     {
         transform.DetachChildren();
@@ -23,6 +24,7 @@ public class EnemyBullet : MonoBehaviour
         _objectsToDelete.Add(Instantiate(p2, _playerUnit.transform.position, Quaternion.identity));
         p2.position = _playerUnit.transform.position;
     }
+
     private void Update()
     {
         if (_playerUnit)
@@ -32,10 +34,12 @@ public class EnemyBullet : MonoBehaviour
         }
         transform.position = GetPoint(p0.position, p1.position, p2.position, t);
     }
+
     public void Draw(Vector3 point, float length)
     {
 
     }
+
     public Vector3 GetPoint(Vector3 p0, Vector3 p1, Vector3 p2, float t)
     {
         Vector3 p01 = Vector3.Lerp(p0, p1, t);
@@ -43,6 +47,7 @@ public class EnemyBullet : MonoBehaviour
         Vector3 p0112 = Vector3.Lerp(p01, p12, t);
         return p0112;
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<PlayerUnit>())

@@ -6,10 +6,9 @@ public class EnemyLogic : MonoBehaviour
     [SerializeField] private QueueWarrior _queueWarrior;
     [SerializeField] private float _spawnDelay;
 
-    private void Start()
-    {
+    private void Start() => 
         StartCoroutine(SpawnEnemy());
-    }
+
     private IEnumerator SpawnEnemy()
     {
         WaitForSeconds delay = new WaitForSeconds(_spawnDelay);

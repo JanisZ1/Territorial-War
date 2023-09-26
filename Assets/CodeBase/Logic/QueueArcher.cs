@@ -6,27 +6,31 @@ public class QueueArcher : MonoBehaviour
     [SerializeField] private GameObject _playerPrefab;
     [SerializeField] private Transform _spawnPosition;
     [SerializeField] private UiSpawnSlider _uiSpawnSlider;
-    public float _delay { get; private set; } = 3;
+
     private float _currentDelay;
-    private List<float> list = new List<float>();
+    private List<float> _list = new List<float>();
     private bool _isFree = true;
-    private bool _UnitHasSpawned;
+    private bool _unitHasSpawned;
+
+    public float Delay { get; private set; } = 3;
+
     public void AddedUnit()
     {
         if (_uiSpawnSlider != null)
         {
-            list.Add(_delay);
+            _list.Add(Delay);
             if (_isFree)
             {
                 StartNext();
             }
         }
     }
+
     private void CreateUnit()
     {
         if (_spawnPosition != null)
         {
-            list.RemoveAt(0);
+            _list.RemoveAt(0);
             GameObject newPlayerUnit = Instantiate(_playerPrefab, _spawnPosition.position, _spawnPosition.rotation);
             _isFree = true;
             _currentDelay = 0;
@@ -36,16 +40,17 @@ public class QueueArcher : MonoBehaviour
 
     private void StartNext()
     {
-        if (list.Count > 0)
+        if (_list.Count > 0)
         {
             _isFree = false;
-            Invoke(nameof(CreateUnit), list[0]);
+            Invoke(nameof(CreateUnit), _list[0]);
         }
         else
         {
             _isFree = true;
         }
     }
+
     private void Update()
     {
         if (_isFree == false && GetComponent<CanvasRenderer>())

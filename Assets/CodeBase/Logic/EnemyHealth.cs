@@ -1,13 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] private uint _unitHealth = 5;
     public UnityEvent _onUnitDied;
     public UnityEvent _onTakeDamage;
-    [SerializeField] private PlayerHealth _playerHealth;
+    private PlayerHealth _playerHealth;
+
     public void TakeDamage(int damage)
     {
         _unitHealth -= (uint)damage;
@@ -17,10 +17,10 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             Die();
         }
     }
-    public void MakeDamage(int damage)
-    {
+
+    public void MakeDamage(int damage) =>
         _playerHealth.TakeDamage(damage);
-    }
+
     private void Die()
     {
         if (transform.parent.gameObject != null)
@@ -29,8 +29,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             _onUnitDied.Invoke();
         }
     }
-    public void FullPlayerHealthVariable(Collider other)
-    {
+
+    public void FullPlayerHealthVariable(Collider other) =>
         _playerHealth = other.GetComponent<PlayerHealth>();
-    }
 }
