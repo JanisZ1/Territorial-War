@@ -1,6 +1,9 @@
-﻿public class SceneLoader
+﻿namespace Assets.CodeBase.Infrastructure
 {
-    public SceneLoader()
+    public class SceneLoader
     {
+        public SceneLoader()
+        {
+        }
     }
 }
