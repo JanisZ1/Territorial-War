@@ -1,3 +1,4 @@
+using Assets.CodeBase.Infrastructure.Services.Factory;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,8 +12,12 @@ public class QueueArcher : MonoBehaviour
     private List<float> _list = new List<float>();
     private bool _isFree = true;
     private bool _unitHasSpawned;
+    private IArcherFactory _archerFactory;
 
     public float Delay { get; private set; } = 3;
+
+    public void Construct(IArcherFactory archerFactory) =>
+        _archerFactory = archerFactory;
 
     public void AddedUnit()
     {
@@ -31,7 +36,7 @@ public class QueueArcher : MonoBehaviour
         if (_spawnPosition != null)
         {
             _list.RemoveAt(0);
-            GameObject newPlayerUnit = Instantiate(_playerPrefab, _spawnPosition.position, _spawnPosition.rotation);
+            GameObject newArcher = _archerFactory.CreateArcher(_playerPrefab, _spawnPosition.position, _spawnPosition.rotation);
             _isFree = true;
             _currentDelay = 0;
             StartNext();

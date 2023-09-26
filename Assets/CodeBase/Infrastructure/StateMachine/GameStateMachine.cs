@@ -1,4 +1,5 @@
 ﻿using Assets.CodeBase.Infrastructure.Services;
+using Assets.CodeBase.Infrastructure.Services.Calculations;
 using Assets.CodeBase.Infrastructure.Services.Factory;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
             _states = new Dictionary<Type, IExitableState>()
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, allServices),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IWarriorFactory>())
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IWarriorFactory>(), allServices.Single<IArcherFactory>(), allServices.Single<IClosestEnemyCalculator>())
             };
         }
 

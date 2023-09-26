@@ -1,3 +1,4 @@
+using Assets.CodeBase.Infrastructure.Services.Calculations;
 using UnityEngine;
 
 public class EnemyUnit : MonoBehaviour
@@ -18,15 +19,15 @@ public class EnemyUnit : MonoBehaviour
 
     private void Awake()
     {
-        _iMovable = GetComponent<EnemyUnitMover>();
+        _iMovable = GetComponentInParent<EnemyUnitMover>();
         _enemyHealth = GetComponentInChildren<EnemyHealth>();
         _animator = GetComponentInChildren<Animator>();
     }
 
-    private void SetAttackTrigger() => 
+    private void SetAttackTrigger() =>
         _animator.SetTrigger("Attack");
 
-    private void SetIdleTrigger() => 
+    private void SetIdleTrigger() =>
         _animator.SetTrigger("Idle");
 
     private void Update()
@@ -39,7 +40,7 @@ public class EnemyUnit : MonoBehaviour
 
         if (Physics.Raycast(start, direction, out hit, maxDistance))
         {
-            
+
             if (hit.collider.GetComponentInParent<PlayerUnit>())
             {
                 SetState(EnemyUnitState.InBattle);
