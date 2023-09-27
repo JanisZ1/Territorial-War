@@ -1,5 +1,6 @@
 using Assets.CodeBase.Logic.Archer;
 using Assets.CodeBase.Logic.Warrior;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(UnitMover))]
@@ -13,6 +14,53 @@ public class PlayerUnit : MonoBehaviour
     [SerializeField] private ArcherAnimator _archerAnimator;
     [SerializeField] private WarriorAnimator _warriorAnimator;
     [SerializeField] private UnitMover _unitMover;
+    [SerializeField] private TriggerObserver _triggerObserver;
+    private Coroutine _coroutine;
+    protected int Index;
+
+    private void Start()
+    {
+        _triggerObserver.TriggerEnter += TriggerEnter;
+        _triggerObserver.TriggerExit += TriggerExit;
+    }
+
+    private void TriggerEnter(Collider obj)
+    {
+        if (obj.GetComponentInParent<PlayerUnit>())
+        {
+            StopMoveCoroutine();
+            _unitMover.StopMove();
+            SetIdleTrigger();
+        }
+
+        if (obj.GetComponentInParent<EnemyUnit>() || obj.GetComponentInParent<EnemyBase>())
+        {
+            StopMoveCoroutine();
+            SetAttackTrigger();
+        }
+
+        if (obj.GetComponentInParent<EnemyUnit>())
+        {
+            StopMoveCoroutine();
+            InitializeTarget(obj);
+        }
+    }
+
+    private void StopMoveCoroutine() =>
+        StopCoroutine(_coroutine);
+
+    private void TriggerExit(Collider obj)
+    {
+        SetMoveTrigger();
+        _coroutine = StartCoroutine(MoveProcess());
+    }
+
+    private IEnumerator MoveProcess()
+    {
+        yield return null;
+        _unitMover.Move();
+        _coroutine = StartCoroutine(MoveProcess());
+    }
 
     private void SetAttackTrigger() =>
         _animator.SetTrigger(AttackTriggerName);
@@ -23,48 +71,12 @@ public class PlayerUnit : MonoBehaviour
     private void SetMoveTrigger() =>
         _animator.SetTrigger(MoveTriggerName);
 
-    public virtual void Update()
-    {
-        //TODO: Refactor tomorrow all this method
-        Vector3 direction = transform.right;
-        float offset = 0.15f;
-        Vector3 start = new Vector3(transform.position.x - offset, transform.position.y, transform.position.z);
-        float maxDistance = 1f;
-        if (Physics.Raycast(start, direction, out RaycastHit hit, maxDistance))
-        {
-            Collider hitCollider = hit.collider;
-
-            if (hitCollider.GetComponentInParent<PlayerUnit>())
-            {
-                _unitMover.StopMove();
-                SetIdleTrigger();
-            }
-
-            if (hitCollider.GetComponentInParent<EnemyUnit>() || hitCollider.GetComponentInParent<EnemyBase>())
-            {
-                SetAttackTrigger();
-            }
-
-            if (hitCollider.GetComponentInParent<EnemyUnit>())
-            {
-                InitializeTarget(hit);
-            }
-        }
-        else
-        {
-            SetMoveTrigger();
-            _unitMover.Move();
-        }
-
-        Debug.DrawRay(transform.position, direction, Color.green, maxDistance);
-    }
-
-    private void InitializeTarget(RaycastHit hit)
+    private void InitializeTarget(Collider hitCollider)
     {
         if (_archerAnimator)
-            _archerAnimator.InitializeTarget(hit.collider);
+            _archerAnimator.InitializeTarget(hitCollider);
 
         if (_warriorAnimator)
-            _warriorAnimator.InitializeTarget(hit.collider);
+            _warriorAnimator.InitializeTarget(hitCollider);
     }
 }

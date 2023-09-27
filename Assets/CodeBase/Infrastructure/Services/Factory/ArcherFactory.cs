@@ -8,7 +8,7 @@ namespace Assets.CodeBase.Infrastructure.Services.Factory
     {
         private readonly IAssets _assets;
         private readonly IClosestEnemyCalculator _closestEnemyCalculator;
-
+        
         public ArcherFactory(IAssets assets, IClosestEnemyCalculator closestEnemyCalculator)
         {
             _assets = assets;

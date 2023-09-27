@@ -16,9 +16,8 @@ public class PlayerArcher : PlayerUnit
     private void Shoot() =>
         Instantiate(_bullet, _spawn.transform.position, _spawn.localRotation);
 
-    public override void Update()
+    private void Update()
     {
-        base.Update();
         _enemyUnit = _closestEnemyCalculator.ClosestEnemy(to: transform);
 
         if (_enemyUnit)
