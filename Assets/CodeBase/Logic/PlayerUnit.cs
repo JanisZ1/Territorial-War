@@ -1,6 +1,7 @@
 using Assets.CodeBase.Logic.Archer;
 using Assets.CodeBase.Logic.Warrior;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(UnitMover))]
@@ -16,6 +17,8 @@ public class PlayerUnit : MonoBehaviour
     [SerializeField] private UnitMover _unitMover;
     [SerializeField] private TriggerObserver _triggerObserver;
     private Coroutine _coroutine;
+    private IGreenCommandSpawner _greenCommandSpawner;
+    public int Id;
 
     private void Start()
     {
@@ -23,13 +26,29 @@ public class PlayerUnit : MonoBehaviour
         _triggerObserver.TriggerExit += TriggerExit;
     }
 
+    public void Construct(IGreenCommandSpawner greenCommandSpawner) =>
+        _greenCommandSpawner = greenCommandSpawner;
+
     private void TriggerEnter(Collider obj)
     {
-        if (obj.GetComponentInParent<PlayerUnit>())
+        Debug.Log("1111");
+        if (obj.GetComponentInParent<PlayerUnit>() || obj.GetComponentInParent<PlayerBase>())
         {
-            StopMoveCoroutine();
-            _unitMover.StopMove();
-            SetIdleTrigger();
+            List<PlayerUnit> unitsSpawned = _greenCommandSpawner.UnitsSpawned;
+
+            PlayerUnit playerUnit = GetUnitInFront(unitsSpawned);
+
+            if (playerUnit != this)//FindedUnitInFront?
+            {
+                StopMoveCoroutine();
+                _unitMover.StopMove();
+                SetIdleTrigger();
+            }
+            else
+            {
+                Debug.Log("1111");
+                _coroutine = StartCoroutine(MoveProcess());
+            }
         }
 
         if (obj.GetComponentInParent<EnemyUnit>() || obj.GetComponentInParent<EnemyBase>())
@@ -45,11 +64,30 @@ public class PlayerUnit : MonoBehaviour
         }
     }
 
-    private void StopMoveCoroutine() =>
-        StopCoroutine(_coroutine);
+    private PlayerUnit GetUnitInFront(List<PlayerUnit> unitsSpawned)
+    {
+        PlayerUnit playerUnit = this;
+
+        for (int i = 0; i < unitsSpawned.Count; i++)
+        {
+            if (Id > unitsSpawned[i].Id)
+            {
+                playerUnit = unitsSpawned[i];
+            }
+        }
+
+        return playerUnit;
+    }
+
+    private void StopMoveCoroutine()
+    {
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+    }
 
     private void TriggerExit(Collider obj)
     {
+        _greenCommandSpawner.UnitsSpawned.Remove(this);
         SetMoveTrigger();
         _coroutine = StartCoroutine(MoveProcess());
     }

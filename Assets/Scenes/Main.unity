@@ -1105,6 +1105,7 @@ GameObject:
   - component: {fileID: 796977521}
   - component: {fileID: 796977520}
   - component: {fileID: 796977524}
+  - component: {fileID: 796977525}
   m_Layer: 0
   m_Name: GreenBase
   m_TagString: Untagged
@@ -1127,7 +1128,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1211,6 +1212,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab056f7865603b4cab9e572c671115f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &796977525
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796977519}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &907602477
 GameObject:
   m_ObjectHideFlags: 0
@@ -1895,8 +1923,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: 6773574472367001583, guid: 258bf0e7587b9054da78146412820ba3, type: 3}
   _spawnPosition: {fileID: 179351541}
-  _spawnedUnits: []
-  _list: []
 --- !u!1 &1417602116
 GameObject:
   m_ObjectHideFlags: 0
@@ -2325,7 +2351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737bb3df0ebd9d849905f8d03bd4457b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _queueWarrior: {fileID: 0}
+  _queueWarrior: {fileID: 1402370834}
   _spawnDelay: 3
 --- !u!1 &2105098255
 GameObject:

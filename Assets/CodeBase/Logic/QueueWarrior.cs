@@ -44,7 +44,7 @@ public class QueueWarrior : MonoBehaviour
             //TODO: Static data for different warriors
             GameObject warrior = _warriorFactory.CreateWarrior(_playerPrefab, _spawnPosition.position, _spawnPosition.rotation);
             _spawnedUnits.Add(warrior.GetComponent<PlayerUnit>());
-            _greenCommandSpawner.AddToDictionary(warrior.GetComponentInChildren<PlayerUnit>());
+            _greenCommandSpawner.Spawn(warrior.GetComponentInChildren<PlayerUnit>());
             _isFree = true;
             _currentDelay = 0;
             StartNext();

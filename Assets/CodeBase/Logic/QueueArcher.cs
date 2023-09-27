@@ -41,7 +41,7 @@ public class QueueArcher : MonoBehaviour
         {
             _list.RemoveAt(0);
             GameObject newArcher = _archerFactory.CreateArcher(_playerPrefab, _spawnPosition.position, _spawnPosition.rotation);
-            _greenCommandSpawner.AddToDictionary(newArcher.GetComponentInChildren<PlayerUnit>());
+            _greenCommandSpawner.Spawn(newArcher.GetComponentInChildren<PlayerUnit>());
             _isFree = true;
             _currentDelay = 0;
             StartNext();

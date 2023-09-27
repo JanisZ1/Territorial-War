@@ -3,6 +3,6 @@ using System.Collections.Generic;
 
 public interface IGreenCommandSpawner : IService
 {
-    Dictionary<PlayerUnit, int> UnitsSpawned { get; }
-    void AddToDictionary(PlayerUnit playerUnit);
+    List<PlayerUnit> UnitsSpawned { get; }
+    void Spawn(PlayerUnit playerUnit);
 }

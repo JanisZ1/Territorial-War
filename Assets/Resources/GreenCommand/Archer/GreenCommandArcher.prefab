@@ -250,6 +250,7 @@ MonoBehaviour:
   _archerAnimator: {fileID: 3980815976511564295}
   _warriorAnimator: {fileID: 0}
   _unitMover: {fileID: 1956603637825456645}
+  _triggerObserver: {fileID: 7035481170648009578}
   _spawn: {fileID: 1956603636260968809}
   _bullet: {fileID: 3680282065587421810, guid: beba39191fe958f49b363465a8d4b6de, type: 3}
 --- !u!54 &4050240299749364378
