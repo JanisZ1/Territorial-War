@@ -1858,31 +1858,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1402370833}
-  - component: {fileID: 1402370831}
+  - component: {fileID: 1402370834}
   m_Layer: 0
-  m_Name: QueueWarrior
+  m_Name: RedBaseQueueWarrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1402370831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1402370830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e397c5226bd2df440829e840795116f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerPrefab: {fileID: 6773574472367001583, guid: 258bf0e7587b9054da78146412820ba3, type: 3}
-  _spawnPosition: {fileID: 179351541}
-  _uiSpawnSlider: {fileID: 31564815}
-  _spawnedUnits: []
-  _list: []
 --- !u!4 &1402370833
 Transform:
   m_ObjectHideFlags: 0
@@ -1898,6 +1881,22 @@ Transform:
   m_Father: {fileID: 1766424366}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1402370834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402370830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee9a761e7affb83479d4c3f3c86f3afb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerPrefab: {fileID: 6773574472367001583, guid: 258bf0e7587b9054da78146412820ba3, type: 3}
+  _spawnPosition: {fileID: 179351541}
+  _spawnedUnits: []
+  _list: []
 --- !u!1 &1417602116
 GameObject:
   m_ObjectHideFlags: 0
@@ -2326,7 +2325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737bb3df0ebd9d849905f8d03bd4457b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _queueWarrior: {fileID: 1402370831}
+  _queueWarrior: {fileID: 0}
   _spawnDelay: 3
 --- !u!1 &2105098255
 GameObject:

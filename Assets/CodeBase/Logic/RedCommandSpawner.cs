@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RedCommandSpawner : MonoBehaviour
 {
-    [SerializeField] private QueueWarrior _queueWarrior;
+    [SerializeField] private RedBaseQueueWarrior _queueWarrior;
     [SerializeField] private float _spawnDelay;
 
     private void Start() =>

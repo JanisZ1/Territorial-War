@@ -16,7 +16,6 @@ public class PlayerUnit : MonoBehaviour
     [SerializeField] private UnitMover _unitMover;
     [SerializeField] private TriggerObserver _triggerObserver;
     private Coroutine _coroutine;
-    protected int Index;
 
     private void Start()
     {

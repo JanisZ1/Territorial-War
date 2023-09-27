@@ -13,11 +13,15 @@ public class QueueArcher : MonoBehaviour
     private bool _isFree = true;
     private bool _unitHasSpawned;
     private IArcherFactory _archerFactory;
+    private IGreenCommandSpawner _greenCommandSpawner;
 
     public float Delay { get; private set; } = 3;
 
-    public void Construct(IArcherFactory archerFactory) =>
+    public void Construct(IArcherFactory archerFactory, IGreenCommandSpawner greenCommandSpawner)
+    {
         _archerFactory = archerFactory;
+        _greenCommandSpawner = greenCommandSpawner;
+    }
 
     public void AddedUnit()
     {
@@ -37,6 +41,7 @@ public class QueueArcher : MonoBehaviour
         {
             _list.RemoveAt(0);
             GameObject newArcher = _archerFactory.CreateArcher(_playerPrefab, _spawnPosition.position, _spawnPosition.rotation);
+            _greenCommandSpawner.AddToDictionary(newArcher.GetComponentInChildren<PlayerUnit>());
             _isFree = true;
             _currentDelay = 0;
             StartNext();

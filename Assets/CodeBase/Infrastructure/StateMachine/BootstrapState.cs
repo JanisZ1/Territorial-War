@@ -34,6 +34,7 @@ namespace Assets.CodeBase.Infrastructure
         private void RegisterServices()
         {
             _services.Register<IAssets>(new AssetProvider());
+            _services.Register<IGreenCommandSpawner>(new GreenCommandUnitSpawner());
             _services.Register<IClosestEnemyCalculator>(new ClosestEnemyCalculator());
             _services.Register<IWarriorFactory>(new WarriorFactory(_services.Single<IAssets>(), _services.Single<IClosestEnemyCalculator>()));
             _services.Register<IArcherFactory>(new ArcherFactory(_services.Single<IAssets>(), _services.Single<IClosestEnemyCalculator>()));
