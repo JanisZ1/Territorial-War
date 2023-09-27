@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerUnitMover : MonoBehaviour, IMovable
+public class UnitMover : MonoBehaviour
 {
     private float _xVector = 1f;
     public Vector3 _playerUnitVector;

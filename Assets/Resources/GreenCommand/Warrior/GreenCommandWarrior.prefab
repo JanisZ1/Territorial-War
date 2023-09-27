@@ -61,9 +61,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10258289fd409084ba0417387aceb4b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
+  _animator: {fileID: 2989681453371314248}
   _archerAnimator: {fileID: 0}
   _warriorAnimator: {fileID: 8916819774281500739}
+  _unitMover: {fileID: 4133240495615844424}
 --- !u!54 &2155121237626727843
 Rigidbody:
   m_ObjectHideFlags: 0

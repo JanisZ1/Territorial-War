@@ -1,6 +1,6 @@
-using Assets.CodeBase.Infrastructure.Services.Calculations;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyUnitMover))]
 public class EnemyUnit : MonoBehaviour
 {
     public IDamageable DamageableObject;
@@ -8,7 +8,7 @@ public class EnemyUnit : MonoBehaviour
     private EnemyUnitState _currentEnemyUnitState;
     [SerializeField] private Animator _animator;
     private EnemyHealth _enemyHealth;
-    private IMovable _iMovable;
+    private EnemyUnitMover _enemyUnitMover;
 
     public enum EnemyUnitState
     {
@@ -19,7 +19,7 @@ public class EnemyUnit : MonoBehaviour
 
     private void Awake()
     {
-        _iMovable = GetComponentInParent<EnemyUnitMover>();
+        _enemyUnitMover = GetComponentInParent<EnemyUnitMover>();
         _enemyHealth = GetComponentInChildren<EnemyHealth>();
         _animator = GetComponentInChildren<Animator>();
     }
@@ -66,7 +66,7 @@ public class EnemyUnit : MonoBehaviour
         if (_currentEnemyUnitState == EnemyUnitState.Moving)
         {
             SetIdleTrigger();
-            _iMovable.Move();
+            _enemyUnitMover.Move();
             //место под SetMovingTrigger; для которого пока нету анимации
         }
         if (_currentEnemyUnitState == EnemyUnitState.Idle)
@@ -79,7 +79,7 @@ public class EnemyUnit : MonoBehaviour
         _currentEnemyUnitState = enemyUnitState;
         if (_currentEnemyUnitState == EnemyUnitState.Idle)
         {
-            _iMovable.StopMove();
+            _enemyUnitMover.StopMove();
         }
     }
 }

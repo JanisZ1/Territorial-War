@@ -2,88 +2,69 @@ using Assets.CodeBase.Logic.Archer;
 using Assets.CodeBase.Logic.Warrior;
 using UnityEngine;
 
+[RequireComponent(typeof(UnitMover))]
 public class PlayerUnit : MonoBehaviour
 {
-    public IDamageable DamageableObject;
-    private IMovable _iMovable;
+    private const string AttackTriggerName = "Attack";
+    private const string IdleTriggerName = "Idle";
+    private const string MoveTriggerName = "Move";
 
-    private PlayerUnitState _currentPlayerUnitState;
     [SerializeField] private Animator _animator;
     [SerializeField] private ArcherAnimator _archerAnimator;
     [SerializeField] private WarriorAnimator _warriorAnimator;
-
-    private void Awake()
-    {
-        _iMovable = GetComponent<PlayerUnitMover>();
-        _animator = GetComponentInChildren<Animator>();
-    }
+    [SerializeField] private UnitMover _unitMover;
 
     private void SetAttackTrigger() =>
-        _animator.SetTrigger("Attack");
+        _animator.SetTrigger(AttackTriggerName);
 
     private void SetIdleTrigger() =>
-        _animator.SetTrigger("Idle");
+        _animator.SetTrigger(IdleTriggerName);
 
-    public enum PlayerUnitState
-    {
-        Moving,
-        InBattle,
-        Idle
-    }
+    private void SetMoveTrigger() =>
+        _animator.SetTrigger(MoveTriggerName);
 
     public virtual void Update()
     {
+        //TODO: Refactor tomorrow all this method
         Vector3 direction = transform.right;
         float offset = 0.15f;
         Vector3 start = new Vector3(transform.position.x - offset, transform.position.y, transform.position.z);
         float maxDistance = 1f;
         if (Physics.Raycast(start, direction, out RaycastHit hit, maxDistance))
         {
-            if (hit.collider.GetComponentInParent<EnemyUnit>())
+            Collider hitCollider = hit.collider;
+
+            if (hitCollider.GetComponentInParent<PlayerUnit>())
             {
-                SetState(PlayerUnitState.InBattle);
+                _unitMover.StopMove();
+                SetIdleTrigger();
+            }
 
-                if (_archerAnimator)
-                    _archerAnimator.InitializeTarget(hit.collider);
-
-                if (_warriorAnimator)
-                    _warriorAnimator.InitializeTarget(hit.collider);
-
+            if (hitCollider.GetComponentInParent<EnemyUnit>() || hitCollider.GetComponentInParent<EnemyBase>())
+            {
                 SetAttackTrigger();
             }
-            if (hit.collider.GetComponentInParent<EnemyBase>())
+
+            if (hitCollider.GetComponentInParent<EnemyUnit>())
             {
-                SetState(PlayerUnitState.InBattle);
-                SetAttackTrigger();
-            }
-            if (hit.collider.GetComponentInParent<PlayerUnit>())
-            {
-                SetState(PlayerUnitState.Idle);
+                InitializeTarget(hit);
             }
         }
         else
         {
-            SetState(PlayerUnitState.Moving);
+            SetMoveTrigger();
+            _unitMover.Move();
         }
 
         Debug.DrawRay(transform.position, direction, Color.green, maxDistance);
-        if (_currentPlayerUnitState == PlayerUnitState.Moving)
-        {
-            SetIdleTrigger();
-            _iMovable.Move();
-            //место под SetMovingTrigger; для которого пока нету анимации
-        }
-        if (_currentPlayerUnitState == PlayerUnitState.Idle)
-        {
-            SetIdleTrigger();
-        }
     }
 
-    private void SetState(PlayerUnitState playerUnitState)
+    private void InitializeTarget(RaycastHit hit)
     {
-        _currentPlayerUnitState = playerUnitState;
+        if (_archerAnimator)
+            _archerAnimator.InitializeTarget(hit.collider);
 
-        if (_currentPlayerUnitState == PlayerUnitState.Idle)
-            _iMovable.StopMove();
+        if (_warriorAnimator)
+            _warriorAnimator.InitializeTarget(hit.collider);
     }
 }

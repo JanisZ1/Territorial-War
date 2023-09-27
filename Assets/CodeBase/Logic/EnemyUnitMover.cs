@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyUnitMover : MonoBehaviour, IMovable
+public class EnemyUnitMover : MonoBehaviour
 {
     private Vector3 _enemyVector;
 

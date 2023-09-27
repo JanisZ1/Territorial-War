@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class RedCommandSpawner : MonoBehaviour
 {
     [SerializeField] private QueueWarrior _queueWarrior;
     [SerializeField] private float _spawnDelay;
