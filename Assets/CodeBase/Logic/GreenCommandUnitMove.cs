@@ -1,19 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class GreenCommandUnitMove : MonoBehaviour
+public class GreenCommandUnitMove : MonoBehaviour, IGreenCommandUnit
 {
     private float _xVector = 1f;
     public Vector3 _playerUnitVector;
 
-    private Coroutine _coroutine;
     [SerializeField] private Animator _animator;
     [SerializeField] private TriggerObserver _triggerObserver;
     private IGreenCommandSpawner _greenCommandSpawner;
 
     private const string MoveTriggerName = "Move";
     private const string IdleTriggerName = "Idle";
+    private bool _isMoving;
 
     public int Id { get; set; }
 
@@ -34,63 +33,63 @@ public class GreenCommandUnitMove : MonoBehaviour
 
     private void TriggerEnter(Collider obj)
     {
-        if (obj.GetComponentInParent<GreenCommandUnitMove>() || obj.GetComponentInParent<PlayerBase>())
+        IGreenCommandUnit greenCommandUnit = obj.GetComponentInParent<IGreenCommandUnit>();
+
+        if (greenCommandUnit != null)
         {
-            List<GreenCommandUnitMove> unitsSpawned = _greenCommandSpawner.UnitsSpawned;
+            _greenCommandSpawner.UnitsSpawned.Add(greenCommandUnit);
+            List<IGreenCommandUnit> unitsSpawned = _greenCommandSpawner.UnitsSpawned;
+            IGreenCommandUnit playerUnit = GetUnitInFront(unitsSpawned);
 
-            GreenCommandUnitMove playerUnit = GetUnitInFront(unitsSpawned);
-
-            if (playerUnit != this)//FindedUnitInFront?
-            {
-                StopMove();
-                StopMoveCoroutine();
-                SetIdleTrigger();
-            }
-            else
-            {
-                StartCoroutine(MoveProcess());
-            }
+            MoveOrStopMove(playerUnit);
         }
 
         if (obj.GetComponentInParent<EnemyUnit>() || obj.GetComponentInParent<EnemyBase>())
         {
-            StopMove();
-            StopMoveCoroutine();
+            _isMoving = false;
         }
     }
 
     private void TriggerExit(Collider obj)
     {
-        _greenCommandSpawner.UnitsSpawned.Remove(this);
-        SetMoveTrigger();
-        _coroutine = StartCoroutine(MoveProcess());
+        IGreenCommandUnit greenCommandUnitMove = obj.GetComponentInParent<IGreenCommandUnit>();
+
+        if (greenCommandUnitMove != null || obj.GetComponentInParent<PlayerBase>())
+        {
+            _greenCommandSpawner.UnitsSpawned.Remove(greenCommandUnitMove);
+            List<IGreenCommandUnit> unitsSpawned = _greenCommandSpawner.UnitsSpawned;
+
+            IGreenCommandUnit playerUnit = GetUnitInFront(unitsSpawned);
+
+            MoveOrStopMove(playerUnit);
+
+            SetMoveTrigger();
+        }
+    }
+
+    private void MoveOrStopMove(IGreenCommandUnit greenCommandUnitMove)
+    {
+        if (Id < greenCommandUnitMove.Id)//FindedUnitInFront?
+        {
+            _isMoving = false;
+            SetIdleTrigger();
+        }
+        else
+        {
+            _isMoving = true;
+        }
+    }
+
+    private void Update()
+    {
+        if (_isMoving)
+            Move();
     }
 
     public void Move()
     {
-        _playerUnitVector = new Vector3(_xVector * Time.deltaTime, 0f, 0f);
-        transform.Translate(_playerUnitVector);
-    }
-
-    public void StopMove() =>
-        _playerUnitVector = Vector3.zero;
-
-    public void StopMoveCoroutine()
-    {
-        if (_coroutine != null)
-        {
-            Debug.Log("Stop Coroutineeeeeeeeeeeee");
-            StopCoroutine(_coroutine);
-        }
-    }
-
-    public IEnumerator MoveProcess()
-    {
-        while (true)
-        {
-            yield return null;
-            Move();
-        }
+        Vector3 movingVector = new Vector3(_xVector * Time.deltaTime, 0f, 0f);
+        transform.Translate(movingVector);
     }
 
     private void SetMoveTrigger() =>
@@ -100,9 +99,9 @@ public class GreenCommandUnitMove : MonoBehaviour
     private void SetIdleTrigger() =>
         _animator.SetTrigger(IdleTriggerName);
 
-    private GreenCommandUnitMove GetUnitInFront(List<GreenCommandUnitMove> unitsSpawned)
+    private IGreenCommandUnit GetUnitInFront(List<IGreenCommandUnit> unitsSpawned)
     {
-        GreenCommandUnitMove greenCommandUnitMove = this;
+        IGreenCommandUnit greenCommandUnitMove = this;
 
         for (int i = 0; i < unitsSpawned.Count; i++)
         {
