@@ -41,7 +41,7 @@ public class EnemyUnit : MonoBehaviour
         if (Physics.Raycast(start, direction, out hit, maxDistance))
         {
 
-            if (hit.collider.GetComponentInParent<PlayerUnit>())
+            if (hit.collider.GetComponentInParent<MeleeAttack>())
             {
                 SetState(EnemyUnitState.InBattle);
                 _enemyHealth.FullPlayerHealthVariable(hit.collider);

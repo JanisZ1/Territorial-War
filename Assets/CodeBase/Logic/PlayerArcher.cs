@@ -1,7 +1,7 @@
 using Assets.CodeBase.Infrastructure.Services.Calculations;
 using UnityEngine;
 
-public class PlayerArcher : PlayerUnit
+public class PlayerArcher : MeleeAttack
 {
     [SerializeField] private Transform _spawn;
     [SerializeField] private PlayerBullet _bullet;

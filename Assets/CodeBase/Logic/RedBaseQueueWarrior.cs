@@ -6,7 +6,7 @@ public class RedBaseQueueWarrior : MonoBehaviour
 {
     [SerializeField] private GameObject _playerPrefab;
     [SerializeField] private Transform _spawnPosition;
-    private List<PlayerUnit> _spawnedUnits = new List<PlayerUnit>();
+    private List<MeleeAttack> _spawnedUnits = new List<MeleeAttack>();
     private List<float> _list = new List<float>();
 
     private float _currentDelay;
@@ -35,7 +35,7 @@ public class RedBaseQueueWarrior : MonoBehaviour
             _list.RemoveAt(0);
             //TODO: Static data for different warriors
             GameObject warrior = _warriorFactory.CreateWarrior(_playerPrefab, _spawnPosition.position, _spawnPosition.rotation);
-            _spawnedUnits.Add(warrior.GetComponent<PlayerUnit>());
+            _spawnedUnits.Add(warrior.GetComponent<MeleeAttack>());
             _isFree = true;
             _currentDelay = 0;
             StartNext();

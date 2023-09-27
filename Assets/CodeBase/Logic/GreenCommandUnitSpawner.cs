@@ -2,11 +2,11 @@
 
 public class GreenCommandUnitSpawner : IGreenCommandSpawner
 {
-    public List<PlayerUnit> UnitsSpawned { get; } = new List<PlayerUnit>();
+    public List<GreenCommandUnitMove> UnitsSpawned { get; } = new List<GreenCommandUnitMove>();
 
     private int _index;
 
-    public void Spawn(PlayerUnit playerUnit)
+    public void Spawn(GreenCommandUnitMove playerUnit)
     {
         UnitsSpawned.Add(playerUnit);
         playerUnit.Construct(this);

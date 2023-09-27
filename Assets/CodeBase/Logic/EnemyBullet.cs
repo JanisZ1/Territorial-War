@@ -8,13 +8,13 @@ public class EnemyBullet : MonoBehaviour
     [SerializeField] private Transform p2;
     [Range(0, 1)]
     [SerializeField] private float t;
-    private PlayerUnit _playerUnit;
+    private MeleeAttack _playerUnit;
     private List<Transform> _objectsToDelete = new List<Transform>();
 
     private void Awake()
     {
         transform.DetachChildren();
-        _playerUnit = FindObjectOfType<PlayerUnit>();
+        _playerUnit = FindObjectOfType<MeleeAttack>();
         _objectsToDelete.Add(transform);
         _objectsToDelete.Add(p0);
         _objectsToDelete.Add(p1);
@@ -50,7 +50,7 @@ public class EnemyBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<PlayerUnit>())
+        if (other.gameObject.GetComponent<MeleeAttack>())
         {
             for (int i = 0; i < _objectsToDelete.Count; i++)
             {

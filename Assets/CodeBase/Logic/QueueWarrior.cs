@@ -7,7 +7,7 @@ public class QueueWarrior : MonoBehaviour
     [SerializeField] private GameObject _playerPrefab;
     [SerializeField] private Transform _spawnPosition;
     [SerializeField] private UiSpawnSlider _uiSpawnSlider;
-    [SerializeField] private List<PlayerUnit> _spawnedUnits = new List<PlayerUnit>();
+    [SerializeField] private List<MeleeAttack> _spawnedUnits = new List<MeleeAttack>();
     [SerializeField] private List<float> _list = new List<float>();
 
     private float _currentDelay;
@@ -43,8 +43,8 @@ public class QueueWarrior : MonoBehaviour
             _list.RemoveAt(0);
             //TODO: Static data for different warriors
             GameObject warrior = _warriorFactory.CreateWarrior(_playerPrefab, _spawnPosition.position, _spawnPosition.rotation);
-            _spawnedUnits.Add(warrior.GetComponent<PlayerUnit>());
-            _greenCommandSpawner.Spawn(warrior.GetComponentInChildren<PlayerUnit>());
+            _spawnedUnits.Add(warrior.GetComponent<MeleeAttack>());
+            _greenCommandSpawner.Spawn(warrior.GetComponentInChildren<GreenCommandUnitMove>());
             _isFree = true;
             _currentDelay = 0;
             StartNext();

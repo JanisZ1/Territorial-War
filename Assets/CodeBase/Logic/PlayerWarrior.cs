@@ -1,4 +1,4 @@
-public class PlayerWarrior : PlayerUnit
+public class PlayerWarrior : MeleeAttack
 {
     
 }
