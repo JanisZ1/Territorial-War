@@ -1,10 +1,8 @@
 using UnityEngine;
 
-public class PlayerBase : MonoBehaviour, IGreenCommandUnit
+public class GreenBase : MonoBehaviour
 {
     private int _health = 10;
-
-    public int Id { get; } = -1;
 
     public void TakeDamage(int damage)
     {

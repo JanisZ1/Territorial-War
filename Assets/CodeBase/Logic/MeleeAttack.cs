@@ -13,30 +13,53 @@ public class MeleeAttack : MonoBehaviour
 
     private const string AttackTriggerName = "Attack";
 
+    public bool IsFighting { get; private set; }
+
     public void SetAttackTrigger() =>
         _animator.SetTrigger(AttackTriggerName);
 
-    private void Start() =>
+    private void Start()
+    {
         _triggerObserver.TriggerEnter += TriggerEnter;
+        _triggerObserver.TriggerExit += TriggerExit;
+    }
 
-    private void OnDestroy() =>
+    private void OnDestroy()
+    {
         _triggerObserver.TriggerEnter -= TriggerEnter;
+        _triggerObserver.TriggerExit -= TriggerExit;
+    }
 
     private void TriggerEnter(Collider obj)
     {
         if (obj.GetComponentInParent<EnemyUnit>() || obj.GetComponentInParent<EnemyBase>())
+        {
+            IsFighting = true;
             SetAttackTrigger();
-
-        if (obj.GetComponentInParent<EnemyUnit>())
-            InitializeTarget(obj);
+        }
+        //TODO: Damageable to two command sides.
+        if (obj.TryGetComponent(out IDamageable damageable))
+        {
+            IsFighting = true;
+            InitializeTarget(damageable);
+        }
     }
 
-    private void InitializeTarget(Collider hitCollider)
+    private void TriggerExit(Collider obj)
+    {
+        if (obj.GetComponentInParent<EnemyUnit>() || obj.GetComponentInParent<EnemyBase>())
+            IsFighting = false;
+
+        if (obj.TryGetComponent(out IDamageable _))
+            IsFighting = false;
+    }
+
+    private void InitializeTarget(IDamageable damageable)
     {
         if (_archerAnimator)
-            _archerAnimator.InitializeTarget(hitCollider);
+            _archerAnimator.InitializeTarget(damageable);
 
         if (_warriorAnimator)
-            _warriorAnimator.InitializeTarget(hitCollider);
+            _warriorAnimator.InitializeTarget(damageable);
     }
 }

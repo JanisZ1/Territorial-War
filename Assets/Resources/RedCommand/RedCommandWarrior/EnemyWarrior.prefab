@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 683247310279067945}
   - component: {fileID: 683247310279067944}
   - component: {fileID: 683247310279067959}
-  - component: {fileID: 6988396779779325858}
-  - component: {fileID: 7058233414746378770}
-  - component: {fileID: 748759279335069136}
+  - component: {fileID: 3574980773571527765}
+  - component: {fileID: 8925249089548902597}
   m_Layer: 0
   m_Name: Animation
   m_TagString: Untagged
@@ -108,7 +107,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6988396779779325858
+--- !u!114 &3574980773571527765
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPosition: {x: 0, y: 0, z: 0}
-  _animator: {fileID: 0}
+  _animator: {fileID: 683247310279067959}
   _unitHealth: 5
   _onUnitDied:
     m_PersistentCalls:
@@ -129,7 +128,7 @@ MonoBehaviour:
   _onTakeDamage:
     m_PersistentCalls:
       m_Calls: []
---- !u!135 &7058233414746378770
+--- !u!135 &8925249089548902597
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,24 +143,12 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &748759279335069136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 683247310279067957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18fdc0fba2ea42a46a8b1360c80b151f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6773574472367001583
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyUnitMover))]
+
 public class EnemyUnit : MonoBehaviour
 {
     public IDamageable DamageableObject;
@@ -46,12 +46,11 @@ public class EnemyUnit : MonoBehaviour
                 SetState(EnemyUnitState.InBattle);
                 _enemyHealth.FullPlayerHealthVariable(hit.collider);
                 SetAttackTrigger();
-                Debug.Log("Player unit is attacked");
             }
-            if (hit.collider.GetComponentInParent<PlayerBase>())
+            if (hit.collider.GetComponentInParent<GreenBase>())
             {
                 SetState(EnemyUnitState.InBattle);
-                FindObjectOfType<PlayerBase>().TakeDamage(1);
+                FindObjectOfType<GreenBase>().TakeDamage(1);
             }
             if (hit.collider.GetComponentInParent<EnemyUnit>())
             {

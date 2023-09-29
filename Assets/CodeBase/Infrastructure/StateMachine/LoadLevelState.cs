@@ -15,7 +15,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
         private const string GreenBaseTag = "GreenBase";
         private const string RedBaseTag = "RedBase";
 
-        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader,IGreenCommandSpawner greenCommandSpawner, IWarriorFactory warriorFactory, IArcherFactory archerFactory, IClosestEnemyCalculator closestEnemyCalculator)
+        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, IGreenCommandSpawner greenCommandSpawner, IWarriorFactory warriorFactory, IArcherFactory archerFactory, IClosestEnemyCalculator closestEnemyCalculator)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -30,6 +30,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
 
         private void OnLoaded()
         {
+            GameObject.FindObjectOfType<QueueChecker>().Construct(_greenCommandSpawner);
             InitializeGreenBase();
             InitializeRedBase();
         }

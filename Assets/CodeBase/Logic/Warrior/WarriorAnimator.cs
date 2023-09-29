@@ -10,7 +10,7 @@ namespace Assets.CodeBase.Logic.Warrior
         public void MakeDamageFromAnimation() =>
         _damageable.TakeDamage(_damage);
 
-        public void InitializeTarget(Collider other) =>
-            _damageable = other.GetComponent<IDamageable>();
+        public void InitializeTarget(IDamageable damageable) =>
+            _damageable = damageable;
     }
 }

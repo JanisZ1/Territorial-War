@@ -2,7 +2,8 @@
 
 public class GreenCommandUnitSpawner : IGreenCommandSpawner
 {
-    public List<IGreenCommandUnit> UnitsSpawned { get; } = new List<IGreenCommandUnit>();
+    //TODO: Make One interface or class to green and red commandUnits
+    public Queue<GreenCommandUnitMove> UnitsSpawnedQueue { get; } = new Queue<GreenCommandUnitMove>();
 
     private int _index;
 
@@ -10,6 +11,8 @@ public class GreenCommandUnitSpawner : IGreenCommandSpawner
     {
         playerUnit.Construct(this);
         playerUnit.Id = _index;
+        UnitsSpawnedQueue.Enqueue(playerUnit);
+
         _index++;
     }
 }
