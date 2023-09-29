@@ -8,16 +8,10 @@ public class QueueChecker : MonoBehaviour
     public void Construct(IGreenCommandSpawner greenCommandSpawner) =>
            _greenCommandSpawner = greenCommandSpawner;
 
-    private void Start()
-    {
-        GreenCommandUnitMove greenCommandUnitMove = _greenCommandSpawner.UnitsSpawnedQueue.Dequeue();
-        _greenCommandUnitMove = greenCommandUnitMove;
-    }
-
     private void Update()
     {
-        if (_greenCommandUnitMove)
-            if (Physics.Raycast(_greenCommandUnitMove.transform.position, _greenCommandUnitMove.transform.right, 1f))
-                _greenCommandUnitMove.Move();
+        //if (_greenCommandUnitMove)
+        //    if (Physics.Raycast(_greenCommandUnitMove.transform.position, _greenCommandUnitMove.transform.right, 1f))
+        //        _greenCommandUnitMove.Move();
     }
 }

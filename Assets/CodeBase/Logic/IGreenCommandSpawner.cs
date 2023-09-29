@@ -3,6 +3,6 @@ using System.Collections.Generic;
 
 public interface IGreenCommandSpawner : IService
 {
-    Queue<GreenCommandUnitMove> UnitsSpawnedQueue { get; }
+    List<GreenCommandUnitMove> AllUnitsClipped { get; }
     void Spawn(GreenCommandUnitMove playerUnit);
 }
