@@ -1,4 +1,3 @@
-using Assets.CodeBase.Infrastructure.Services.Factory;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +12,6 @@ public class QueueWarrior : MonoBehaviour
     private float _currentDelay;
     private bool _isFree = true;
     private bool _uUnitHasSpawned;
-    private IWarriorFactory _warriorFactory;
 
     public float Delay { get; private set; } = 3;
 
