@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class RedBaseQueueWarrior : MonoBehaviour
 {
-    [SerializeField] private GameObject _playerPrefab;
     [SerializeField] private Transform _spawnPosition;
     private List<MeleeAttack> _spawnedUnits = new List<MeleeAttack>();
     private List<float> _list = new List<float>();
@@ -59,9 +58,6 @@ public class RedBaseQueueWarrior : MonoBehaviour
 
     private void Update()
     {
-        if (!_playerPrefab || !_spawnPosition)
-            return;
-
         if (_isFree == false && GetComponent<CanvasRenderer>())
             _currentDelay += Time.deltaTime;
     }

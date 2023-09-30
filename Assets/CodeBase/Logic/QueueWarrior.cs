@@ -1,23 +1,29 @@
 using Assets.CodeBase.StaticData;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QueueWarrior : MonoBehaviour
 {
-    [SerializeField] private GameObject _playerPrefab;
     [SerializeField] private UiSpawnSlider _uiSpawnSlider;
-    [SerializeField] private List<MeleeAttack> _spawnedUnits = new List<MeleeAttack>();
     [SerializeField] private List<float> _list = new List<float>();
     [SerializeField] private GreenCommandUnitSpawner _greenCommandUnitSpawner;
+    [SerializeField] private Button _queueButton;
 
     private float _currentDelay;
     private bool _isFree = true;
-    private bool _uUnitHasSpawned;
+
     [SerializeField] private UnitType _unitType;
 
     public float Delay { get; private set; } = 3;
 
-    public void AddedUnit()
+    private void OnEnable() =>
+        _queueButton.onClick.AddListener(AddUnit);
+
+    private void OnDisable() =>
+        _queueButton.onClick.RemoveListener(AddUnit);
+
+    private void AddUnit()
     {
         if (_uiSpawnSlider != null)
         {
@@ -32,9 +38,8 @@ public class QueueWarrior : MonoBehaviour
     private void CreateUnit()
     {
         _list.RemoveAt(0);
-        //TODO: Static data for different warriors
-        GreenCommandUnitMove greenCommandUnitMove = _greenCommandUnitSpawner.Spawn(_unitType, _greenCommandUnitSpawner.transform.position, Quaternion.identity);
-        _spawnedUnits.Add(greenCommandUnitMove.GetComponent<MeleeAttack>());
+
+        _greenCommandUnitSpawner.Spawn(_unitType, _greenCommandUnitSpawner.transform.position, Quaternion.identity);
 
         _isFree = true;
         _currentDelay = 0;
@@ -56,15 +61,15 @@ public class QueueWarrior : MonoBehaviour
 
     private void Update()
     {
-        if (!_playerPrefab || !_uiSpawnSlider)
+        if (!_uiSpawnSlider)
             return;
 
-        if (_isFree == false && GetComponent<CanvasRenderer>())
+        if (_isFree == false)
         {
             _currentDelay += Time.deltaTime;
             _uiSpawnSlider.ChangeSliderValue(_currentDelay);
         }
-        else if (_isFree == true && GetComponent<CanvasRenderer>())
+        else if (_isFree == true)
         {
             _uiSpawnSlider.ChangeSliderValue(_currentDelay);
         }

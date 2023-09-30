@@ -388,19 +388,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 46312943}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 46312945}
-        m_TargetAssemblyTypeName: Turn, Assembly-CSharp
-        m_MethodName: AddedUnit
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &46312943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,12 +439,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e397c5226bd2df440829e840795116f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerPrefab: {fileID: 4133240495615844789, guid: 2421a15cef03ae847b8d8f9dc84fa11c, type: 3}
-  _spawnPosition: {fileID: 0}
   _uiSpawnSlider: {fileID: 31564815}
-  _spawnedUnits: []
   _list: []
   _greenCommandUnitSpawner: {fileID: 329071587}
+  _queueButton: {fileID: 46312942}
+  _unitType: 0
 --- !u!1 &179351540
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,6 +595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33099bb1320cdc24b99edef43c5cab07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UnitType: 0
 --- !u!1 &334781575
 GameObject:
   m_ObjectHideFlags: 0
@@ -1906,7 +1894,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1402370833}
   - component: {fileID: 1402370832}
-  - component: {fileID: 1402370831}
+  - component: {fileID: 1402370834}
   m_Layer: 0
   m_Name: EnemyController
   m_TagString: Untagged
@@ -1914,24 +1902,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1402370831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1402370830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e397c5226bd2df440829e840795116f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerPrefab: {fileID: 6773574472367001583, guid: 258bf0e7587b9054da78146412820ba3, type: 3}
-  _spawnPosition: {fileID: 179351541}
-  _uiSpawnSlider: {fileID: 31564815}
-  _spawnedUnits: []
-  _list: []
-  _greenCommandUnitSpawner: {fileID: 0}
 --- !u!114 &1402370832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1961,6 +1931,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1402370834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402370830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee9a761e7affb83479d4c3f3c86f3afb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerPrefab: {fileID: 6773574472367001583, guid: 258bf0e7587b9054da78146412820ba3, type: 3}
+  _spawnPosition: {fileID: 179351541}
+  _unitType: 0
 --- !u!1 &1417602116
 GameObject:
   m_ObjectHideFlags: 0
