@@ -1,6 +1,5 @@
 ﻿using Assets.CodeBase.Infrastructure.Services;
 using Assets.CodeBase.Infrastructure.Services.AssetProvider;
-using Assets.CodeBase.Infrastructure.Services.Calculations;
 using Assets.CodeBase.Infrastructure.Services.Factory;
 using Assets.CodeBase.Infrastructure.Services.StaticData;
 using Assets.CodeBase.Infrastructure.StateMachine;
@@ -36,9 +35,8 @@ namespace Assets.CodeBase.Infrastructure
         {
             _services.Register<IAssets>(new AssetProvider());
             _services.Register<IStaticDataService>(new StaticDataService());
-            _services.Register<IClosestEnemyCalculator>(new ClosestEnemyCalculator());
-            _services.Register<IGreenCommandUnitFactory>(new GreenCommandUnitFactory(_services.Single<IStaticDataService>(), _services.Single<IClosestEnemyCalculator>()));
-            _services.Register<IArcherFactory>(new ArcherFactory(_services.Single<IAssets>(), _services.Single<IClosestEnemyCalculator>()));
+            _services.Register<IGreenCommandUnitFactory>(new GreenCommandUnitFactory(_services.Single<IStaticDataService>()));
+            _services.Register<IArcherFactory>(new ArcherFactory(_services.Single<IAssets>()));
         }
 
         private void EnterLoadLevel() =>
