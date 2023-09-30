@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Assets.CodeBase.Infrastructure.Services.Factory
 {
-    public class GreenCommandUnitFactory : IGreenCommandUnitFactory
+    public class UnitFactory : IUnitFactory
     {
         private readonly IStaticDataService _staticData;
 
-        public GreenCommandUnitFactory(IStaticDataService staticData) =>
+        public UnitFactory(IStaticDataService staticData) =>
             _staticData = staticData;
 
         public GameObject CreateUnit(UnitType unitType, Vector3 at, Quaternion rotation)

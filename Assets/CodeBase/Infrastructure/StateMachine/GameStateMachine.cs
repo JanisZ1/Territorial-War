@@ -17,7 +17,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
             _states = new Dictionary<Type, IExitableState>()
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, allServices),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IStaticDataService>(), allServices.Single<IGreenCommandUnitFactory>())
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IStaticDataService>(), allServices.Single<IUnitFactory>())
             };
         }
 

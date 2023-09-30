@@ -595,7 +595,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33099bb1320cdc24b99edef43c5cab07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UnitType: 0
 --- !u!1 &334781575
 GameObject:
   m_ObjectHideFlags: 0
@@ -1919,7 +1918,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnPosition: {fileID: 179351541}
   _spawnDelay: 3
-  UnitType: 0
 --- !u!1 &1417602116
 GameObject:
   m_ObjectHideFlags: 0

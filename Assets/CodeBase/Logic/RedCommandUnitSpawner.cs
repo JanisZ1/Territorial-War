@@ -7,11 +7,11 @@ public class RedCommandUnitSpawner : MonoBehaviour
 {
     private RedCommandUnit _previousUnit;
     [SerializeField] private Transform _spawnPosition;
-    private IGreenCommandUnitFactory _greenCommandUnitFactory;
+    private IUnitFactory _greenCommandUnitFactory;
 
     [SerializeField] private float _spawnDelay;
 
-    public void Construct(IGreenCommandUnitFactory warriorFactory) =>
+    public void Construct(IUnitFactory warriorFactory) =>
         _greenCommandUnitFactory = warriorFactory;
 
     private void Start() =>

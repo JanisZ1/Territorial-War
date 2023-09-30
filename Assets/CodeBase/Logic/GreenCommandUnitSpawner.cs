@@ -5,9 +5,9 @@ using UnityEngine;
 public class GreenCommandUnitSpawner : MonoBehaviour
 {
     private GreenCommandUnit _previousUnit;
-    private IGreenCommandUnitFactory _greenCommandUnitFactory;
+    private IUnitFactory _greenCommandUnitFactory;
 
-    public void Construct(IGreenCommandUnitFactory warriorFactory) =>
+    public void Construct(IUnitFactory warriorFactory) =>
         _greenCommandUnitFactory = warriorFactory;
 
     public void Spawn(UnitType unitType, Vector3 position, Quaternion rotation)

@@ -35,8 +35,7 @@ namespace Assets.CodeBase.Infrastructure
         {
             _services.Register<IAssets>(new AssetProvider());
             _services.Register<IStaticDataService>(new StaticDataService());
-            _services.Register<IGreenCommandUnitFactory>(new GreenCommandUnitFactory(_services.Single<IStaticDataService>()));
-            _services.Register<IArcherFactory>(new ArcherFactory(_services.Single<IAssets>()));
+            _services.Register<IUnitFactory>(new UnitFactory(_services.Single<IStaticDataService>()));
         }
 
         private void EnterLoadLevel() =>

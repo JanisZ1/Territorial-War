@@ -9,11 +9,11 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
         private readonly GameStateMachine _gameStateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly IStaticDataService _staticDataService;
-        private readonly IGreenCommandUnitFactory _greenCommandUnitFactory;
+        private readonly IUnitFactory _greenCommandUnitFactory;
         private const string GreenBaseTag = "GreenBase";
         private const string RedBaseTag = "RedBase";
 
-        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, IStaticDataService staticDataService, IGreenCommandUnitFactory greenCommandUnitFactory)
+        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, IStaticDataService staticDataService, IUnitFactory greenCommandUnitFactory)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
