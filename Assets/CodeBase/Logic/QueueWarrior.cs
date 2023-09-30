@@ -5,24 +5,17 @@ using UnityEngine;
 public class QueueWarrior : MonoBehaviour
 {
     [SerializeField] private GameObject _playerPrefab;
-    [SerializeField] private Transform _spawnPosition;
     [SerializeField] private UiSpawnSlider _uiSpawnSlider;
     [SerializeField] private List<MeleeAttack> _spawnedUnits = new List<MeleeAttack>();
     [SerializeField] private List<float> _list = new List<float>();
+    [SerializeField] private GreenCommandUnitSpawner _greenCommandUnitSpawner;
 
     private float _currentDelay;
     private bool _isFree = true;
     private bool _uUnitHasSpawned;
     private IWarriorFactory _warriorFactory;
-    private IGreenCommandSpawner _greenCommandSpawner;
 
     public float Delay { get; private set; } = 3;
-
-    public void Construct(IWarriorFactory warriorFactory, IGreenCommandSpawner greenCommandSpawner)
-    {
-        _warriorFactory = warriorFactory;
-        _greenCommandSpawner = greenCommandSpawner;
-    }
 
     public void AddedUnit()
     {
@@ -38,17 +31,14 @@ public class QueueWarrior : MonoBehaviour
 
     private void CreateUnit()
     {
-        if (_spawnPosition != null)
-        {
-            _list.RemoveAt(0);
-            //TODO: Static data for different warriors
-            GameObject warrior = _warriorFactory.CreateWarrior(_playerPrefab, _spawnPosition.position, _spawnPosition.rotation);
-            _spawnedUnits.Add(warrior.GetComponent<MeleeAttack>());
-            _greenCommandSpawner.Spawn(warrior.GetComponentInChildren<GreenCommandUnitMove>());
-            _isFree = true;
-            _currentDelay = 0;
-            StartNext();
-        }
+        _list.RemoveAt(0);
+        //TODO: Static data for different warriors
+        GreenCommandUnitMove greenCommandUnitMove = _greenCommandUnitSpawner.Spawn(_playerPrefab, _greenCommandUnitSpawner.transform.position, Quaternion.identity);
+        _spawnedUnits.Add(greenCommandUnitMove.GetComponent<MeleeAttack>());
+
+        _isFree = true;
+        _currentDelay = 0;
+        StartNext();
     }
 
     private void StartNext()
@@ -66,7 +56,7 @@ public class QueueWarrior : MonoBehaviour
 
     private void Update()
     {
-        if (!_playerPrefab || !_spawnPosition || !_uiSpawnSlider)
+        if (!_playerPrefab || !_uiSpawnSlider)
             return;
 
         if (_isFree == false && GetComponent<CanvasRenderer>())
