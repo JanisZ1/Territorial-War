@@ -6,7 +6,9 @@ namespace Assets.CodeBase.StaticData
     [Serializable]
     public class SpawnerStaticData
     {
-        public UnitType UnitType;
         public Vector3 Position;
+
+        public SpawnerStaticData(Vector3 position) =>
+            Position = position;
     }
 }

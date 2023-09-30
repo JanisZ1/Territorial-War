@@ -1,4 +1,5 @@
 ﻿using Assets.CodeBase.Infrastructure.Services.Factory;
+using Assets.CodeBase.StaticData;
 using UnityEngine;
 
 public class GreenCommandUnitSpawner : MonoBehaviour
@@ -6,6 +7,8 @@ public class GreenCommandUnitSpawner : MonoBehaviour
     private GreenCommandUnitMove _previousUnit;
     private IWarriorFactory _warriorFactory;
     private IArcherFactory _archerFactory;
+
+    public UnitType UnitType;
 
     public void Construct(IWarriorFactory warriorFactory, IArcherFactory archerFactory)
     {
