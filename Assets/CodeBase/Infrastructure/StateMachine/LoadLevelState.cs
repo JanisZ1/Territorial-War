@@ -41,7 +41,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
         private void InitializeRedBase()
         {
             GameObject gameObject = GameObject.FindGameObjectWithTag(RedBaseTag);
-            gameObject.GetComponentInChildren<RedBaseQueueWarrior>().Construct(_greenCommandUnitFactory);
+            gameObject.GetComponentInChildren<RedCommandUnitSpawner>().Construct(_greenCommandUnitFactory);
         }
 
         public void Exit()

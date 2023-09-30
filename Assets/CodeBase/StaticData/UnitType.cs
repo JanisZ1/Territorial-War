@@ -2,7 +2,9 @@
 {
     public enum UnitType
     {
-        Melee = 0,
-        Archer = 1
+        GreenCommandMelee = 0,
+        GreenCommandArcher = 1,
+        RedCommandMelee = 2,
+        RedCommandArcher = 3,
     }
 }

@@ -1,22 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBullet : MonoBehaviour
+public class GreenCommandBullet : MonoBehaviour
 {
     [SerializeField] private Transform p0;
     [SerializeField] private Transform p1;
     [SerializeField] private Transform p2;
     [Range(0, 1)]
     [SerializeField] private float t;
-    private EnemyUnit _enemyUnit;
+    private RedCommandUnitMove _redCommandUnit;
     private List<Transform> _bezierPointsToDelete = new List<Transform>();
-    private EnemyHealth _enemyHealth;
+    private RedCommandUnitHealth _redCommandUnitHealth;
 
     private void Awake()
     {
         transform.DetachChildren();
-        _enemyHealth = FindObjectOfType<EnemyHealth>();
-        _enemyUnit = FindObjectOfType<EnemyUnit>();
+        _redCommandUnitHealth = FindObjectOfType<RedCommandUnitHealth>();
+        _redCommandUnit = FindObjectOfType<RedCommandUnitMove>();
         _bezierPointsToDelete.Add(transform);
         _bezierPointsToDelete.Add(p0);
         _bezierPointsToDelete.Add(p1);
@@ -25,16 +25,16 @@ public class PlayerBullet : MonoBehaviour
         _bezierPointsToDelete.Add(p0);
         p1 = Instantiate(p1, transform.position + new Vector3(0.75f, 1f, 0), Quaternion.identity);
         _bezierPointsToDelete.Add(p1);
-        p2 = (Instantiate(p2, _enemyUnit.transform.position, Quaternion.identity));
+        p2 = (Instantiate(p2, _redCommandUnit.transform.position, Quaternion.identity));
         _bezierPointsToDelete.Add(p2);
-        p2.position = _enemyUnit.transform.position;
+        p2.position = _redCommandUnit.transform.position;
     }
 
     private void Update()
     {
-        if (_enemyUnit)
+        if (_redCommandUnit)
         {
-            p2.position = _enemyUnit.transform.position;
+            p2.position = _redCommandUnit.transform.position;
             t += Time.deltaTime;
         }
         else
@@ -42,7 +42,6 @@ public class PlayerBullet : MonoBehaviour
             //надо уничтожить точки безье если врага убили а пуля ещё летит
         }
         transform.position = GetPoint(p0.position, p1.position, p2.position, t);
-        
     }
 
     public Vector3 GetPoint(Vector3 p0, Vector3 p1, Vector3 p2, float t)
@@ -55,10 +54,10 @@ public class PlayerBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<EnemyHealth>())
+        if (other.gameObject.GetComponent<RedCommandUnitHealth>())
         {
             DestroyBezierPoints();
-            _enemyHealth.TakeDamage(1);
+            _redCommandUnitHealth.TakeDamage(1);
         }
     }
 

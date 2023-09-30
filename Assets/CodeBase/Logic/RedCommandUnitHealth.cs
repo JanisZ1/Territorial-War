@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EnemyHealth : EnemyUnit, IDamageable
+public class RedCommandUnitHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] private uint _unitHealth = 5;
     public UnityEvent _onUnitDied;
     public UnityEvent _onTakeDamage;
-    private PlayerHealth _playerHealth;
+    private GreenCommandUnitHealth _greenCommandUnitHealth;
 
     public void TakeDamage(int damage)
     {
@@ -19,7 +19,7 @@ public class EnemyHealth : EnemyUnit, IDamageable
     }
 
     public void MakeDamage(int damage) =>
-        _playerHealth.TakeDamage(damage);
+        _greenCommandUnitHealth.TakeDamage(damage);
 
     private void Die()
     {
@@ -30,6 +30,6 @@ public class EnemyHealth : EnemyUnit, IDamageable
         }
     }
 
-    public void FullPlayerHealthVariable(Collider other) =>
-    _playerHealth = other.GetComponentInParent<PlayerHealth>();
+    public void FullGreenCommandHealthVariable(Collider other) =>
+    _greenCommandUnitHealth = other.GetComponentInParent<GreenCommandUnitHealth>();
 }

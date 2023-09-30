@@ -25,7 +25,7 @@ public class MeleeAttack : MonoBehaviour
 
     private void TriggerEnter(Collider obj)
     {
-        if (obj.GetComponentInParent<EnemyUnit>() || obj.GetComponentInParent<EnemyBase>())
+        if (obj.GetComponentInParent<RedCommandUnitMove>() || obj.GetComponentInParent<EnemyBase>())
         {
             IsFighting = true;
             SetAttackTrigger();
@@ -40,7 +40,7 @@ public class MeleeAttack : MonoBehaviour
 
     private void TriggerExit(Collider obj)
     {
-        if (obj.GetComponentInParent<EnemyUnit>() || obj.GetComponentInParent<EnemyBase>())
+        if (obj.GetComponentInParent<RedCommandUnitMove>() || obj.GetComponentInParent<EnemyBase>())
             IsFighting = false;
 
         if (obj.TryGetComponent(out IDamageable _))

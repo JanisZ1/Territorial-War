@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-public class GreenCommandUnitMove : GreenCommandUnit
+public class RedCommandUnitMove : RedCommandUnit
 {
+    private Vector3 _enemyVector;
+
     private const float MinimumDistance = 1.2f;
     private const float XVector = 1f;
 
@@ -19,10 +21,12 @@ public class GreenCommandUnitMove : GreenCommandUnit
 
     private void Move()
     {
-        Vector3 movingVector = new Vector3(XVector * Time.deltaTime, 0f, 0f);
-        transform.Translate(movingVector);
+        _enemyVector = new Vector3(-XVector * Time.deltaTime, 0f, 0f);
+        transform.Translate(_enemyVector);
     }
 
     private float DistanceToPreviousUnit() =>
         Vector3.Distance(transform.position, PreviousUnit.transform.position);
+    public void StopMove() =>
+        _enemyVector = Vector3.zero;
 }

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class GreenCommandUnitHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] private int _unitHealth = 5;
 

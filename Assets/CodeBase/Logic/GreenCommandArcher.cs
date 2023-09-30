@@ -3,9 +3,9 @@ using UnityEngine;
 public class GreenCommandArcher : MonoBehaviour
 {
     [SerializeField] private Transform _spawn;
-    [SerializeField] private PlayerBullet _bullet;
+    [SerializeField] private GreenCommandBullet _bullet;
 
-    private EnemyUnit _enemyUnit;
+    private RedCommandUnitMove _enemyUnit;
     private float _shootingTime;
 
     private void Shoot() =>

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2af67b5f6aa621f48a14116c0b854368, type: 3}
-  m_Name: Archer
+  m_Name: RedCommandArcher
   m_EditorClassIdentifier: 
-  UnitType: 1
-  Prefab: {fileID: 1956603637825456702, guid: e3c8aa3c8b1b82449ac5f7c37460506c, type: 3}
+  UnitType: 3
+  Prefab: {fileID: 1050452520100697641, guid: 036318293bd016748a95d68ba3134ac6, type: 3}

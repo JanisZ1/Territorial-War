@@ -119,8 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e14b8ab8e0e5e141bda490cc9dbe42f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPosition: {x: 0, y: 0, z: 0}
-  _animator: {fileID: 683247310279067959}
   _unitHealth: 5
   _onUnitDied:
     m_PersistentCalls:
@@ -160,9 +158,8 @@ GameObject:
   - component: {fileID: 481875501027983157}
   - component: {fileID: 1469650408251432978}
   - component: {fileID: -3730608365782350052}
-  - component: {fileID: 6602324029495497733}
   m_Layer: 0
-  m_Name: EnemyWarrior
+  m_Name: RedCommandWarrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,17 +220,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6602324029495497733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6773574472367001583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 399be012709078a47ada63b18613dde3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyPosition: {x: 0, y: 0, z: 0}
-  _animator: {fileID: 683247310279067959}
