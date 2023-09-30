@@ -30,7 +30,6 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
 
         private void OnLoaded()
         {
-            GameObject.FindObjectOfType<QueueChecker>().Construct(_greenCommandSpawner);
             InitializeGreenBase();
             InitializeRedBase();
         }

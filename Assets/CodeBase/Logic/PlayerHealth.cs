@@ -1,17 +1,17 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private uint _unitHealth = 5;
-    [SerializeField] private GreenCommandUnitMove _greenCommandUnitMove;
-    public UnityEvent _onUnitDied;
-    public UnityEvent _onTakeDamage;
+    [SerializeField] private int _unitHealth = 5;
+
+    public event Action OnUnitDied;
+    public event Action OnTakeDamage;
 
     public void TakeDamage(int damage)
     {
-        _unitHealth -= (uint)damage;
-        _onTakeDamage.Invoke();
+        _unitHealth -= damage;
+        OnTakeDamage.Invoke();
 
         if (_unitHealth <= 0)
             Die();
@@ -20,6 +20,6 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         Destroy(gameObject);
-        _onUnitDied.Invoke();
+        OnUnitDied.Invoke();
     }
 }

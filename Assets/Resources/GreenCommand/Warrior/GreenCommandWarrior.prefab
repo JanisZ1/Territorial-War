@@ -162,9 +162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3357e744b1f0f81438054b962fa9027c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerUnitVector: {x: 0, y: 0, z: 0}
-  _animator: {fileID: 2989681453371314248}
-  _triggerObserver: {fileID: 7629648338506649704}
   _meleeAttack: {fileID: 7545123504832298684}
 --- !u!114 &7545123504832298684
 MonoBehaviour:
@@ -178,10 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cea231e8907a4504a90990d52c81c0be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 2989681453371314248}
-  _archerAnimator: {fileID: 0}
-  _warriorAnimator: {fileID: 8916819774281500739}
-  _greenCommandUnitMove: {fileID: 7406965401828270793}
+  _greenCommandAnimator: {fileID: 8916819774281500739}
   _triggerObserver: {fileID: 7629648338506649704}
 --- !u!1 &9081095946275407576
 GameObject:
@@ -197,7 +191,7 @@ GameObject:
   - component: {fileID: 2989681453371314248}
   - component: {fileID: 8916819774281500739}
   m_Layer: 0
-  m_Name: PlayerWarrior
+  m_Name: WarriorAnimator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -301,3 +295,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68bb732bb55190489c032577d5f72a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 2989681453371314248}

@@ -1,16 +1,14 @@
-﻿using UnityEngine;
-
-namespace Assets.CodeBase.Logic.Archer
+﻿namespace Assets.CodeBase.Logic.Archer
 {
-    public class ArcherAnimator : MonoBehaviour
+    public class ArcherAnimator : GreenCommandAnimator
     {
         private IDamageable _damageable;
         private readonly int _damage = 1;
 
-        public void MakeDamageFromAnimation() =>
+        public override void MakeDamageFromAnimation() => 
             _damageable.TakeDamage(_damage);
 
-        public void InitializeTarget(IDamageable damageable) =>
+        public override void InitializeTarget(IDamageable damageable) =>
             _damageable = damageable;
     }
 }

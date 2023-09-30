@@ -159,8 +159,8 @@ GameObject:
   m_Component:
   - component: {fileID: 481875501027983157}
   - component: {fileID: 1469650408251432978}
-  - component: {fileID: -8724109761360454066}
   - component: {fileID: -3730608365782350052}
+  - component: {fileID: 6602324029495497733}
   m_Layer: 0
   m_Name: EnemyWarrior
   m_TagString: Untagged
@@ -196,20 +196,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18fdc0fba2ea42a46a8b1360c80b151f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-8724109761360454066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6773574472367001583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb8ad72c4f8d18647b8dfb565f715568, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyPosition: {x: 0, y: 0, z: 0}
-  _animator: {fileID: 683247310279067959}
 --- !u!54 &-3730608365782350052
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -237,3 +223,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6602324029495497733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6773574472367001583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 399be012709078a47ada63b18613dde3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyPosition: {x: 0, y: 0, z: 0}
+  _animator: {fileID: 683247310279067959}
