@@ -4,29 +4,20 @@ using UnityEngine;
 
 public class GreenCommandUnitSpawner : MonoBehaviour
 {
-    private GreenCommandMeleeUnitMove _previousUnit;
-    private IWarriorFactory _warriorFactory;
-    private IArcherFactory _archerFactory;
+    private Unit _previousUnit;
+    private IGreenCommandUnitFactory _greenCommandUnitFactory;
 
     public UnitType UnitType;
 
-    public void Construct(IWarriorFactory warriorFactory, IArcherFactory archerFactory)
+    public void Construct(IGreenCommandUnitFactory warriorFactory) =>
+        _greenCommandUnitFactory = warriorFactory;
+
+    public void Spawn(UnitType unitType, Vector3 position, Quaternion rotation)
     {
-        _warriorFactory = warriorFactory;
-        _archerFactory = archerFactory;
+        GameObject gameObject = _greenCommandUnitFactory.CreateUnit(unitType, position, rotation);
+        Unit unit = gameObject.GetComponent<Unit>();
+
+        unit.PreviousUnit = _previousUnit;
+        _previousUnit = unit;
     }
-
-    public GreenCommandMeleeUnitMove Spawn(UnitType unitType, Vector3 position, Quaternion rotation)
-    {
-        GameObject gameObject = _warriorFactory.CreateWarrior(unitType, position, rotation);
-        GreenCommandMeleeUnitMove greenCommandUnitMove = gameObject.GetComponent<GreenCommandMeleeUnitMove>();
-
-        greenCommandUnitMove.PreviousUnit = _previousUnit;
-
-        _previousUnit = greenCommandUnitMove;
-        return greenCommandUnitMove;
-    }
-
-    public void SpawnArcher(GameObject playerPrefab, Vector3 position, Quaternion rotation) =>
-        _archerFactory.CreateArcher(playerPrefab, position, rotation);
 }

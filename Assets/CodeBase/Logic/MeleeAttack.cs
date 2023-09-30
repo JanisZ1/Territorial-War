@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(GreenCommandMeleeUnitMove))]
+[RequireComponent(typeof(GreenCommandUnitMove))]
 public class MeleeAttack : MonoBehaviour
 {
     [SerializeField] private GreenCommandAnimator _greenCommandAnimator;

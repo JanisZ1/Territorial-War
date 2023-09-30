@@ -1,5 +1,4 @@
-﻿using Assets.CodeBase.Infrastructure.Services.Calculations;
-using Assets.CodeBase.Infrastructure.Services.Factory;
+﻿using Assets.CodeBase.Infrastructure.Services.Factory;
 using Assets.CodeBase.Infrastructure.Services.StaticData;
 using UnityEngine;
 
@@ -10,20 +9,16 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
         private readonly GameStateMachine _gameStateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly IStaticDataService _staticDataService;
-        private readonly IWarriorFactory _warriorFactory;
-        private readonly IClosestEnemyCalculator _closestEnemyCalculator;
-        private IArcherFactory _archerFactory;
+        private readonly IGreenCommandUnitFactory _greenCommandUnitFactory;
         private const string GreenBaseTag = "GreenBase";
         private const string RedBaseTag = "RedBase";
 
-        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, IStaticDataService staticDataService, IWarriorFactory warriorFactory, IArcherFactory archerFactory, IClosestEnemyCalculator closestEnemyCalculator)
+        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, IStaticDataService staticDataService, IGreenCommandUnitFactory greenCommandUnitFactory)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
             _staticDataService = staticDataService;
-            _warriorFactory = warriorFactory;
-            _archerFactory = archerFactory;
-            _closestEnemyCalculator = closestEnemyCalculator;
+            _greenCommandUnitFactory = greenCommandUnitFactory;
         }
 
         public void Enter(string scene) =>
@@ -40,7 +35,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
         private void InitializeGreenBase()
         {
             GameObject gameObject = GameObject.FindGameObjectWithTag(GreenBaseTag);
-            gameObject.GetComponentInChildren<GreenCommandUnitSpawner>().Construct(_warriorFactory, _archerFactory);
+            gameObject.GetComponentInChildren<GreenCommandUnitSpawner>().Construct(_greenCommandUnitFactory);
         }
 
         private void InitializeRedBase()

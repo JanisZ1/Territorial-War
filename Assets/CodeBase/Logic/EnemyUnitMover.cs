@@ -10,6 +10,6 @@ public class EnemyUnitMover : MonoBehaviour
         transform.Translate(_enemyVector);
     }
 
-    public void StopMove() => 
+    public void StopMove() =>
         _enemyVector = Vector3.zero;
 }

@@ -1,13 +1,9 @@
 ﻿using UnityEngine;
 
-public class GreenCommandMeleeUnitMove : MonoBehaviour
+public class GreenCommandUnitMove : Unit
 {
-    [SerializeField] private MeleeAttack _meleeAttack;
-
     private const float MinimumDistance = 1.2f;
     private const float XVector = 1f;
-
-    public GreenCommandMeleeUnitMove PreviousUnit { get; set; }
 
     private void Update()
     {
@@ -17,7 +13,7 @@ public class GreenCommandMeleeUnitMove : MonoBehaviour
             return;
         }
 
-        if (DistanceToPreviousUnit() > MinimumDistance && !PreviousUnitFighting())
+        if (DistanceToPreviousUnit() > MinimumDistance)
             Move();
     }
 
@@ -26,9 +22,6 @@ public class GreenCommandMeleeUnitMove : MonoBehaviour
         Vector3 movingVector = new Vector3(XVector * Time.deltaTime, 0f, 0f);
         transform.Translate(movingVector);
     }
-
-    private bool PreviousUnitFighting() =>
-        PreviousUnit._meleeAttack.IsFighting;
 
     private float DistanceToPreviousUnit() =>
         Vector3.Distance(transform.position, PreviousUnit.transform.position);

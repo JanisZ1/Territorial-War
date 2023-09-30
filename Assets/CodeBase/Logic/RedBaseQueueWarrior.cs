@@ -12,12 +12,12 @@ public class RedBaseQueueWarrior : MonoBehaviour
     private float _currentDelay;
     private bool _isFree = true;
     private bool _uUnitHasSpawned;
-    private IWarriorFactory _warriorFactory;
+    private IGreenCommandUnitFactory _warriorFactory;
     [SerializeField] private UnitType _unitType;
 
     public float Delay { get; private set; } = 3;
 
-    public void Construct(IWarriorFactory warriorFactory) =>
+    public void Construct(IGreenCommandUnitFactory warriorFactory) =>
         _warriorFactory = warriorFactory;
 
     public void AddedUnit()
@@ -35,7 +35,7 @@ public class RedBaseQueueWarrior : MonoBehaviour
         {
             _list.RemoveAt(0);
             //TODO: Static data for different warriors
-            GameObject warrior = _warriorFactory.CreateWarrior(_unitType, _spawnPosition.position, _spawnPosition.rotation);
+            GameObject warrior = _warriorFactory.CreateUnit(_unitType, _spawnPosition.position, _spawnPosition.rotation);
             _spawnedUnits.Add(warrior.GetComponent<MeleeAttack>());
             _isFree = true;
             _currentDelay = 0;

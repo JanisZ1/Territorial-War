@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 1956603637825456699}
   - component: {fileID: 4050240299749364378}
   - component: {fileID: 2475969227826920140}
-  - component: {fileID: 7026876554073345324}
+  - component: {fileID: 8340692600081987475}
   m_Layer: 0
   m_Name: GreenCommandArcher
   m_TagString: Untagged
@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitHealth: 5
---- !u!114 &7026876554073345324
+--- !u!114 &8340692600081987475
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -273,7 +273,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1956603637825456702}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18fdc0fba2ea42a46a8b1360c80b151f, type: 3}
+  m_Script: {fileID: 11500000, guid: 05c7c4b4317a6f5449aeee60fa95b701, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3896927226302761260

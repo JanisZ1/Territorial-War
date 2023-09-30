@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 2155121237626727843}
   - component: {fileID: 3919259657673538861}
   - component: {fileID: 7545123504832298684}
-  - component: {fileID: 853070342242501010}
+  - component: {fileID: 1205295706166812858}
   m_Layer: 0
   m_Name: GreenCommandWarrior
   m_TagString: Untagged
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _greenCommandAnimator: {fileID: 8916819774281500739}
   _triggerObserver: {fileID: 7629648338506649704}
---- !u!114 &853070342242501010
+--- !u!114 &1205295706166812858
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,10 +166,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4133240495615844789}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e06f65f585dd1b743b89e462767498d8, type: 3}
+  m_Script: {fileID: 11500000, guid: 05c7c4b4317a6f5449aeee60fa95b701, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _meleeAttack: {fileID: 7545123504832298684}
 --- !u!1 &9081095946275407576
 GameObject:
   m_ObjectHideFlags: 0
