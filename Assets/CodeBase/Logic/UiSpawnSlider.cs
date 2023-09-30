@@ -4,10 +4,10 @@ using UnityEngine.UI;
 public class UiSpawnSlider : MonoBehaviour
 {
     [SerializeField] private Slider _slider;
-    private QueueWarrior _queueWarrior;
+    private QueueUnit _queueWarrior;
 
     private void Start() =>
-        _queueWarrior = FindObjectOfType<QueueWarrior>();
+        _queueWarrior = FindObjectOfType<QueueUnit>();
 
     private void Update()
     {

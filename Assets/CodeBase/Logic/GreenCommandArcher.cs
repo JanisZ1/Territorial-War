@@ -1,7 +1,7 @@
 using Assets.CodeBase.Infrastructure.Services.Calculations;
 using UnityEngine;
 
-public class PlayerArcher : MeleeAttack
+public class GreenCommandArcher : MonoBehaviour
 {
     [SerializeField] private Transform _spawn;
     [SerializeField] private PlayerBullet _bullet;
@@ -18,7 +18,8 @@ public class PlayerArcher : MeleeAttack
 
     private void Update()
     {
-        _enemyUnit = _closestEnemyCalculator.ClosestEnemy(to: transform);
+        if (_closestEnemyCalculator != null)
+            _enemyUnit = _closestEnemyCalculator.ClosestEnemy(to: transform);
 
         if (_enemyUnit)
         {

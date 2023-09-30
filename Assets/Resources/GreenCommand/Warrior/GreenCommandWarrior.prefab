@@ -77,8 +77,8 @@ GameObject:
   - component: {fileID: 4133240495615844426}
   - component: {fileID: 2155121237626727843}
   - component: {fileID: 3919259657673538861}
-  - component: {fileID: 7406965401828270793}
   - component: {fileID: 7545123504832298684}
+  - component: {fileID: 853070342242501010}
   m_Layer: 0
   m_Name: GreenCommandWarrior
   m_TagString: Untagged
@@ -143,26 +143,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitHealth: 5
-  _greenCommandUnitMove: {fileID: 7406965401828270793}
-  _onUnitDied:
-    m_PersistentCalls:
-      m_Calls: []
-  _onTakeDamage:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &7406965401828270793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4133240495615844789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3357e744b1f0f81438054b962fa9027c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _meleeAttack: {fileID: 7545123504832298684}
 --- !u!114 &7545123504832298684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,6 +157,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _greenCommandAnimator: {fileID: 8916819774281500739}
   _triggerObserver: {fileID: 7629648338506649704}
+--- !u!114 &853070342242501010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4133240495615844789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e06f65f585dd1b743b89e462767498d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _meleeAttack: {fileID: 7545123504832298684}
 --- !u!1 &9081095946275407576
 GameObject:
   m_ObjectHideFlags: 0

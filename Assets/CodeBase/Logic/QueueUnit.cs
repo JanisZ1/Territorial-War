@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QueueWarrior : MonoBehaviour
+public class QueueUnit : MonoBehaviour
 {
     [SerializeField] private UiSpawnSlider _uiSpawnSlider;
     [SerializeField] private List<float> _list = new List<float>();
@@ -25,13 +25,10 @@ public class QueueWarrior : MonoBehaviour
 
     private void AddUnit()
     {
-        if (_uiSpawnSlider != null)
+        _list.Add(Delay);
+        if (_isFree)
         {
-            _list.Add(Delay);
-            if (_isFree)
-            {
-                StartNext();
-            }
+            StartNext();
         }
     }
 
@@ -61,9 +58,6 @@ public class QueueWarrior : MonoBehaviour
 
     private void Update()
     {
-        if (!_uiSpawnSlider)
-            return;
-
         if (_isFree == false)
         {
             _currentDelay += Time.deltaTime;

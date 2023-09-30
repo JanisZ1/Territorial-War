@@ -10,7 +10,7 @@ namespace Assets.CodeBase.Infrastructure.Services.StaticData
         private Dictionary<string, LevelStaticData> _levels;
         private Dictionary<UnitType, UnitStaticData> _units;
         private const string LevelsStaticDataPath = "StaticData/Levels";
-        private const string UnitsStaticDataPath = "StaticData/UnitsData";
+        private const string UnitsStaticDataPath = "StaticData/Units";
 
         public void Load()
         {

@@ -20,7 +20,7 @@ namespace Assets.CodeBase.Infrastructure.Services.Factory
             GameObject gameObject = Object.Instantiate(prefab, at, rotation);
 
             EnemyHealth enemyHealth = gameObject.GetComponentInChildren<EnemyHealth>();
-            PlayerArcher playerArcher = gameObject.GetComponentInParent<PlayerArcher>();
+            GreenCommandArcher playerArcher = gameObject.GetComponentInParent<GreenCommandArcher>();
 
             if (playerArcher)
                 playerArcher.Construct(_closestEnemyCalculator);

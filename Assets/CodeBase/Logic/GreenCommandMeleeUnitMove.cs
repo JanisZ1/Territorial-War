@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-public class GreenCommandUnitMove : MonoBehaviour
+public class GreenCommandMeleeUnitMove : MonoBehaviour
 {
     [SerializeField] private MeleeAttack _meleeAttack;
 
     private const float MinimumDistance = 1.2f;
     private const float XVector = 1f;
 
-    public GreenCommandUnitMove PreviousUnit { get; set; }
+    public GreenCommandMeleeUnitMove PreviousUnit { get; set; }
 
     private void Update()
     {

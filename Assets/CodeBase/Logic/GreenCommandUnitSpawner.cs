@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GreenCommandUnitSpawner : MonoBehaviour
 {
-    private GreenCommandUnitMove _previousUnit;
+    private GreenCommandMeleeUnitMove _previousUnit;
     private IWarriorFactory _warriorFactory;
     private IArcherFactory _archerFactory;
 
@@ -16,10 +16,10 @@ public class GreenCommandUnitSpawner : MonoBehaviour
         _archerFactory = archerFactory;
     }
 
-    public GreenCommandUnitMove Spawn(UnitType unitType, Vector3 position, Quaternion rotation)
+    public GreenCommandMeleeUnitMove Spawn(UnitType unitType, Vector3 position, Quaternion rotation)
     {
         GameObject gameObject = _warriorFactory.CreateWarrior(unitType, position, rotation);
-        GreenCommandUnitMove greenCommandUnitMove = gameObject.GetComponent<GreenCommandUnitMove>();
+        GreenCommandMeleeUnitMove greenCommandUnitMove = gameObject.GetComponent<GreenCommandMeleeUnitMove>();
 
         greenCommandUnitMove.PreviousUnit = _previousUnit;
 
