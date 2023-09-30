@@ -16,9 +16,9 @@ public class GreenCommandUnitSpawner : MonoBehaviour
         _archerFactory = archerFactory;
     }
 
-    public GreenCommandUnitMove Spawn(GameObject _playerPrefab, Vector3 position, Quaternion rotation)
+    public GreenCommandUnitMove Spawn(UnitType unitType, Vector3 position, Quaternion rotation)
     {
-        GameObject gameObject = _warriorFactory.CreateWarrior(_playerPrefab, position, rotation);
+        GameObject gameObject = _warriorFactory.CreateWarrior(unitType, position, rotation);
         GreenCommandUnitMove greenCommandUnitMove = gameObject.GetComponent<GreenCommandUnitMove>();
 
         greenCommandUnitMove.PreviousUnit = _previousUnit;

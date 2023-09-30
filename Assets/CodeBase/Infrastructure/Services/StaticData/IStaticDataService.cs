@@ -6,5 +6,6 @@ namespace Assets.CodeBase.Infrastructure.Services.StaticData
     {
         void Load();
         LevelStaticData ForLevel(string level);
+        UnitStaticData ForUnit(UnitType unitType);
     }
 }

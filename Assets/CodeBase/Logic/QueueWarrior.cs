@@ -1,3 +1,4 @@
+using Assets.CodeBase.StaticData;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class QueueWarrior : MonoBehaviour
     private float _currentDelay;
     private bool _isFree = true;
     private bool _uUnitHasSpawned;
+    [SerializeField] private UnitType _unitType;
 
     public float Delay { get; private set; } = 3;
 
@@ -31,7 +33,7 @@ public class QueueWarrior : MonoBehaviour
     {
         _list.RemoveAt(0);
         //TODO: Static data for different warriors
-        GreenCommandUnitMove greenCommandUnitMove = _greenCommandUnitSpawner.Spawn(_playerPrefab, _greenCommandUnitSpawner.transform.position, Quaternion.identity);
+        GreenCommandUnitMove greenCommandUnitMove = _greenCommandUnitSpawner.Spawn(_unitType, _greenCommandUnitSpawner.transform.position, Quaternion.identity);
         _spawnedUnits.Add(greenCommandUnitMove.GetComponent<MeleeAttack>());
 
         _isFree = true;

@@ -1,4 +1,5 @@
 ﻿using Assets.CodeBase.Infrastructure.Services.Factory;
+using Assets.CodeBase.StaticData;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ public class RedBaseQueueWarrior : MonoBehaviour
     private bool _isFree = true;
     private bool _uUnitHasSpawned;
     private IWarriorFactory _warriorFactory;
+    [SerializeField] private UnitType _unitType;
 
     public float Delay { get; private set; } = 3;
 
@@ -34,7 +36,7 @@ public class RedBaseQueueWarrior : MonoBehaviour
         {
             _list.RemoveAt(0);
             //TODO: Static data for different warriors
-            GameObject warrior = _warriorFactory.CreateWarrior(_playerPrefab, _spawnPosition.position, _spawnPosition.rotation);
+            GameObject warrior = _warriorFactory.CreateWarrior(_unitType, _spawnPosition.position, _spawnPosition.rotation);
             _spawnedUnits.Add(warrior.GetComponent<MeleeAttack>());
             _isFree = true;
             _currentDelay = 0;
