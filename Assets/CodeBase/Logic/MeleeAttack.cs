@@ -1,3 +1,5 @@
+using Assets.CodeBase.Logic.GreenCommand;
+using Assets.CodeBase.Logic.RedCommand;
 using UnityEngine;
 
 [RequireComponent(typeof(GreenCommandUnitMove))]
@@ -25,7 +27,7 @@ public class MeleeAttack : MonoBehaviour
 
     private void TriggerEnter(Collider obj)
     {
-        if (obj.GetComponentInParent<RedCommandUnitMove>() || obj.GetComponentInParent<EnemyBase>())
+        if (obj.GetComponentInParent<RedCommandUnitMove>() || obj.GetComponentInParent<RedCommandBase>())
         {
             IsFighting = true;
             SetAttackTrigger();
@@ -40,7 +42,7 @@ public class MeleeAttack : MonoBehaviour
 
     private void TriggerExit(Collider obj)
     {
-        if (obj.GetComponentInParent<RedCommandUnitMove>() || obj.GetComponentInParent<EnemyBase>())
+        if (obj.GetComponentInParent<RedCommandUnitMove>() || obj.GetComponentInParent<RedCommandBase>())
             IsFighting = false;
 
         if (obj.TryGetComponent(out IDamageable _))

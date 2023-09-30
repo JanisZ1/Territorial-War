@@ -1,5 +1,6 @@
 ﻿using Assets.CodeBase.Infrastructure.Services.Factory;
 using Assets.CodeBase.Infrastructure.Services.StaticData;
+using Assets.CodeBase.Logic.Spawners;
 using UnityEngine;
 
 namespace Assets.CodeBase.Infrastructure.StateMachine

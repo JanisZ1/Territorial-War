@@ -1,4 +1,4 @@
-﻿namespace Assets.CodeBase.Logic.Warrior
+﻿namespace Assets.CodeBase.Logic.GreenCommand
 {
     public class WarriorAnimator : GreenCommandAnimator
     {

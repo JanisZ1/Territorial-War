@@ -1,11 +1,11 @@
-﻿namespace Assets.CodeBase.Logic.Archer
+﻿namespace Assets.CodeBase.Logic.GreenCommand
 {
     public class ArcherAnimator : GreenCommandAnimator
     {
         private IDamageable _damageable;
         private readonly int _damage = 1;
 
-        public override void MakeDamageFromAnimation() => 
+        public override void MakeDamageFromAnimation() =>
             _damageable.TakeDamage(_damage);
 
         public override void InitializeTarget(IDamageable damageable) =>
