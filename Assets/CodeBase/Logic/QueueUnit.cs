@@ -1,5 +1,6 @@
 using Assets.CodeBase.Logic.Spawners;
 using Assets.CodeBase.StaticData;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,12 +8,14 @@ using UnityEngine.UI;
 public class QueueUnit : MonoBehaviour
 {
     [SerializeField] private UiSpawnSlider _uiSpawnSlider;
-    [SerializeField] private List<float> _list = new List<float>();
+    [SerializeField] private List<float> _productionList = new List<float>();
     [SerializeField] private GreenCommandUnitSpawner _greenCommandUnitSpawner;
     [SerializeField] private Button _queueButton;
+    public event Action UnitAdded;
 
-    private float _currentDelay;
-    private bool _isFree = true;
+    private int _maximumUnitsAdded = 5;
+
+    private bool _unitProduced;
 
     [SerializeField] private UnitType _unitType;
 
@@ -26,47 +29,34 @@ public class QueueUnit : MonoBehaviour
 
     private void AddUnit()
     {
-        _list.Add(Delay);
-        if (_isFree)
+        if (_productionList.Count < _maximumUnitsAdded)
+            _productionList.Add(Delay);
+    }
+
+    private bool UnitsIsInProduction() =>
+        _productionList.Count > 0;
+
+    private void Update()
+    {
+        if (UnitsIsInProduction() && !_unitProduced)
         {
+            _unitProduced = true;
             StartNext();
         }
     }
 
+    private void StartNext()
+    {
+        _uiSpawnSlider.StartChangeSliderValue();
+        Invoke(nameof(CreateUnit), _productionList[0]);
+    }
+
     private void CreateUnit()
     {
-        _list.RemoveAt(0);
+        _productionList.RemoveAt(0);
 
         _greenCommandUnitSpawner.Spawn(_unitType, _greenCommandUnitSpawner.transform.position, Quaternion.identity);
 
-        _isFree = true;
-        _currentDelay = 0;
-        StartNext();
-    }
-
-    private void StartNext()
-    {
-        if (_list.Count > 0)
-        {
-            _isFree = false;
-            Invoke(nameof(CreateUnit), _list[0]);
-        }
-        else
-        {
-            _isFree = true;
-        }
-    }
-
-    private void Update()
-    {
-        if (_isFree == false)
-        {
-            _currentDelay += Time.deltaTime;
-            _uiSpawnSlider.ChangeSliderValue(_currentDelay);
-        }
-        else if (_isFree == true)
-        {
-            _uiSpawnSlider.ChangeSliderValue(_currentDelay);
-        }
+        _unitProduced = false;
     }
 }
