@@ -16,7 +16,7 @@ namespace Assets.CodeBase.Logic.Spawners
 
         [SerializeField] private float _spawnDelay;
 
-        public void Construct(IUnitFactory warriorFactory, IRedCommandUnitsHandler redCommandUnitsHandler)
+        public void Construct(IUnitFactory warriorFactory, IRedCommandUnitsHandler redCommandUnitsHandler, Infrastructure.Services.GreenCommandUnitsHandler.IGreenCommandUnitsHandler _greenCommandUnitsHandler)
         {
             _greenCommandUnitFactory = warriorFactory;
             _redCommandUnitsHandler = redCommandUnitsHandler;

@@ -1,5 +1,6 @@
 ﻿using Assets.CodeBase.Infrastructure.Services;
 using Assets.CodeBase.Infrastructure.Services.Factory;
+using Assets.CodeBase.Infrastructure.Services.GreenCommandUnitsHandler;
 using Assets.CodeBase.Infrastructure.Services.RedCommandUnitsHandler;
 using Assets.CodeBase.Infrastructure.Services.StaticData;
 using System;
@@ -18,7 +19,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
             _states = new Dictionary<Type, IExitableState>()
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, allServices),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IRedCommandUnitsHandler>(), allServices.Single<IStaticDataService>(), allServices.Single<IUnitFactory>())
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IGreenCommandUnitsHandler>(), allServices.Single<IRedCommandUnitsHandler>(), allServices.Single<IStaticDataService>(), allServices.Single<IUnitFactory>())
             };
         }
 

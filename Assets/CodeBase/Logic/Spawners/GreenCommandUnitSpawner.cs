@@ -1,4 +1,5 @@
 ﻿using Assets.CodeBase.Infrastructure.Services.Factory;
+using Assets.CodeBase.Infrastructure.Services.GreenCommandUnitsHandler;
 using Assets.CodeBase.Infrastructure.Services.RedCommandUnitsHandler;
 using Assets.CodeBase.Logic.GreenCommand;
 using Assets.CodeBase.StaticData;
@@ -11,11 +12,13 @@ namespace Assets.CodeBase.Logic.Spawners
         private GreenCommandUnit _previousUnit;
         private IUnitFactory _greenCommandUnitFactory;
         private IRedCommandUnitsHandler _redCommandUnitsHandler;
+        private IGreenCommandUnitsHandler _greenCommandUnitsHandler;
 
-        public void Construct(IUnitFactory warriorFactory, IRedCommandUnitsHandler redCommandUnitsHandler)
+        public void Construct(IUnitFactory warriorFactory, IRedCommandUnitsHandler redCommandUnitsHandler, IGreenCommandUnitsHandler greenCommandUnitsHandler)
         {
             _greenCommandUnitFactory = warriorFactory;
             _redCommandUnitsHandler = redCommandUnitsHandler;
+            _greenCommandUnitsHandler = greenCommandUnitsHandler;
         }
 
         public void Spawn(UnitType unitType, Vector3 position, Quaternion rotation)
@@ -25,6 +28,8 @@ namespace Assets.CodeBase.Logic.Spawners
 
             unit.PreviousUnit = _previousUnit;
             _previousUnit = unit;
+            _greenCommandUnitsHandler.GreenCommandUnits.Add(unit);
+
             unit.GetComponent<GreenCommandEnemyUnitInFrontCalculator>().Construct(_redCommandUnitsHandler);
         }
     }
