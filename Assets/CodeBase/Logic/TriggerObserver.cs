@@ -9,9 +9,6 @@ public class TriggerObserver : MonoBehaviour
     private void OnTriggerEnter(Collider other) =>
         TriggerEnter?.Invoke(other);
 
-    private void OnTriggerExit(Collider other)
-    {
-        
+    private void OnTriggerExit(Collider other) =>
         TriggerExit?.Invoke(other);
-    }
 }

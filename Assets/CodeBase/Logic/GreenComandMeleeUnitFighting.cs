@@ -10,17 +10,27 @@ public class GreenComandMeleeUnitFighting : MonoBehaviour
     [SerializeField] private GreenCommandEnemyUnitInFrontCalculator _greenCommandEnemyUnitInFrontCalculator;
     [SerializeField] private float _fightDistance;
 
+    private IDamageable _damageable;
+    private readonly int _damage = 1;
+
     private void Start()
     {
+        _greenCommandAnimator.AttackEventFired += MakeDamageToEnemy;
+
         _triggerObserver.TriggerEnter += TriggerEnter;
         _triggerObserver.TriggerExit += TriggerExit;
     }
 
     private void OnDestroy()
     {
+        _greenCommandAnimator.AttackEventFired -= MakeDamageToEnemy;
+
         _triggerObserver.TriggerEnter -= TriggerEnter;
         _triggerObserver.TriggerExit -= TriggerExit;
     }
+
+    private void MakeDamageToEnemy() =>
+        _damageable.TakeDamage(_damage);
 
     private void TriggerEnter(Collider obj)
     {
@@ -28,7 +38,7 @@ public class GreenComandMeleeUnitFighting : MonoBehaviour
 
         if (closest.distance < _fightDistance)
         {
-            _greenCommandAnimator.InitializeTarget(closest.unit.GetComponent<IDamageable>());
+            _damageable = closest.unit.GetComponentInChildren<IDamageable>();
             _greenCommandAnimator.SetAttackTrigger();
         }
     }

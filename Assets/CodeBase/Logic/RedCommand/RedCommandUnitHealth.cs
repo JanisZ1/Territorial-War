@@ -14,7 +14,7 @@ namespace Assets.CodeBase.Logic.RedCommand
         public void TakeDamage(int damage)
         {
             _unitHealth -= (uint)damage;
-            OnTakeDamage.Invoke();
+            OnTakeDamage?.Invoke();
             if (_unitHealth <= 0)
             {
                 Die();
@@ -29,7 +29,7 @@ namespace Assets.CodeBase.Logic.RedCommand
             if (transform.parent.gameObject != null)
             {
                 Destroy(transform.parent.gameObject);
-                OnUnitDied.Invoke();
+                OnUnitDied?.Invoke();
             }
         }
 

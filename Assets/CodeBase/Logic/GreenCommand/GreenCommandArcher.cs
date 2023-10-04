@@ -11,6 +11,9 @@ namespace Assets.CodeBase.Logic.GreenCommand
         private RedCommandUnitMove _enemyUnit;
         private float _shootingTime;
 
+        private IDamageable _damageable;
+        private readonly int _damage = 1;
+
         private void Shoot() =>
             Instantiate(_bullet, _spawn.transform.position, _spawn.localRotation);
 
