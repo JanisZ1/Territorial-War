@@ -12,7 +12,12 @@ namespace Assets.CodeBase.Logic.GreenCommand
 
         private const string AttackTriggerName = "Attack";
 
+        public const string IdleTriggerName = "Idle";
+
         public void SetAttackTrigger() =>
             _animator.SetTrigger(AttackTriggerName);
+
+        public void SetIdleTrigger() =>
+            _animator.SetTrigger(IdleTriggerName);
     }
 }

@@ -10,13 +10,13 @@ namespace Assets.CodeBase.Logic.RedCommand
         [SerializeField] private Transform p2;
         [Range(0, 1)]
         [SerializeField] private float t;
-        private MeleeAttack _playerUnit;
+        private GreenComandMeleeUnitFighting _playerUnit;
         private List<Transform> _objectsToDelete = new List<Transform>();
 
         private void Awake()
         {
             transform.DetachChildren();
-            _playerUnit = FindObjectOfType<MeleeAttack>();
+            _playerUnit = FindObjectOfType<GreenComandMeleeUnitFighting>();
             _objectsToDelete.Add(transform);
             _objectsToDelete.Add(p0);
             _objectsToDelete.Add(p1);
@@ -52,7 +52,7 @@ namespace Assets.CodeBase.Logic.RedCommand
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.GetComponent<MeleeAttack>())
+            if (other.gameObject.GetComponent<GreenComandMeleeUnitFighting>())
             {
                 for (int i = 0; i < _objectsToDelete.Count; i++)
                 {

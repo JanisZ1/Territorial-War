@@ -2,7 +2,7 @@
 
 namespace Assets.CodeBase.Logic.GreenCommand
 {
-    public class GreenCommandUnitMove : GreenCommandUnit
+    public class GreenCommandMeleeUnitMove : GreenCommandUnit
     {
         private const float MinimumDistance = 1.2f;
         private const float XVector = 1f;

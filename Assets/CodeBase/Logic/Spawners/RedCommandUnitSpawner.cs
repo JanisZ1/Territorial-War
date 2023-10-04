@@ -1,4 +1,5 @@
 ﻿using Assets.CodeBase.Infrastructure.Services.Factory;
+using Assets.CodeBase.Infrastructure.Services.RedCommandUnitsHandler;
 using Assets.CodeBase.Logic.RedCommand;
 using Assets.CodeBase.StaticData;
 using System.Collections;
@@ -11,11 +12,15 @@ namespace Assets.CodeBase.Logic.Spawners
         private RedCommandUnit _previousUnit;
         [SerializeField] private Transform _spawnPosition;
         private IUnitFactory _greenCommandUnitFactory;
+        private IRedCommandUnitsHandler _redCommandUnitsHandler;
 
         [SerializeField] private float _spawnDelay;
 
-        public void Construct(IUnitFactory warriorFactory) =>
+        public void Construct(IUnitFactory warriorFactory, IRedCommandUnitsHandler redCommandUnitsHandler)
+        {
             _greenCommandUnitFactory = warriorFactory;
+            _redCommandUnitsHandler = redCommandUnitsHandler;
+        }
 
         private void Start() =>
             StartCoroutine(SpawnRedCommandWarrior());
@@ -37,6 +42,8 @@ namespace Assets.CodeBase.Logic.Spawners
 
             unit.PreviousUnit = _previousUnit;
             _previousUnit = unit;
+
+            _redCommandUnitsHandler.RedCommandUnits.Add(unit);
         }
     }
 }

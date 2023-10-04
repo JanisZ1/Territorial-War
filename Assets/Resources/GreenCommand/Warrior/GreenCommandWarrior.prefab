@@ -79,6 +79,7 @@ GameObject:
   - component: {fileID: 3919259657673538861}
   - component: {fileID: 7545123504832298684}
   - component: {fileID: 1205295706166812858}
+  - component: {fileID: 3143719451017177257}
   m_Layer: 0
   m_Name: GreenCommandWarrior
   m_TagString: Untagged
@@ -152,11 +153,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4133240495615844789}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cea231e8907a4504a90990d52c81c0be, type: 3}
+  m_Script: {fileID: 11500000, guid: 1174957ce80a25649a9fce64bb3b37ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _greenCommandAnimator: {fileID: 8916819774281500739}
   _triggerObserver: {fileID: 7629648338506649704}
+  _greenCommandEnemyUnitInFrontCalculator: {fileID: 3143719451017177257}
+  _fightDistance: 2
 --- !u!114 &1205295706166812858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,6 +170,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05c7c4b4317a6f5449aeee60fa95b701, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3143719451017177257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4133240495615844789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44971f6b6c4190348a138d4578f755e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &9081095946275407576
