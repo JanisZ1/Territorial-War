@@ -1,7 +1,7 @@
 using Assets.CodeBase.Logic.GreenCommand;
 using System.Linq;
 using UnityEngine;
-using AnimationState = Assets.CodeBase.Logic.GreenCommand.AnimationState;
+using GreenCommandAnimationState = Assets.CodeBase.Logic.GreenCommand.GreenCommandAnimationState;
 
 [RequireComponent(typeof(GreenCommandMeleeUnitMove))]
 public class GreenComandMeleeUnitAttack : MonoBehaviour
@@ -28,14 +28,17 @@ public class GreenComandMeleeUnitAttack : MonoBehaviour
         _greenCommandAnimator.OnStateExited += StateExited;
     }
 
-    private void StateExited(AnimationState state)
+    private void StateExited(GreenCommandAnimationState state)
     {
-        if (state == AnimationState.Attack)
+        if (state == GreenCommandAnimationState.Attack)
             _isAttacking = false;
     }
 
-    private void OnDestroy() =>
+    private void OnDestroy()
+    {
         _greenCommandAnimator.AttackEventFired -= OnAttack;
+        _greenCommandAnimator.OnStateExited -= StateExited;
+    }
 
     private void Update()
     {

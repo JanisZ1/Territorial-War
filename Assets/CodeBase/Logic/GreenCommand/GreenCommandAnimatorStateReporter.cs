@@ -2,9 +2,9 @@
 
 namespace Assets.CodeBase.Logic.GreenCommand
 {
-    public class AnimatorStateReporter : StateMachineBehaviour
+    public class GreenCommandAnimatorStateReporter : StateMachineBehaviour
     {
-        private IAnimationStateReader _animationStateReader;
+        private IGreenCommandAnimationStateReader _animationStateReader;
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
@@ -19,7 +19,7 @@ namespace Assets.CodeBase.Logic.GreenCommand
             if (_animationStateReader != null)
                 return;
 
-            _animationStateReader = animator.GetComponent<IAnimationStateReader>();
+            _animationStateReader = animator.GetComponent<IGreenCommandAnimationStateReader>();
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

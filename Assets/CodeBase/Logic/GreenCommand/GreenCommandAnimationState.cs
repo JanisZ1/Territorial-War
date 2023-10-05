@@ -1,6 +1,6 @@
 ﻿namespace Assets.CodeBase.Logic.GreenCommand
 {
-    public enum AnimationState
+    public enum GreenCommandAnimationState
     {
         Attack = 0,
         Idle = 1

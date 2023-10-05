@@ -28,9 +28,12 @@ namespace Assets.CodeBase.Logic.Spawners
 
             unit.PreviousUnit = _previousUnit;
             _previousUnit = unit;
-            _greenCommandUnitsHandler.GreenCommandUnits.Add(unit);
-
+            unit.GetComponentInChildren<GreenCommandUnitDeath>().OnUnitDied += RemoveFromGreenCommandHandler;
             unit.GetComponent<CheckAttackRangeForGreenCommandMelee>().Construct(_redCommandUnitsHandler);
+            _greenCommandUnitsHandler.GreenCommandUnits.Add(unit);
         }
+
+        private void RemoveFromGreenCommandHandler(GreenCommandUnitDeath greenCommandUnitDeath) =>
+            _greenCommandUnitsHandler.GreenCommandUnits.Remove(greenCommandUnitDeath.GetComponentInParent<GreenCommandUnit>());
     }
 }

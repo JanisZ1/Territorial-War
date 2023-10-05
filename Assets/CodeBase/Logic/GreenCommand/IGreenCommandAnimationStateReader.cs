@@ -1,9 +1,9 @@
 ﻿namespace Assets.CodeBase.Logic.GreenCommand
 {
-    public interface IAnimationStateReader
+    public interface IGreenCommandAnimationStateReader
     {
         void StateExited(int state);
         void StateEntered(int state);
-        AnimationState State { get; }
+        GreenCommandAnimationState State { get; }
     }
 }

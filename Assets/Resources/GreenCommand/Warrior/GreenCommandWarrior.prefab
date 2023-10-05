@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 7750659315689672703}
   - component: {fileID: 7629648338506649704}
   - component: {fileID: 6241727137337279934}
-  m_Layer: 0
+  - component: {fileID: 1422621945498825585}
+  m_Layer: 7
   m_Name: TriggerObserver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64,8 +65,22 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1422621945498825585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3652882263604575187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd756b24767b05442b59b04b706a45e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitHealth: 5
+  _greenCommandUnitDeath: {fileID: 6622750644945443187}
 --- !u!1 &4133240495615844789
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,12 +91,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4133240495615844426}
   - component: {fileID: 2155121237626727843}
-  - component: {fileID: 3919259657673538861}
   - component: {fileID: 7545123504832298684}
   - component: {fileID: 1205295706166812858}
   - component: {fileID: 3143719451017177257}
   - component: {fileID: 8457476544084714065}
-  m_Layer: 0
+  - component: {fileID: 6622750644945443187}
+  m_Layer: 7
   m_Name: GreenCommandWarrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,19 +147,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &3919259657673538861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4133240495615844789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd756b24767b05442b59b04b706a45e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _unitHealth: 5
 --- !u!114 &7545123504832298684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,6 +202,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _greenCommandMeleeUnitMove: {fileID: 1205295706166812858}
   _greenCommandAnimator: {fileID: 8916819774281500739}
+--- !u!114 &6622750644945443187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4133240495615844789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee1d0be63dff3746b2c6d75a905e293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitHealth: 5
 --- !u!1 &9081095946275407576
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,7 +228,7 @@ GameObject:
   - component: {fileID: 1785207641445180926}
   - component: {fileID: 2989681453371314248}
   - component: {fileID: 8916819774281500739}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WarriorAnimator
   m_TagString: Untagged
   m_Icon: {fileID: 0}

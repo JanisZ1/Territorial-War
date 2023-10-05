@@ -1,6 +1,6 @@
 ﻿using Assets.CodeBase.Logic.GreenCommand;
 using UnityEngine;
-using AnimationState = Assets.CodeBase.Logic.GreenCommand.AnimationState;
+using GreenCommandAnimationState = Assets.CodeBase.Logic.GreenCommand.GreenCommandAnimationState;
 
 public class StopMoveOnAttackForGreenCommand : MonoBehaviour
 {
@@ -19,15 +19,15 @@ public class StopMoveOnAttackForGreenCommand : MonoBehaviour
         _greenCommandAnimator.OnStateEntered -= StopMove;
     }
 
-    private void StartMove(AnimationState animationState)
+    private void StartMove(GreenCommandAnimationState animationState)
     {
-        if (animationState == AnimationState.Attack)
+        if (animationState == GreenCommandAnimationState.Attack)
             _greenCommandMeleeUnitMove.StartMove();
     }
 
-    private void StopMove(AnimationState animationState)
+    private void StopMove(GreenCommandAnimationState animationState)
     {
-        if (animationState == AnimationState.Attack)
+        if (animationState == GreenCommandAnimationState.Attack)
             _greenCommandMeleeUnitMove.StopMove();
     }
 }

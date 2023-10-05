@@ -11,7 +11,7 @@ namespace Assets.CodeBase.Logic.GreenCommand
         [SerializeField] private Transform p2;
         [Range(0, 1)]
         [SerializeField] private float t;
-        private RedCommandUnitMove _redCommandUnit;
+        private RedCommandMeleeUnitMove _redCommandUnit;
         private List<Transform> _bezierPointsToDelete = new List<Transform>();
         private RedCommandUnitHealth _redCommandUnitHealth;
 
@@ -19,7 +19,7 @@ namespace Assets.CodeBase.Logic.GreenCommand
         {
             transform.DetachChildren();
             _redCommandUnitHealth = FindObjectOfType<RedCommandUnitHealth>();
-            _redCommandUnit = FindObjectOfType<RedCommandUnitMove>();
+            _redCommandUnit = FindObjectOfType<RedCommandMeleeUnitMove>();
             _bezierPointsToDelete.Add(transform);
             _bezierPointsToDelete.Add(p0);
             _bezierPointsToDelete.Add(p1);

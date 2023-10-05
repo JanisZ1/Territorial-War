@@ -1,4 +1,5 @@
 ﻿using Assets.CodeBase.Infrastructure.Services.Factory;
+using Assets.CodeBase.Infrastructure.Services.GreenCommandUnitsHandler;
 using Assets.CodeBase.Infrastructure.Services.RedCommandUnitsHandler;
 using Assets.CodeBase.Logic.RedCommand;
 using Assets.CodeBase.StaticData;
@@ -13,13 +14,14 @@ namespace Assets.CodeBase.Logic.Spawners
         [SerializeField] private Transform _spawnPosition;
         private IUnitFactory _greenCommandUnitFactory;
         private IRedCommandUnitsHandler _redCommandUnitsHandler;
-
+        private IGreenCommandUnitsHandler _greenCommandUnitsHandler;
         [SerializeField] private float _spawnDelay;
 
-        public void Construct(IUnitFactory warriorFactory, IRedCommandUnitsHandler redCommandUnitsHandler, Infrastructure.Services.GreenCommandUnitsHandler.IGreenCommandUnitsHandler _greenCommandUnitsHandler)
+        public void Construct(IUnitFactory warriorFactory, IRedCommandUnitsHandler redCommandUnitsHandler, IGreenCommandUnitsHandler greenCommandUnitsHandler)
         {
             _greenCommandUnitFactory = warriorFactory;
             _redCommandUnitsHandler = redCommandUnitsHandler;
+            _greenCommandUnitsHandler = greenCommandUnitsHandler;
         }
 
         private void Start() =>
@@ -42,8 +44,12 @@ namespace Assets.CodeBase.Logic.Spawners
 
             unit.PreviousUnit = _previousUnit;
             _previousUnit = unit;
-
+            unit.GetComponent<CheckAttackRangeForRedCommandMelee>().Construct(_greenCommandUnitsHandler);
+            unit.GetComponentInChildren<RedCommandUnitDeath>().OnUnitDied += RemoveFromRedCommandHandler;
             _redCommandUnitsHandler.RedCommandUnits.Add(unit);
         }
+
+        private void RemoveFromRedCommandHandler(RedCommandUnitDeath redCommandUnitDeath) =>
+            _redCommandUnitsHandler.RedCommandUnits.Remove(redCommandUnitDeath.GetComponent<RedCommandUnit>());
     }
 }

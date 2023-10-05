@@ -8,7 +8,7 @@ namespace Assets.CodeBase.Logic.GreenCommand
         [SerializeField] private Transform _spawn;
         [SerializeField] private GreenCommandBullet _bullet;
 
-        private RedCommandUnitMove _enemyUnit;
+        private RedCommandMeleeUnitMove _enemyUnit;
         private float _shootingTime;
 
         private IDamageable _damageable;

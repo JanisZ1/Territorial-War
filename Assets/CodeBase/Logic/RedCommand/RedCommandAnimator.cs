@@ -1,9 +1,10 @@
 ﻿using System;
 using UnityEngine;
+using AnimationState = Assets.CodeBase.Logic.RedCommand.RedCommandAnimationState;
 
-namespace Assets.CodeBase.Logic.GreenCommand
+namespace Assets.CodeBase.Logic.RedCommand
 {
-    public class GreenCommandAnimator : MonoBehaviour, IGreenCommandAnimationStateReader
+    public class RedCommandAnimator : MonoBehaviour, IRedCommandAnimationStateReader
     {
         [SerializeField] private Animator _animator;
 
@@ -14,11 +15,11 @@ namespace Assets.CodeBase.Logic.GreenCommand
 
         public const string IdleTriggerName = "Idle";
 
-        public GreenCommandAnimationState State { get; private set; }
+        public AnimationState State { get; private set; }
 
         //Call event instead method
-        public event Action<GreenCommandAnimationState> OnStateExited;
-        public event Action<GreenCommandAnimationState> OnStateEntered;
+        public event Action<AnimationState> OnStateExited;
+        public event Action<AnimationState> OnStateEntered;
         public event Action AttackEventFired;
 
         public void FireEventFromAnimation() =>
@@ -34,10 +35,10 @@ namespace Assets.CodeBase.Logic.GreenCommand
         {
             Debug.Log(state == _attackStateHash);
             if (state == _attackStateHash)
-                State = GreenCommandAnimationState.Attack;
+                State = AnimationState.Attack;
 
             else if (state == _idleStateHash)
-                State = GreenCommandAnimationState.Idle;
+                State = AnimationState.Idle;
 
             OnStateExited?.Invoke(State);
         }
@@ -45,10 +46,10 @@ namespace Assets.CodeBase.Logic.GreenCommand
         {
             Debug.Log(state == _attackStateHash);
             if (state == _attackStateHash)
-                State = GreenCommandAnimationState.Attack;
+                State = AnimationState.Attack;
 
             else if (state == _idleStateHash)
-                State = GreenCommandAnimationState.Idle;
+                State = AnimationState.Idle;
 
             OnStateEntered?.Invoke(State);
         }

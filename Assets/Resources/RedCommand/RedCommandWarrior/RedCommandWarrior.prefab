@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 683247310279067959}
   - component: {fileID: 3574980773571527765}
   - component: {fileID: 8925249089548902597}
+  - component: {fileID: 4868808123082160489}
   m_Layer: 6
   m_Name: Animation
   m_TagString: Untagged
@@ -120,6 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitHealth: 5
+  _redCommandUnitDeath: {fileID: 1328021036676503594}
 --- !u!135 &8925249089548902597
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -141,6 +143,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4868808123082160489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683247310279067957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2dd080d952ddc846a3d29d7a53ecc8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 683247310279067959}
 --- !u!1 &6773574472367001583
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,6 +167,10 @@ GameObject:
   - component: {fileID: 481875501027983157}
   - component: {fileID: 1469650408251432978}
   - component: {fileID: -3730608365782350052}
+  - component: {fileID: 3886250537983041366}
+  - component: {fileID: 807220024161959097}
+  - component: {fileID: 1432967924018255046}
+  - component: {fileID: 1328021036676503594}
   m_Layer: 6
   m_Name: RedCommandWarrior
   m_TagString: Untagged
@@ -214,3 +233,58 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3886250537983041366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6773574472367001583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e56e482304e1c1498064f9bd8692508, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _redCommandMeleeUnitMove: {fileID: 1469650408251432978}
+  _redCommandAnimator: {fileID: 4868808123082160489}
+--- !u!114 &807220024161959097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6773574472367001583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94292b2bccf7b164c89e6b9bfbbcc388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _redCommandAnimator: {fileID: 4868808123082160489}
+  _fightRadius: 0.5
+  _attackCooldown: 2
+--- !u!114 &1432967924018255046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6773574472367001583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1f972e0c598bc2489340051d6cc710e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _redComandMeleeUnitAttack: {fileID: 807220024161959097}
+  _attackRange: 2
+--- !u!114 &1328021036676503594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6773574472367001583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56464c6cc7d2e5c4c8649537d95cf470, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

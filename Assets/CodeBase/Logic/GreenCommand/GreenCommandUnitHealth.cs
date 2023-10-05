@@ -7,22 +7,16 @@ namespace Assets.CodeBase.Logic.GreenCommand
     {
         [SerializeField] private int _unitHealth = 5;
 
-        public event Action OnUnitDied;
+        [SerializeField] private GreenCommandUnitDeath _greenCommandUnitDeath;
         public event Action OnTakeDamage;
 
         public void TakeDamage(int damage)
         {
             _unitHealth -= damage;
-            OnTakeDamage.Invoke();
+            OnTakeDamage?.Invoke();
 
             if (_unitHealth <= 0)
-                Die();
-        }
-
-        private void Die()
-        {
-            Destroy(gameObject);
-            OnUnitDied.Invoke();
+                _greenCommandUnitDeath.Die();
         }
     }
 }
