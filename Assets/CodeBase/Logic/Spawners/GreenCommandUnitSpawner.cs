@@ -29,7 +29,7 @@ namespace Assets.CodeBase.Logic.Spawners
             unit.PreviousUnit = _previousUnit;
             _previousUnit = unit;
             unit.GetComponentInChildren<GreenCommandUnitDeath>().OnUnitDied += RemoveFromGreenCommandHandler;
-            unit.GetComponent<CheckAttackRangeForGreenCommandMelee>().Construct(_redCommandUnitsHandler);
+            unit.GetComponent<ClosestEnemyUnitCalculatorForGreenCommand>().Construct(_redCommandUnitsHandler);
             _greenCommandUnitsHandler.GreenCommandUnits.Add(unit);
         }
 

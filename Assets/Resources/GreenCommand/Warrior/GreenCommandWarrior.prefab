@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 3143719451017177257}
   - component: {fileID: 8457476544084714065}
   - component: {fileID: 6622750644945443187}
+  - component: {fileID: -6745266510964760214}
   m_Layer: 7
   m_Name: GreenCommandWarrior
   m_TagString: Untagged
@@ -161,7 +162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _greenCommandAnimator: {fileID: 8916819774281500739}
   _fightRadius: 0.5
-  _attackCooldown: 2
+  _attackCooldown: 1
 --- !u!114 &1205295706166812858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _greenComandMeleeUnitAttack: {fileID: 7545123504832298684}
+  _closestEnemyCalculator: {fileID: -6745266510964760214}
   _attackRange: 2
 --- !u!114 &8457476544084714065
 MonoBehaviour:
@@ -201,7 +203,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _greenCommandMeleeUnitMove: {fileID: 1205295706166812858}
-  _greenCommandAnimator: {fileID: 8916819774281500739}
+  _closestEnemyCalculator: {fileID: -6745266510964760214}
+  _stopMoveDistance: 1.5
 --- !u!114 &6622750644945443187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +218,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitHealth: 5
+--- !u!114 &-6745266510964760214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4133240495615844789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9e0f065c257e24996ec903fd18ac99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9081095946275407576
 GameObject:
   m_ObjectHideFlags: 0

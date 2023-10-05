@@ -33,7 +33,6 @@ namespace Assets.CodeBase.Logic.RedCommand
 
         public void StateExited(int state)
         {
-            Debug.Log(state == _attackStateHash);
             if (state == _attackStateHash)
                 State = AnimationState.Attack;
 
@@ -42,9 +41,9 @@ namespace Assets.CodeBase.Logic.RedCommand
 
             OnStateExited?.Invoke(State);
         }
+
         public void StateEntered(int state)
         {
-            Debug.Log(state == _attackStateHash);
             if (state == _attackStateHash)
                 State = AnimationState.Attack;
 

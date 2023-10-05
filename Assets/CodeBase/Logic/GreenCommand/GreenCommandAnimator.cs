@@ -32,7 +32,6 @@ namespace Assets.CodeBase.Logic.GreenCommand
 
         public void StateExited(int state)
         {
-            Debug.Log(state == _attackStateHash);
             if (state == _attackStateHash)
                 State = GreenCommandAnimationState.Attack;
 
@@ -41,9 +40,9 @@ namespace Assets.CodeBase.Logic.GreenCommand
 
             OnStateExited?.Invoke(State);
         }
+
         public void StateEntered(int state)
         {
-            Debug.Log(state == _attackStateHash);
             if (state == _attackStateHash)
                 State = GreenCommandAnimationState.Attack;
 

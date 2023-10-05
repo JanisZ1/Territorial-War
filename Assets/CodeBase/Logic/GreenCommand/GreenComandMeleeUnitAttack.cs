@@ -28,12 +28,6 @@ public class GreenComandMeleeUnitAttack : MonoBehaviour
         _greenCommandAnimator.OnStateExited += StateExited;
     }
 
-    private void StateExited(GreenCommandAnimationState state)
-    {
-        if (state == GreenCommandAnimationState.Attack)
-            _isAttacking = false;
-    }
-
     private void OnDestroy()
     {
         _greenCommandAnimator.AttackEventFired -= OnAttack;
@@ -48,6 +42,15 @@ public class GreenComandMeleeUnitAttack : MonoBehaviour
             StartAttack();
     }
 
+    private void StateExited(GreenCommandAnimationState state)
+    {
+        if (state == GreenCommandAnimationState.Attack)
+        {
+            _cooldown = _attackCooldown;
+            _isAttacking = false;
+        }
+    }
+
     public void EnableAttack() =>
         _attackEnabled = true;
 
@@ -60,16 +63,7 @@ public class GreenComandMeleeUnitAttack : MonoBehaviour
     private void OnAttack()
     {
         if (Hit(out Collider hit))
-        {
             hit.GetComponent<IDamageable>().TakeDamage(_damage);
-            OnEnemyDamaged();
-        }
-    }
-
-    private void OnEnemyDamaged()
-    {
-        _cooldown = _attackCooldown;
-        _isAttacking = false;
     }
 
     private void StartAttack()
