@@ -25,13 +25,13 @@ public class GreenComandMeleeUnitAttack : MonoBehaviour
         _layerMask = 1 << LayerMask.NameToLayer(RedCommandLayer);
 
         _greenCommandAnimator.AttackEventFired += OnAttack;
-        _greenCommandAnimator.OnStateExited += StateExited;
+        _greenCommandAnimator.OnStateExited += OnAttackEnded;
     }
 
     private void OnDestroy()
     {
         _greenCommandAnimator.AttackEventFired -= OnAttack;
-        _greenCommandAnimator.OnStateExited -= StateExited;
+        _greenCommandAnimator.OnStateExited -= OnAttackEnded;
     }
 
     private void Update()
@@ -42,7 +42,7 @@ public class GreenComandMeleeUnitAttack : MonoBehaviour
             StartAttack();
     }
 
-    private void StateExited(GreenCommandAnimationState state)
+    private void OnAttackEnded(GreenCommandAnimationState state)
     {
         if (state == GreenCommandAnimationState.Attack)
         {

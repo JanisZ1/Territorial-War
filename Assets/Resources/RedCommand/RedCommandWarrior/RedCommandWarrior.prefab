@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 807220024161959097}
   - component: {fileID: 1432967924018255046}
   - component: {fileID: 1328021036676503594}
+  - component: {fileID: 3963346809550244407}
   m_Layer: 6
   m_Name: RedCommandWarrior
   m_TagString: Untagged
@@ -246,7 +247,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _redCommandMeleeUnitMove: {fileID: 1469650408251432978}
-  _redCommandAnimator: {fileID: 4868808123082160489}
+  _closestEnemyCalculator: {fileID: 1432967924018255046}
+  _stopMoveDistance: 1.5
 --- !u!114 &807220024161959097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,11 +273,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6773574472367001583}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1f972e0c598bc2489340051d6cc710e, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e60e42dc959fc548ba428ace7351add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _redComandMeleeUnitAttack: {fileID: 807220024161959097}
-  _attackRange: 2
 --- !u!114 &1328021036676503594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,3 +288,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56464c6cc7d2e5c4c8649537d95cf470, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3963346809550244407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6773574472367001583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efd37a6f33da98a47b071835f35a96be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _redComandMeleeUnitAttack: {fileID: 807220024161959097}
+  _closestEnemyCalculator: {fileID: 1432967924018255046}
+  _attackRange: 2

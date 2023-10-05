@@ -24,19 +24,22 @@ namespace Assets.CodeBase.Logic.RedCommand
             _layerMask = 1 << LayerMask.NameToLayer(GreenCommandLayer);
 
             _redCommandAnimator.AttackEventFired += OnAttack;
-            _redCommandAnimator.OnStateExited += StateExited;
+            _redCommandAnimator.OnStateExited += OnAttackEnded;
         }
 
-        private void StateExited(RedCommandAnimationState state)
+        private void OnAttackEnded(RedCommandAnimationState state)
         {
             if (state == RedCommandAnimationState.Attack)
+            {
+                _cooldown = _attackCooldown;
                 _isAttacking = false;
+            }
         }
 
         private void OnDestroy()
         {
             _redCommandAnimator.AttackEventFired -= OnAttack;
-            _redCommandAnimator.OnStateExited -= StateExited;
+            _redCommandAnimator.OnStateExited -= OnAttackEnded;
         }
 
         private void Update()
@@ -59,16 +62,7 @@ namespace Assets.CodeBase.Logic.RedCommand
         private void OnAttack()
         {
             if (Hit(out Collider hit))
-            {
                 hit.GetComponent<IDamageable>().TakeDamage(_damage);
-                OnEnemyDamaged();
-            }
-        }
-
-        private void OnEnemyDamaged()
-        {
-            _cooldown = _attackCooldown;
-            _isAttacking = false;
         }
 
         private void StartAttack()

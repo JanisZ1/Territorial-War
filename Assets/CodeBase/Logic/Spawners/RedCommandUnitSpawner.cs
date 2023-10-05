@@ -44,7 +44,7 @@ namespace Assets.CodeBase.Logic.Spawners
 
             unit.PreviousUnit = _previousUnit;
             _previousUnit = unit;
-            unit.GetComponent<CheckAttackRangeForRedCommandMelee>().Construct(_greenCommandUnitsHandler);
+            unit.GetComponent<ClosestEnemyUnitCalculatorForRedCommand>().Construct(_greenCommandUnitsHandler);
             unit.GetComponentInChildren<RedCommandUnitDeath>().OnUnitDied += RemoveFromRedCommandHandler;
             _redCommandUnitsHandler.RedCommandUnits.Add(unit);
         }
