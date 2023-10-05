@@ -1,7 +1,7 @@
 ﻿using Assets.CodeBase.Logic.RedCommand;
 using UnityEngine;
 
-public class EnableAttackOnEnemyInFrontForGreenCommand : MonoBehaviour
+public class EnableMeleeAttackOnEnemyInFrontForGreenCommand : MonoBehaviour
 {
     [SerializeField] private GreenComandMeleeUnitAttack _greenComandMeleeUnitAttack;
     [SerializeField] private ClosestEnemyUnitCalculatorForGreenCommand _closestEnemyCalculator;

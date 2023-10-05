@@ -137,10 +137,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1956603636256866378}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d85573625ab91d4ebe2f23db37f5064, type: 3}
+  m_Script: {fileID: 11500000, guid: d9f3369e0e67d3941a5c06f3d92e2a73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 5958711661130588439}
+  _animator: {fileID: 0}
 --- !u!1 &1956603636260968808
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,6 +185,8 @@ GameObject:
   - component: {fileID: 4050240299749364378}
   - component: {fileID: 2475969227826920140}
   - component: {fileID: 8340692600081987475}
+  - component: {fileID: 1115098585396678049}
+  - component: {fileID: -10678701989473829}
   m_Layer: 0
   m_Name: GreenCommandArcher
   m_TagString: Untagged
@@ -264,6 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitHealth: 5
+  _greenCommandUnitDeath: {fileID: 1115098585396678049}
 --- !u!114 &8340692600081987475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,6 +277,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05c7c4b4317a6f5449aeee60fa95b701, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1115098585396678049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956603637825456702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee1d0be63dff3746b2c6d75a905e293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitHealth: 5
+--- !u!114 &-10678701989473829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956603637825456702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9e0f065c257e24996ec903fd18ac99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3896927226302761260
