@@ -6,9 +6,13 @@ namespace Assets.CodeBase.Logic.GreenCommand
     {
         private const float MinimumDistance = 1.2f;
         private const float XVector = 1f;
+        private bool _movingEnabled = true;
 
         private void Update()
         {
+            if (!_movingEnabled)
+                return;
+
             if (!PreviousUnit)
             {
                 Move();
@@ -27,5 +31,11 @@ namespace Assets.CodeBase.Logic.GreenCommand
 
         private float DistanceToPreviousUnit() =>
             Vector3.Distance(transform.position, PreviousUnit.transform.position);
+
+        public void StartMove() =>
+            _movingEnabled = true;
+
+        public void StopMove() =>
+            _movingEnabled = false;
     }
 }

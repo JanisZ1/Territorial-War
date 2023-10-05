@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 683247310279067959}
   - component: {fileID: 3574980773571527765}
   - component: {fileID: 8925249089548902597}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Animation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,12 +120,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitHealth: 5
-  _onUnitDied:
-    m_PersistentCalls:
-      m_Calls: []
-  _onTakeDamage:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!135 &8925249089548902597
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -158,7 +152,7 @@ GameObject:
   - component: {fileID: 481875501027983157}
   - component: {fileID: 1469650408251432978}
   - component: {fileID: -3730608365782350052}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RedCommandWarrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}

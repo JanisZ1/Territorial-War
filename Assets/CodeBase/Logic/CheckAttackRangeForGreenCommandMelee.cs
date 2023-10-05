@@ -2,17 +2,27 @@
 using Assets.CodeBase.Logic.RedCommand;
 using UnityEngine;
 
-public class GreenCommandEnemyUnitInFrontCalculator : MonoBehaviour
+public class CheckAttackRangeForGreenCommandMelee : MonoBehaviour
 {
     private IRedCommandUnitsHandler _redCommandUnitsHandler;
+    [SerializeField] private GreenComandMeleeUnitAttack _greenComandMeleeUnitAttack;
+    [SerializeField] private float _attackRange;
 
     public void Construct(IRedCommandUnitsHandler redCommandUnitsHandler) =>
         _redCommandUnitsHandler = redCommandUnitsHandler;
 
-    public (float distance, RedCommandUnit unit) CalculateClosestEnemyForMelee() =>
-        GetClosestRedCommandUnit();
+    private void Update()
+    {
+        (float distance, RedCommandUnit unit) closestUnit = ClosestRedCommandUnit();
 
-    private (float distance, RedCommandUnit unit) GetClosestRedCommandUnit()
+        if (closestUnit.distance < _attackRange)
+            _greenComandMeleeUnitAttack.EnableAttack();
+
+        else
+            _greenComandMeleeUnitAttack.DisableAttack();
+    }
+
+    private (float distance, RedCommandUnit unit) ClosestRedCommandUnit()
     {
         float minDistance = float.MaxValue;
         RedCommandUnit minClosestRedCommandUnit = null;

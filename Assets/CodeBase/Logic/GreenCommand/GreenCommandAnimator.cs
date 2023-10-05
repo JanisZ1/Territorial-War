@@ -3,26 +3,54 @@ using UnityEngine;
 
 namespace Assets.CodeBase.Logic.GreenCommand
 {
-    public class GreenCommandAnimator : MonoBehaviour
+    public class GreenCommandAnimator : MonoBehaviour, IAnimationStateReader
     {
         [SerializeField] private Animator _animator;
+
+        private readonly int _attackStateHash = Animator.StringToHash("Attack");
+        private readonly int _idleStateHash = Animator.StringToHash("Idle");
 
         private const string AttackTriggerName = "Attack";
 
         public const string IdleTriggerName = "Idle";
 
+        public AnimationState State { get; private set; }
+
         //Call event instead method
+        public event Action<AnimationState> OnStateExited;
+        public event Action<AnimationState> OnStateEntered;
         public event Action AttackEventFired;
 
-        public void FireEventFromAnimation()
-        {
+        public void FireEventFromAnimation() =>
             AttackEventFired?.Invoke();
-        }
 
-        public void SetAttackTrigger() =>
+        public void PlayAttack() =>
             _animator.SetTrigger(AttackTriggerName);
 
-        public void SetIdleTrigger() =>
+        public void PlayIdle() =>
             _animator.SetTrigger(IdleTriggerName);
+
+        public void StateExited(int state)
+        {
+            Debug.Log(state == _attackStateHash);
+            if (state == _attackStateHash)
+                State = AnimationState.Attack;
+
+            else if (state == _idleStateHash)
+                State = AnimationState.Idle;
+
+            OnStateExited?.Invoke(State);
+        }
+        public void StateEntered(int state)
+        {
+            Debug.Log(state == _attackStateHash);
+            if (state == _attackStateHash)
+                State = AnimationState.Attack;
+
+            else if (state == _idleStateHash)
+                State = AnimationState.Idle;
+
+            OnStateEntered?.Invoke(State);
+        }
     }
 }

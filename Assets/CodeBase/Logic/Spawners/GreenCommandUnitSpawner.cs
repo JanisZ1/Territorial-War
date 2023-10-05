@@ -30,7 +30,7 @@ namespace Assets.CodeBase.Logic.Spawners
             _previousUnit = unit;
             _greenCommandUnitsHandler.GreenCommandUnits.Add(unit);
 
-            unit.GetComponent<GreenCommandEnemyUnitInFrontCalculator>().Construct(_redCommandUnitsHandler);
+            unit.GetComponent<CheckAttackRangeForGreenCommandMelee>().Construct(_redCommandUnitsHandler);
         }
     }
 }
