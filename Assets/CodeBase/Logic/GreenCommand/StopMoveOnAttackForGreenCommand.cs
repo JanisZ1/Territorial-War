@@ -2,7 +2,7 @@
 using UnityEngine;
 using AnimationState = Assets.CodeBase.Logic.GreenCommand.AnimationState;
 
-public class StopMoveOnAttack : MonoBehaviour
+public class StopMoveOnAttackForGreenCommand : MonoBehaviour
 {
     [SerializeField] private GreenCommandMeleeUnitMove _greenCommandMeleeUnitMove;
     [SerializeField] private GreenCommandAnimator _greenCommandAnimator;

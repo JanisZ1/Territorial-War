@@ -39,7 +39,6 @@ public class GreenComandMeleeUnitAttack : MonoBehaviour
 
     private void Update()
     {
-        Debug.DrawRay(transform.position + transform.right, Vector3.up, Color.green);
         UpdateCooldown();
 
         if (CooldownIsUp() && !_isAttacking && _attackEnabled)
@@ -51,7 +50,6 @@ public class GreenComandMeleeUnitAttack : MonoBehaviour
 
     public void DisableAttack()
     {
-        Debug.Log("DisableAttack");
         _greenCommandAnimator.PlayIdle();
         _attackEnabled = false;
     }
@@ -60,7 +58,6 @@ public class GreenComandMeleeUnitAttack : MonoBehaviour
     {
         if (Hit(out Collider hit))
         {
-            Debug.Log("OnAttack");
             hit.GetComponent<IDamageable>().TakeDamage(_damage);
             OnEnemyDamaged();
         }
