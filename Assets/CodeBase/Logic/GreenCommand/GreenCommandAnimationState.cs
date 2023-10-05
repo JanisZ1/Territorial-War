@@ -3,6 +3,7 @@
     public enum GreenCommandAnimationState
     {
         Attack = 0,
-        Idle = 1
+        RangeAttack = 1,
+        Idle = 2
     }
 }
