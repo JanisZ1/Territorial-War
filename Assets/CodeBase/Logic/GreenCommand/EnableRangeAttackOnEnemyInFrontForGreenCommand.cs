@@ -1,4 +1,5 @@
-﻿using Assets.CodeBase.Logic.RedCommand;
+﻿using Assets.CodeBase.Logic.GreenCommand;
+using Assets.CodeBase.Logic.RedCommand;
 using UnityEngine;
 
 public class EnableRangeAttackOnEnemyInFrontForGreenCommand : MonoBehaviour

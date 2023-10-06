@@ -271,6 +271,7 @@ MonoBehaviour:
   _greenCommandAnimator: {fileID: 3980815976511564295}
   _spawn: {fileID: 1956603636260968809}
   _bullet: {fileID: 3680282065587421810, guid: beba39191fe958f49b363465a8d4b6de, type: 3}
+  _closestEnemyCalculator: {fileID: -10678701989473829}
   _attackCooldown: 2
 --- !u!114 &338662669819293755
 MonoBehaviour:
