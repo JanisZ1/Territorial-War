@@ -1,27 +1,44 @@
+using Assets.CodeBase.Infrastructure.Services.StaticData;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UiSpawnSlider : MonoBehaviour
 {
-
     [SerializeField] private Slider _slider;
-    private QueueWarrior _queueWarrior;
+    [SerializeField] private QueueUnit _queueUnit;
+    private IStaticDataService _staticDataService;
+
     private void Start()
     {
-        _queueWarrior = FindObjectOfType<QueueWarrior>();
+        _slider.minValue = 0;
+        _slider.maxValue = _queueUnit.Delay;
     }
-    private void Update()
+    //TODO: Static data for ui
+    public void Construct(IStaticDataService staticDataService)
     {
-        if (_slider != null && _queueWarrior != null)
+        _staticDataService = staticDataService;
+    }
+
+    private IEnumerator ChangeSliderValue()
+    {
+        while (true)
         {
-            _slider.minValue = 0;
-            _slider.maxValue = _queueWarrior._delay;
+            yield return null;
+
+            _slider.value += Time.deltaTime;
+
+            if (_slider.value >= _queueUnit.Delay)
+            {
+                ResetSlider();
+                break;
+            }
         }
     }
-    public void ChangeSliderValue(float currentValue)
-    {
-        _slider.value = currentValue;
-    }
+
+    private void ResetSlider() =>
+        _slider.value = 0;
+
+    public void StartChangeSliderValue() =>
+         StartCoroutine(ChangeSliderValue());
 }
