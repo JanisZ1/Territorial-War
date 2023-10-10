@@ -4,8 +4,8 @@ namespace Assets.CodeBase.Logic.GreenCommand
 {
     public class GreenCommandMeleeUnitMove : GreenCommandUnit
     {
-        private const float MinimumDistance = 1.2f;
-        private const float XVector = 1f;
+        private float _minimumDistance = 1.2f;
+        private float _xVector = 1f;
         private bool _movingEnabled = true;
 
         private void Update()
@@ -19,13 +19,13 @@ namespace Assets.CodeBase.Logic.GreenCommand
                 return;
             }
 
-            if (DistanceToPreviousUnit() > MinimumDistance)
+            if (DistanceToPreviousUnit() > _minimumDistance)
                 Move();
         }
 
         private void Move()
         {
-            Vector3 movingVector = new Vector3(XVector * Time.deltaTime, 0f, 0f);
+            Vector3 movingVector = new Vector3(_xVector * Time.deltaTime, 0f, 0f);
             transform.Translate(movingVector);
         }
 

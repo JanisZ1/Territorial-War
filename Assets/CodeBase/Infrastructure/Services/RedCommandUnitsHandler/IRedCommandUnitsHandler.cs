@@ -5,6 +5,6 @@ namespace Assets.CodeBase.Infrastructure.Services.RedCommandUnitsHandler
 {
     public interface IRedCommandUnitsHandler : IService
     {
-        List<RedCommandUnit> RedCommandUnits { get; }
+        List<RedCommandUnit> RedCommandUnits { get; set; }
     }
 }
