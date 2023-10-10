@@ -9,6 +9,9 @@ namespace Assets.CodeBase.Tests
 {
     public class Create
     {
+        public static RedCommandMeleeUnitMove RedCommandMeleeUnitMove() => 
+            new GameObject().AddComponent<RedCommandMeleeUnitMove>();
+
         public static Transform GreenCommandUnit(IRedCommandUnitsHandler redCommandUnitsHandler)
         {
             Transform greenCommandUnit = GreenCommandUnit();
@@ -18,10 +21,13 @@ namespace Assets.CodeBase.Tests
             return greenCommandUnit;
         }
 
-        public static IRedCommandUnitsHandler RedCommandUnitsHandler()
+        public static IRedCommandUnitsHandler RedCommandUnitsHandler(RedCommandUnit redCommandUnit = null)
         {
             IRedCommandUnitsHandler redCommandUnitsHandler = Substitute.For<IRedCommandUnitsHandler>();
             redCommandUnitsHandler.RedCommandUnits = new List<RedCommandUnit>();
+            if (redCommandUnit)
+                redCommandUnitsHandler.RedCommandUnits.Add(redCommandUnit);
+
             return redCommandUnitsHandler;
         }
 
