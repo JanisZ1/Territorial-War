@@ -16,8 +16,9 @@ namespace Assets.CodeBase.Logic.RedCommand
         private float _cooldown;
 
         private bool _isAttacking;
-        private bool _attackEnabled;
         private readonly int _damage = 1;
+
+        public bool AttackEnabled { get; private set; }
 
         private void Start()
         {
@@ -46,17 +47,17 @@ namespace Assets.CodeBase.Logic.RedCommand
         {
             UpdateCooldown();
 
-            if (CooldownIsUp() && !_isAttacking && _attackEnabled)
+            if (CooldownIsUp() && !_isAttacking && AttackEnabled)
                 StartAttack();
         }
 
         public void EnableAttack() =>
-            _attackEnabled = true;
+            AttackEnabled = true;
 
         public void DisableAttack()
         {
             _redCommandAnimator.PlayIdle();
-            _attackEnabled = false;
+            AttackEnabled = false;
         }
 
         private void OnAttack()

@@ -4,7 +4,7 @@ using UnityEngine;
 using GreenCommandAnimationState = Assets.CodeBase.Logic.GreenCommand.GreenCommandAnimationState;
 
 [RequireComponent(typeof(GreenCommandMeleeUnitMove))]
-public class GreenComandMeleeUnitAttack : MonoBehaviour
+public class GreenCommandMeleeUnitAttack : MonoBehaviour
 {
     private const string RedCommandLayer = "RedCommand";
     [SerializeField] private GreenCommandAnimator _greenCommandAnimator;
@@ -16,9 +16,13 @@ public class GreenComandMeleeUnitAttack : MonoBehaviour
     [SerializeField] private float _attackCooldown = 2;
     private float _cooldown;
 
-    private bool _isAttacking;
-    private bool _attackEnabled;
     private readonly int _damage = 1;
+
+    public float AttackCooldown => _attackCooldown;
+
+    public bool IsAttacking { get; private set; }
+
+    public bool AttackEnabled { get; private set; }
 
     private void Start()
     {
@@ -38,7 +42,7 @@ public class GreenComandMeleeUnitAttack : MonoBehaviour
     {
         UpdateCooldown();
 
-        if (CooldownIsUp() && !_isAttacking && _attackEnabled)
+        if (CooldownIsUp() && !IsAttacking && AttackEnabled)
             StartAttack();
     }
 
@@ -47,17 +51,17 @@ public class GreenComandMeleeUnitAttack : MonoBehaviour
         if (state == GreenCommandAnimationState.Attack)
         {
             _cooldown = _attackCooldown;
-            _isAttacking = false;
+            IsAttacking = false;
         }
     }
 
     public void EnableAttack() =>
-        _attackEnabled = true;
+        AttackEnabled = true;
 
     public void DisableAttack()
     {
         _greenCommandAnimator.PlayIdle();
-        _attackEnabled = false;
+        AttackEnabled = false;
     }
 
     private void OnAttack()
@@ -69,7 +73,7 @@ public class GreenComandMeleeUnitAttack : MonoBehaviour
     private void StartAttack()
     {
         _greenCommandAnimator.PlayAttack();
-        _isAttacking = true;
+        IsAttacking = true;
     }
 
     private void UpdateCooldown()

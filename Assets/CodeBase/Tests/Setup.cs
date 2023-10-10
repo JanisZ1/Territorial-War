@@ -7,7 +7,7 @@ namespace Assets.CodeBase.Tests
 {
     public class Setup
     {
-        public static GreenCommandMeleeUnitMove GreenCommandMeleeUnitMove(RedCommandUnit redCommandUnit = null)
+        public static GreenCommandMeleeUnitMove GreenCommandMeleeUnit(RedCommandUnit redCommandUnit = null)
         {
             IRedCommandUnitsHandler redCommandUnitsHandler = Create.RedCommandUnitsHandler(redCommandUnit);
             GreenCommandMeleeUnitMove greenCommandUnit = Create.GreenCommandMeleeUnitMove(redCommandUnitsHandler);
@@ -15,7 +15,7 @@ namespace Assets.CodeBase.Tests
             return greenCommandUnit;
         }
 
-        public static RedCommandMeleeUnitMove RedCommandMeleeUnitMove(GreenCommandUnit greenCommandUnit = null)
+        public static RedCommandMeleeUnitMove RedCommandMeleeUnit(GreenCommandUnit greenCommandUnit = null)
         {
             IGreenCommandUnitsHandler greenCommandUnitsHandler = Create.GreenCommandUnitsHandler(greenCommandUnit);
             RedCommandMeleeUnitMove redCommandUnit = Create.RedCommandMeleeUnitMove(greenCommandUnitsHandler);

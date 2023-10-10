@@ -10,6 +10,8 @@ namespace Assets.CodeBase.Logic.RedCommand
 
         public event Action OnTakeDamage;
 
+        public int UnitHealth => _unitHealth;
+
         public void TakeDamage(int damage)
         {
             _unitHealth -= damage;

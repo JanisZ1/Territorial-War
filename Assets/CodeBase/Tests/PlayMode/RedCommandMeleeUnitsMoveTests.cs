@@ -13,7 +13,7 @@ namespace Assets.CodeBase.Tests.PlayMode
         public IEnumerator WhenWaitedFor0point1Seconds_AndPreviousUnitIsNull_ThenUnitShouldMoveLeft()
         {
             // Arrange.
-            RedCommandMeleeUnitMove redCommandUnit = Setup.RedCommandMeleeUnitMove();
+            RedCommandMeleeUnitMove redCommandUnit = Setup.RedCommandMeleeUnit();
 
             float initialPosition = redCommandUnit.transform.position.x;
 
@@ -30,8 +30,8 @@ namespace Assets.CodeBase.Tests.PlayMode
         public IEnumerator WhenSettedEnemyPositionToRedCommandUnit_AndEnemyInFront_ThenUnitShouldStopMoving()
         {
             // Arrange.
-            GreenCommandUnit greenCommandUnit = Setup.GreenCommandMeleeUnitMove();
-            RedCommandMeleeUnitMove redCommandUnit = Setup.RedCommandMeleeUnitMove(greenCommandUnit);
+            GreenCommandUnit greenCommandUnit = Setup.GreenCommandMeleeUnit();
+            RedCommandMeleeUnitMove redCommandUnit = Setup.RedCommandMeleeUnit(greenCommandUnit);
 
             // Act.
             greenCommandUnit.transform.position = redCommandUnit.transform.position;
