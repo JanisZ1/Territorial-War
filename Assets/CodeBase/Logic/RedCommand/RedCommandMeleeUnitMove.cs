@@ -6,11 +6,12 @@ namespace Assets.CodeBase.Logic.RedCommand
     {
         private const float MinimumDistance = 1.2f;
         private const float XVector = 1f;
-        private bool _movingEnabled = true;
+
+        public bool MovingEnabled { get; private set; } = true;
 
         private void Update()
         {
-            if (!_movingEnabled)
+            if (!MovingEnabled)
                 return;
 
             if (!PreviousUnit)
@@ -33,9 +34,9 @@ namespace Assets.CodeBase.Logic.RedCommand
             Vector3.Distance(transform.position, PreviousUnit.transform.position);
 
         public void StartMove() =>
-            _movingEnabled = true;
+            MovingEnabled = true;
 
         public void StopMove() =>
-            _movingEnabled = false;
+            MovingEnabled = false;
     }
 }

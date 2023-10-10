@@ -1,20 +1,26 @@
-﻿using Assets.CodeBase.Infrastructure.Services.RedCommandUnitsHandler;
+﻿using Assets.CodeBase.Infrastructure.Services.GreenCommandUnitsHandler;
+using Assets.CodeBase.Infrastructure.Services.RedCommandUnitsHandler;
+using Assets.CodeBase.Logic.GreenCommand;
 using Assets.CodeBase.Logic.RedCommand;
-using UnityEngine;
 
 namespace Assets.CodeBase.Tests
 {
     public class Setup
     {
-        public static float InitialPosition(Transform greenCommandUnit) =>
-            greenCommandUnit.transform.position.x;
-
-        public static Transform GreenCommandUnit(RedCommandUnit redCommandUnit = null)
+        public static GreenCommandMeleeUnitMove GreenCommandMeleeUnitMove(RedCommandUnit redCommandUnit = null)
         {
             IRedCommandUnitsHandler redCommandUnitsHandler = Create.RedCommandUnitsHandler(redCommandUnit);
-            Transform greenCommandUnit = Create.GreenCommandUnit(redCommandUnitsHandler);
+            GreenCommandMeleeUnitMove greenCommandUnit = Create.GreenCommandMeleeUnitMove(redCommandUnitsHandler);
 
             return greenCommandUnit;
+        }
+
+        public static RedCommandMeleeUnitMove RedCommandMeleeUnitMove(GreenCommandUnit greenCommandUnit = null)
+        {
+            IGreenCommandUnitsHandler greenCommandUnitsHandler = Create.GreenCommandUnitsHandler(greenCommandUnit);
+            RedCommandMeleeUnitMove redCommandUnit = Create.RedCommandMeleeUnitMove(greenCommandUnitsHandler);
+
+            return redCommandUnit;
         }
     }
 }

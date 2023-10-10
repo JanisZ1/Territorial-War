@@ -5,6 +5,6 @@ namespace Assets.CodeBase.Infrastructure.Services.GreenCommandUnitsHandler
 {
     public interface IGreenCommandUnitsHandler : IService
     {
-        List<GreenCommandUnit> GreenCommandUnits { get; }
+        List<GreenCommandUnit> GreenCommandUnits { get; set; }
     }
 }

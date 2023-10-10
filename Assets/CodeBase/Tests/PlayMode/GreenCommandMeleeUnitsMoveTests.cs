@@ -13,15 +13,15 @@ namespace Assets.CodeBase.Tests.PlayMode
         public IEnumerator WhenWaitedFor0point1Seconds_AndPreviousUnitIsNull_ThenUnitShouldMoveRight()
         {
             // Arrange.
-            Transform greenCommandUnit = Setup.GreenCommandUnit();
+            GreenCommandMeleeUnitMove greenCommandUnit = Setup.GreenCommandMeleeUnitMove();
 
-            float initialPosition = Setup.InitialPosition(greenCommandUnit);
+            float initialPosition = greenCommandUnit.transform.position.x;
 
             // Act.
             yield return new WaitForSeconds(0.1f);
 
             // Assert.
-            Assert.Greater(greenCommandUnit.position.x, initialPosition);
+            Assert.Greater(greenCommandUnit.transform.position.x, initialPosition);
 
             Object.Destroy(greenCommandUnit.gameObject);
         }
@@ -30,16 +30,15 @@ namespace Assets.CodeBase.Tests.PlayMode
         public IEnumerator WhenSettedEnemyPositionToGreenCommandUnit_AndEnemyInFront_ThenUnitShouldStopMoving()
         {
             // Arrange.
-            RedCommandUnit redCommandUnit = Create.RedCommandMeleeUnitMove();
-            Transform greenCommandUnit = Setup.GreenCommandUnit(redCommandUnit);
-            GreenCommandMeleeUnitMove greenCommandMeleeUnitMove = greenCommandUnit.GetComponent<GreenCommandMeleeUnitMove>();
+            RedCommandUnit redCommandUnit = Setup.RedCommandMeleeUnitMove();
+            GreenCommandMeleeUnitMove greenCommandUnit = Setup.GreenCommandMeleeUnitMove(redCommandUnit);
 
             // Act.
-            redCommandUnit.transform.position = greenCommandUnit.position;
+            redCommandUnit.transform.position = greenCommandUnit.transform.position;
             yield return null;
 
             // Assert.
-            Assert.IsFalse(greenCommandMeleeUnitMove.MovingEnabled);
+            Assert.IsFalse(greenCommandUnit.MovingEnabled);
 
             Object.Destroy(greenCommandUnit.gameObject);
             Object.Destroy(redCommandUnit.gameObject);
