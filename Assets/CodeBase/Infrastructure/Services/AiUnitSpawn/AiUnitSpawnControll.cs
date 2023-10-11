@@ -15,7 +15,7 @@ namespace Assets.CodeBase.Infrastructure.Services.AiUnitControll
         public AiUnitSpawnControll(ICoroutinerRunner coroutinerRunner) =>
             _coroutinerRunner = coroutinerRunner;
 
-        public void InitSpawners(GreenCommandUnitSpawner greenCommandUnitSpawner,RedCommandUnitSpawner redCommandUnitSpawner)
+        public void InitSpawners(GreenCommandUnitSpawner greenCommandUnitSpawner, RedCommandUnitSpawner redCommandUnitSpawner)
         {
             _greenCommandUnitSpawner = greenCommandUnitSpawner;
             _redCommandUnitSpawner = redCommandUnitSpawner;

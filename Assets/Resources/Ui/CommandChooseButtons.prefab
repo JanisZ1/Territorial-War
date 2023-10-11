@@ -608,4 +608,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 612295637698135113}
-  _commandColor: 1
+  _commandColor: 0
