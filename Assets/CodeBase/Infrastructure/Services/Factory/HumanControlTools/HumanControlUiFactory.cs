@@ -3,12 +3,12 @@ using Assets.CodeBase.Infrastructure.Services.StaticData;
 
 namespace Assets.CodeBase.Infrastructure.Services.Factory.HumanControlTools
 {
-    public class HumanControlToolsFactory : IHumanControlToolsFactory
+    public class HumanControlUiFactory : IHumanControlUiFactory
     {
         private readonly IUiFactory _uiFactory;
         private readonly IStaticDataService _staticDataService;
 
-        public HumanControlToolsFactory(IUiFactory uiFactory, IStaticDataService staticDataService)
+        public HumanControlUiFactory(IUiFactory uiFactory, IStaticDataService staticDataService)
         {
             _uiFactory = uiFactory;
             _staticDataService = staticDataService;

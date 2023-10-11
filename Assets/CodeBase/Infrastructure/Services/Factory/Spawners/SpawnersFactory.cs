@@ -1,4 +1,5 @@
 ﻿using Assets.CodeBase.Infrastructure.Services.AssetProvider;
+using UnityEngine;
 
 namespace Assets.CodeBase.Infrastructure.Services.Factory.Spawners
 {
@@ -9,17 +10,17 @@ namespace Assets.CodeBase.Infrastructure.Services.Factory.Spawners
         public SpawnersFactory(IAssets assets) =>
             _assets = assets;
 
-        public void CreateCommandSpawner(CommandColor commandColor)
+        public GameObject CreateCommandSpawner(CommandColor commandColor)
         {
             switch (commandColor)
             {
                 case CommandColor.Green:
-                    _assets.Instantiate(AssetPath.GreenCommandSpawner);
-                    break;
+                    return _assets.Instantiate(AssetPath.GreenCommandSpawner);
+
                 case CommandColor.Red:
-                    _assets.Instantiate(AssetPath.RedCommandSpawner);
-                    break;
+                    return _assets.Instantiate(AssetPath.RedCommandSpawner);
             }
+            return null;
         }
     }
 }

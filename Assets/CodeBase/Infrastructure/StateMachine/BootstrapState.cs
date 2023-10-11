@@ -1,4 +1,5 @@
 ﻿using Assets.CodeBase.Infrastructure.Services;
+using Assets.CodeBase.Infrastructure.Services.AiUnitControll;
 using Assets.CodeBase.Infrastructure.Services.AssetProvider;
 using Assets.CodeBase.Infrastructure.Services.ChooseCommandMediator;
 using Assets.CodeBase.Infrastructure.Services.Factory;
@@ -16,15 +17,17 @@ namespace Assets.CodeBase.Infrastructure
     public class BootstrapState : IState
     {
         private readonly GameStateMachine _gameStateMachine;
+        private readonly ICoroutinerRunner _coroutinerRunner;
         private readonly SceneLoader _sceneLoader;
         private readonly AllServices _services;
 
         private const string Bootstrap = "Bootstrap";
         private const string Main = "Main";
 
-        public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, AllServices services)
+        public BootstrapState(GameStateMachine gameStateMachine, ICoroutinerRunner coroutinerRunner, SceneLoader sceneLoader, AllServices services)
         {
             _gameStateMachine = gameStateMachine;
+            _coroutinerRunner = coroutinerRunner;
             _sceneLoader = sceneLoader;
             _services = services;
 
@@ -47,8 +50,9 @@ namespace Assets.CodeBase.Infrastructure
             _services.Register<IUnitFactory>(new UnitFactory(_services.Single<IStaticDataService>()));
             _services.Register<ISpawnersFactory>(new SpawnersFactory(_services.Single<IAssets>()));
             _services.Register<IUiFactory>(new UiFactory(_services.Single<IAssets>(), _services.Single<IStaticDataService>()));
-            _services.Register<IHumanControlToolsFactory>(new HumanControlToolsFactory(_services.Single<IUiFactory>(), _services.Single<IStaticDataService>()));
-            _services.Register<IChooseCommandMediator>(new ChooseCommandMediator(_services.Single<IHumanControlToolsFactory>()));
+            _services.Register<IHumanControlUiFactory>(new HumanControlUiFactory(_services.Single<IUiFactory>(), _services.Single<IStaticDataService>()));
+            _services.Register<IAiUnitSpawnControll>(new AiUnitSpawnControll(_coroutinerRunner));
+            _services.Register<IChooseCommandMediator>(new ChooseCommandMediator(_services.Single<IHumanControlUiFactory>(), _services.Single<IAiUnitSpawnControll>()));
         }
 
         private void EnterLoadLevel() =>

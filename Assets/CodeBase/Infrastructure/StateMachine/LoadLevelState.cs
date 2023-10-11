@@ -1,4 +1,6 @@
-﻿using Assets.CodeBase.Infrastructure.Services.Factory.Ui;
+﻿using Assets.CodeBase.Infrastructure.Services.AiUnitControll;
+using Assets.CodeBase.Infrastructure.Services.Factory.Spawners;
+using Assets.CodeBase.Infrastructure.Services.Factory.Ui;
 using Assets.CodeBase.Infrastructure.Services.Factory.Unit;
 using Assets.CodeBase.Infrastructure.Services.GreenCommandUnitsHandler;
 using Assets.CodeBase.Infrastructure.Services.RedCommandUnitsHandler;
@@ -12,20 +14,22 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
     public class LoadLevelState : ILoadLevelState
     {
         private readonly GameStateMachine _gameStateMachine;
+        private readonly ISpawnersFactory _spawnersFactory;
         private readonly SceneLoader _sceneLoader;
+        private readonly IAiUnitSpawnControll _aiUnitSpawnControll;
         private readonly IChooseCommandMediator _chooseCommandMediator;
         private readonly IUiFactory _uiFactory;
         private readonly IGreenCommandUnitsHandler _greenCommandUnitsHandler;
         private readonly IRedCommandUnitsHandler _redCommandUnitsHandler;
         private readonly IStaticDataService _staticDataService;
         private readonly IUnitFactory _greenCommandUnitFactory;
-        private const string GreenBaseTag = "GreenBase";
-        private const string RedBaseTag = "RedBase";
 
-        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, IChooseCommandMediator chooseCommandMediator, IUiFactory uiFactory, IGreenCommandUnitsHandler greenCommandUnitsHandler, IRedCommandUnitsHandler redCommandUnitsHandler, IStaticDataService staticDataService, IUnitFactory greenCommandUnitFactory)
+        public LoadLevelState(GameStateMachine gameStateMachine, ISpawnersFactory spawnersFactory, SceneLoader sceneLoader, IAiUnitSpawnControll aiUnitSpawnControll, IChooseCommandMediator chooseCommandMediator, IUiFactory uiFactory, IGreenCommandUnitsHandler greenCommandUnitsHandler, IRedCommandUnitsHandler redCommandUnitsHandler, IStaticDataService staticDataService, IUnitFactory greenCommandUnitFactory)
         {
             _gameStateMachine = gameStateMachine;
+            _spawnersFactory = spawnersFactory;
             _sceneLoader = sceneLoader;
+            _aiUnitSpawnControll = aiUnitSpawnControll;
             _chooseCommandMediator = chooseCommandMediator;
             _uiFactory = uiFactory;
             _greenCommandUnitsHandler = greenCommandUnitsHandler;
@@ -40,12 +44,13 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
         private void OnLoaded()
         {
             _staticDataService.Load();
-
             _uiFactory.CreateUiRoot();
             CreateChooseCommandButtons();
 
-            InitializeGreenBase();
-            InitializeRedBase();
+            GreenCommandUnitSpawner greenCommandUnitSpawner = InitializeGreenUnitSpawner();
+            RedCommandUnitSpawner redCommandUnitSpawner = InitializeRedUnitSpawner();
+
+            _aiUnitSpawnControll.InitSpawners(greenCommandUnitSpawner, redCommandUnitSpawner);
         }
 
         private void CreateChooseCommandButtons()
@@ -56,16 +61,22 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
                 chooseButton.Construct(_chooseCommandMediator);
         }
 
-        private void InitializeGreenBase()
+        private GreenCommandUnitSpawner InitializeGreenUnitSpawner()
         {
-            GameObject gameObject = GameObject.FindGameObjectWithTag(GreenBaseTag);
-            gameObject.GetComponentInChildren<GreenCommandUnitSpawner>().Construct(_greenCommandUnitFactory, _redCommandUnitsHandler, _greenCommandUnitsHandler);
+            GameObject gameObject = _spawnersFactory.CreateCommandSpawner(CommandColor.Green);
+            GreenCommandUnitSpawner greenCommandUnitSpawner = gameObject.GetComponentInChildren<GreenCommandUnitSpawner>();
+            greenCommandUnitSpawner.Construct(_greenCommandUnitFactory, _redCommandUnitsHandler, _greenCommandUnitsHandler);
+
+            return greenCommandUnitSpawner;
         }
 
-        private void InitializeRedBase()
+        private RedCommandUnitSpawner InitializeRedUnitSpawner()
         {
-            GameObject gameObject = GameObject.FindGameObjectWithTag(RedBaseTag);
-            gameObject.GetComponentInChildren<RedCommandUnitSpawner>().Construct(_greenCommandUnitFactory, _redCommandUnitsHandler, _greenCommandUnitsHandler);
+            GameObject gameObject = _spawnersFactory.CreateCommandSpawner(CommandColor.Red);
+            RedCommandUnitSpawner redCommandUnitSpawner = gameObject.GetComponentInChildren<RedCommandUnitSpawner>();
+            redCommandUnitSpawner.Construct(_greenCommandUnitFactory, _redCommandUnitsHandler, _greenCommandUnitsHandler);
+
+            return redCommandUnitSpawner;
         }
 
         public void Exit()

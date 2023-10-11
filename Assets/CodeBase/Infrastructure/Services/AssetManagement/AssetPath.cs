@@ -6,7 +6,7 @@
         public const string GreenCommandWarriorPath = "GreenCommand/Warrior/GreenCommandWarrior";
         public const string UiRootPath = "Ui/UiRoot";
         public const string ChooseCommandUiPath = "Ui/CommandChooseButtons";
-        public const string GreenCommandSpawner = "";
-        public const string RedCommandSpawner = "";
+        public const string GreenCommandSpawner = "Spawners/GreenUnitSpawner";
+        public const string RedCommandSpawner = "Spawners/RedUnitSpawner";
     }
 }

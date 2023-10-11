@@ -1,4 +1,6 @@
 ﻿using Assets.CodeBase.Infrastructure.Services;
+using Assets.CodeBase.Infrastructure.Services.AiUnitControll;
+using Assets.CodeBase.Infrastructure.Services.Factory.Spawners;
 using Assets.CodeBase.Infrastructure.Services.Factory.Ui;
 using Assets.CodeBase.Infrastructure.Services.Factory.Unit;
 using Assets.CodeBase.Infrastructure.Services.GreenCommandUnitsHandler;
@@ -15,12 +17,12 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
 
         private IExitableState _currentState;
 
-        public GameStateMachine(SceneLoader sceneLoader, AllServices allServices)
+        public GameStateMachine(ICoroutinerRunner coroutinerRunner, SceneLoader sceneLoader, AllServices allServices)
         {
             _states = new Dictionary<Type, IExitableState>()
             {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, allServices),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IChooseCommandMediator>(), allServices.Single<IUiFactory>(), allServices.Single<IGreenCommandUnitsHandler>(), allServices.Single<IRedCommandUnitsHandler>(), allServices.Single<IStaticDataService>(), allServices.Single<IUnitFactory>())
+                [typeof(BootstrapState)] = new BootstrapState(this, coroutinerRunner, sceneLoader, allServices),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, allServices.Single<ISpawnersFactory>(), sceneLoader, allServices.Single<IAiUnitSpawnControll>(), allServices.Single<IChooseCommandMediator>(), allServices.Single<IUiFactory>(), allServices.Single<IGreenCommandUnitsHandler>(), allServices.Single<IRedCommandUnitsHandler>(), allServices.Single<IStaticDataService>(), allServices.Single<IUnitFactory>())
             };
         }
 

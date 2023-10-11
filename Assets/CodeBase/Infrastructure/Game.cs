@@ -8,6 +8,6 @@ namespace Assets.CodeBase.Infrastructure
         public GameStateMachine StateMachine;
 
         public Game(ICoroutinerRunner coroutinerRunner) =>
-            StateMachine = new GameStateMachine(new SceneLoader(coroutinerRunner), new AllServices());
+            StateMachine = new GameStateMachine(coroutinerRunner, new SceneLoader(coroutinerRunner), new AllServices());
     }
 }

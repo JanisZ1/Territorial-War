@@ -1,7 +1,9 @@
-﻿namespace Assets.CodeBase.Infrastructure.Services.Factory.Spawners
+﻿using UnityEngine;
+
+namespace Assets.CodeBase.Infrastructure.Services.Factory.Spawners
 {
     public interface ISpawnersFactory : IService
     {
-        void CreateCommandSpawner(CommandColor commandColor);
+        GameObject CreateCommandSpawner(CommandColor commandColor);
     }
 }
