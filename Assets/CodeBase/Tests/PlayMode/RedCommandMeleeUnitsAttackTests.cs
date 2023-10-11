@@ -9,7 +9,7 @@ namespace Assets.CodeBase.Tests.PlayMode
 {
     public class RedCommandMeleeUnitsAttackTests
     {
-        private Vector3 _greenCommandUnitMoveOffset = -Vector3.right * 2;
+        private Vector3 _greenCommandUnitMoveOffset = Vector3.left * 2;
         private const float AttackAnimationTime = 2;
 
         [UnityTest]
@@ -33,24 +33,24 @@ namespace Assets.CodeBase.Tests.PlayMode
         }
 
         [UnityTest]
-        public IEnumerator WhenWaitedForAttack_AndSettedEnemyPositionToInFrontOfGreenUnit_ThenAttackėdUnitShouldBeDamaged()
+        public IEnumerator WhenWaitedForAttack_AndSettedEnemyPositionToInFrontOfRedUnit_ThenAttackėdUnitShouldBeDamaged()
         {
             // Arrange.
             GreenCommandUnit greenCommandUnit = Setup.GreenCommandMeleeUnit();
             GreenCommandUnitHealth greenCommandUnitHealth = greenCommandUnit.GetComponentInChildren<GreenCommandUnitHealth>();
             int initialHealth = greenCommandUnitHealth.UnitHealth;
 
-            RedCommandMeleeUnitMove greenCommandunit = Setup.RedCommandMeleeUnit(greenCommandUnit);
-            RedComandMeleeUnitAttack meleeUnitAttack = greenCommandunit.GetComponent<RedComandMeleeUnitAttack>();
+            RedCommandMeleeUnitMove redCommandunit = Setup.RedCommandMeleeUnit(greenCommandUnit);
+            RedComandMeleeUnitAttack meleeUnitAttack = redCommandunit.GetComponent<RedComandMeleeUnitAttack>();
             // Act.
-            greenCommandUnit.transform.position = greenCommandunit.transform.position + _greenCommandUnitMoveOffset;
+            greenCommandUnit.transform.position = redCommandunit.transform.position + _greenCommandUnitMoveOffset;
 
             yield return new WaitForSeconds(meleeUnitAttack.AttackCooldown + AttackAnimationTime);
 
             // Assert.
             Assert.Less(greenCommandUnitHealth.UnitHealth, initialHealth);
 
-            Object.Destroy(greenCommandunit.gameObject);
+            Object.Destroy(redCommandunit.gameObject);
             Object.Destroy(greenCommandUnit.gameObject);
         }
     }
