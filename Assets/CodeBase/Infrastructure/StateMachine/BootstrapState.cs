@@ -3,6 +3,7 @@ using Assets.CodeBase.Infrastructure.Services.AssetProvider;
 using Assets.CodeBase.Infrastructure.Services.ChooseCommandMediator;
 using Assets.CodeBase.Infrastructure.Services.Factory;
 using Assets.CodeBase.Infrastructure.Services.Factory.HumanControlTools;
+using Assets.CodeBase.Infrastructure.Services.Factory.Spawners;
 using Assets.CodeBase.Infrastructure.Services.Factory.Ui;
 using Assets.CodeBase.Infrastructure.Services.Factory.Unit;
 using Assets.CodeBase.Infrastructure.Services.GreenCommandUnitsHandler;
@@ -44,6 +45,7 @@ namespace Assets.CodeBase.Infrastructure
             _services.Register<IRedCommandUnitsHandler>(new RedCommandUnitsHandler());
             _services.Register<IGreenCommandUnitsHandler>(new GreenCommandUnitsHandler());
             _services.Register<IUnitFactory>(new UnitFactory(_services.Single<IStaticDataService>()));
+            _services.Register<ISpawnersFactory>(new SpawnersFactory(_services.Single<IAssets>()));
             _services.Register<IUiFactory>(new UiFactory(_services.Single<IAssets>(), _services.Single<IStaticDataService>()));
             _services.Register<IHumanControlToolsFactory>(new HumanControlToolsFactory(_services.Single<IUiFactory>(), _services.Single<IStaticDataService>()));
             _services.Register<IChooseCommandMediator>(new ChooseCommandMediator(_services.Single<IHumanControlToolsFactory>()));
