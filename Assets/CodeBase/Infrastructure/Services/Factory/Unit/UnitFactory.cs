@@ -2,7 +2,7 @@
 using Assets.CodeBase.StaticData;
 using UnityEngine;
 
-namespace Assets.CodeBase.Infrastructure.Services.Factory
+namespace Assets.CodeBase.Infrastructure.Services.Factory.Unit
 {
     public class UnitFactory : IUnitFactory
     {
