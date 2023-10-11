@@ -1,5 +1,6 @@
 ﻿using Assets.CodeBase.Infrastructure.Services.AssetProvider;
 using Assets.CodeBase.Infrastructure.Services.StaticData;
+using Assets.CodeBase.Logic.Ui;
 using UnityEngine;
 
 namespace Assets.CodeBase.Infrastructure.Services.Factory.Ui
@@ -19,9 +20,10 @@ namespace Assets.CodeBase.Infrastructure.Services.Factory.Ui
         public void CreateUiRoot() =>
             _uiRoot = _assets.Instantiate(AssetPath.UiRootPath).transform;
 
-        public void CreateChooseCommandButtons()
+        public GameObject CreateChooseCommandButtons()
         {
-
+            GameObject chooseCommandButtons = _assets.Instantiate(AssetPath.ChooseCommandUiPath, _uiRoot);
+            return chooseCommandButtons;
         }
 
         public void CreateQueueButtons(CommandColor commandColor)

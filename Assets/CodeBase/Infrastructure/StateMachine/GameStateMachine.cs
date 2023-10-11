@@ -1,4 +1,5 @@
 ﻿using Assets.CodeBase.Infrastructure.Services;
+using Assets.CodeBase.Infrastructure.Services.Factory.Ui;
 using Assets.CodeBase.Infrastructure.Services.Factory.Unit;
 using Assets.CodeBase.Infrastructure.Services.GreenCommandUnitsHandler;
 using Assets.CodeBase.Infrastructure.Services.RedCommandUnitsHandler;
@@ -19,7 +20,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
             _states = new Dictionary<Type, IExitableState>()
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, allServices),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IGreenCommandUnitsHandler>(), allServices.Single<IRedCommandUnitsHandler>(), allServices.Single<IStaticDataService>(), allServices.Single<IUnitFactory>())
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IChooseCommandMediator>(), allServices.Single<IUiFactory>(), allServices.Single<IGreenCommandUnitsHandler>(), allServices.Single<IRedCommandUnitsHandler>(), allServices.Single<IStaticDataService>(), allServices.Single<IUnitFactory>())
             };
         }
 
