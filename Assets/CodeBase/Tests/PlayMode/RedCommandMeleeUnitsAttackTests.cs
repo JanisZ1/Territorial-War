@@ -9,6 +9,9 @@ namespace Assets.CodeBase.Tests.PlayMode
 {
     public class RedCommandMeleeUnitsAttackTests
     {
+        private Vector3 _greenCommandUnitMoveOffset = -Vector3.right * 2;
+        private const float AttackAnimationTime = 2;
+
         [UnityTest]
         public IEnumerator WhenWaitedFor0point1Seconds_AndSettedEnemyPositionToRedCommandUnit_ThenAttackShouldBeEnabled()
         {
@@ -27,6 +30,28 @@ namespace Assets.CodeBase.Tests.PlayMode
 
             Object.Destroy(greenCommandunit.gameObject);
             Object.Destroy(redCommandUnit.gameObject);
+        }
+
+        [UnityTest]
+        public IEnumerator WhenWaitedForAttack_AndSettedEnemyPositionToInFrontOfGreenUnit_ThenAttackėdUnitShouldBeDamaged()
+        {
+            // Arrange.
+            GreenCommandUnit greenCommandUnit = Setup.GreenCommandMeleeUnit();
+            GreenCommandUnitHealth greenCommandUnitHealth = greenCommandUnit.GetComponentInChildren<GreenCommandUnitHealth>();
+            int initialHealth = greenCommandUnitHealth.UnitHealth;
+
+            RedCommandMeleeUnitMove greenCommandunit = Setup.RedCommandMeleeUnit(greenCommandUnit);
+            RedComandMeleeUnitAttack meleeUnitAttack = greenCommandunit.GetComponent<RedComandMeleeUnitAttack>();
+            // Act.
+            greenCommandUnit.transform.position = greenCommandunit.transform.position + _greenCommandUnitMoveOffset;
+
+            yield return new WaitForSeconds(meleeUnitAttack.AttackCooldown + AttackAnimationTime);
+
+            // Assert.
+            Assert.Less(greenCommandUnitHealth.UnitHealth, initialHealth);
+
+            Object.Destroy(greenCommandunit.gameObject);
+            Object.Destroy(greenCommandUnit.gameObject);
         }
     }
 }

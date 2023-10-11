@@ -18,6 +18,8 @@ namespace Assets.CodeBase.Logic.RedCommand
         private bool _isAttacking;
         private readonly int _damage = 1;
 
+        public float AttackCooldown => _attackCooldown;
+
         public bool AttackEnabled { get; private set; }
 
         private void Start()
