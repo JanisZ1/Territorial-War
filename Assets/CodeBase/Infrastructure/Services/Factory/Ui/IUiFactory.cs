@@ -3,7 +3,7 @@
     public interface IUiFactory : IService
     {
         void CreateUiRoot();
-        void CreateChooseButtons();
+        void CreateChooseCommandButtons();
         void CreateQueueButtons(CommandColor commandColor);
         void CreateUpgradeButtons(CommandColor commandColor);
     }

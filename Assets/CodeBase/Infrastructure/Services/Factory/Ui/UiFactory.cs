@@ -19,7 +19,7 @@ namespace Assets.CodeBase.Infrastructure.Services.Factory.Ui
         public void CreateUiRoot() =>
             _uiRoot = _assets.Instantiate(AssetPath.UiRootPath).transform;
 
-        public void CreateChooseButtons()
+        public void CreateChooseCommandButtons()
         {
 
         }

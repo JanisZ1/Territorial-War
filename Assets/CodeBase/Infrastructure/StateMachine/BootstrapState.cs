@@ -1,6 +1,9 @@
 ﻿using Assets.CodeBase.Infrastructure.Services;
 using Assets.CodeBase.Infrastructure.Services.AssetProvider;
+using Assets.CodeBase.Infrastructure.Services.ChooseCommandMediator;
 using Assets.CodeBase.Infrastructure.Services.Factory;
+using Assets.CodeBase.Infrastructure.Services.Factory.HumanControlTools;
+using Assets.CodeBase.Infrastructure.Services.Factory.Ui;
 using Assets.CodeBase.Infrastructure.Services.Factory.Unit;
 using Assets.CodeBase.Infrastructure.Services.GreenCommandUnitsHandler;
 using Assets.CodeBase.Infrastructure.Services.RedCommandUnitsHandler;
@@ -41,6 +44,9 @@ namespace Assets.CodeBase.Infrastructure
             _services.Register<IRedCommandUnitsHandler>(new RedCommandUnitsHandler());
             _services.Register<IGreenCommandUnitsHandler>(new GreenCommandUnitsHandler());
             _services.Register<IUnitFactory>(new UnitFactory(_services.Single<IStaticDataService>()));
+            _services.Register<IUiFactory>(new UiFactory(_services.Single<IAssets>(), _services.Single<IStaticDataService>()));
+            _services.Register<IHumanControlToolsFactory>(new HumanControlToolsFactory(_services.Single<IUiFactory>(), _services.Single<IStaticDataService>()));
+            _services.Register<IChooseCommandMediator>(new ChooseCommandMediator(_services.Single<IHumanControlToolsFactory>()));
         }
 
         private void EnterLoadLevel() =>
