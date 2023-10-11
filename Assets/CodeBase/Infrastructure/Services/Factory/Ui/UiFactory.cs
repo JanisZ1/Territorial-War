@@ -1,6 +1,5 @@
 ﻿using Assets.CodeBase.Infrastructure.Services.AssetProvider;
 using Assets.CodeBase.Infrastructure.Services.StaticData;
-using Assets.CodeBase.Logic.Ui;
 using UnityEngine;
 
 namespace Assets.CodeBase.Infrastructure.Services.Factory.Ui
@@ -26,12 +25,18 @@ namespace Assets.CodeBase.Infrastructure.Services.Factory.Ui
             return chooseCommandButtons;
         }
 
-        public void CreateQueueButtons(CommandColor commandColor)
+        public void CreateHumanControlledUi(CommandColor commandColor)
         {
-        }
+            switch (commandColor)
+            {
+                case CommandColor.Green:
+                    _assets.Instantiate(AssetPath.GreenCommandHumanUiPath, _uiRoot);
+                    break;
 
-        public void CreateUpgradeButtons(CommandColor commandColor)
-        {
+                case CommandColor.Red:
+                    _assets.Instantiate(AssetPath.RedCommandHumanUiPath, _uiRoot);
+                    break;
+            }
         }
     }
 }

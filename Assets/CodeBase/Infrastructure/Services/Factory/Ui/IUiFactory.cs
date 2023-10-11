@@ -6,7 +6,6 @@ namespace Assets.CodeBase.Infrastructure.Services.Factory.Ui
     {
         void CreateUiRoot();
         GameObject CreateChooseCommandButtons();
-        void CreateQueueButtons(CommandColor commandColor);
-        void CreateUpgradeButtons(CommandColor commandColor);
+        void CreateHumanControlledUi(CommandColor commandColor);
     }
 }

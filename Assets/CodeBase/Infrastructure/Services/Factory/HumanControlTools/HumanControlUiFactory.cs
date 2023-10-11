@@ -14,10 +14,7 @@ namespace Assets.CodeBase.Infrastructure.Services.Factory.HumanControlTools
             _staticDataService = staticDataService;
         }
 
-        public void CreateHumanControlledTools(CommandColor commandColor)
-        {
-            _uiFactory.CreateQueueButtons(commandColor);
-            _uiFactory.CreateUpgradeButtons(commandColor);
-        }
+        public void CreateHumanControlledTools(CommandColor commandColor) =>
+            _uiFactory.CreateHumanControlledUi(commandColor);
     }
 }
