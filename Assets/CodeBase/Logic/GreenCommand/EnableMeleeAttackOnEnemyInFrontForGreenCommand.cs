@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnableMeleeAttackOnEnemyInFrontForGreenCommand : MonoBehaviour
 {
-    [SerializeField] private GreenComandMeleeUnitAttack _greenComandMeleeUnitAttack;
+    [SerializeField] private GreenCommandMeleeUnitAttack _greenComandMeleeUnitAttack;
     [SerializeField] private ClosestEnemyUnitCalculatorForGreenCommand _closestEnemyCalculator;
     [SerializeField] private float _attackRange;
 

@@ -2,7 +2,7 @@
 {
     public class AssetPath
     {
-        public const string RedCommandWarriorPath = "RedCommand/RedCommandWarrior/EnemyWarrior";
+        public const string RedCommandWarriorPath = "RedCommand/RedCommandWarrior/RedCommandWarrior";
         public const string GreenCommandWarriorPath = "GreenCommand/Warrior/GreenCommandWarrior";
     }
 }
