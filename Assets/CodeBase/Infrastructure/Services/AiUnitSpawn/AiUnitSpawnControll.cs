@@ -1,4 +1,5 @@
-﻿using Assets.CodeBase.Logic.Spawners;
+﻿using Assets.CodeBase.Infrastructure.Services.Factory.Spawners;
+using Assets.CodeBase.Infrastructure.Services.StaticData;
 using Assets.CodeBase.StaticData;
 using System.Collections;
 using UnityEngine;
@@ -8,17 +9,14 @@ namespace Assets.CodeBase.Infrastructure.Services.AiUnitControll
     public class AiUnitSpawnControll : IAiUnitSpawnControll
     {
         private readonly ICoroutinerRunner _coroutinerRunner;
-        private GreenCommandUnitSpawner _greenCommandUnitSpawner;
-        private RedCommandUnitSpawner _redCommandUnitSpawner;
+        private readonly IAiUnitSpawnerFactory _aiUnitSpawnerFactory;
+
         private float _spawnDelay = 3;
 
-        public AiUnitSpawnControll(ICoroutinerRunner coroutinerRunner) =>
-            _coroutinerRunner = coroutinerRunner;
-
-        public void InitSpawners(GreenCommandUnitSpawner greenCommandUnitSpawner, RedCommandUnitSpawner redCommandUnitSpawner)
+        public AiUnitSpawnControll(ICoroutinerRunner coroutinerRunner, IAiUnitSpawnerFactory aiUnitSpawnerFactory)
         {
-            _greenCommandUnitSpawner = greenCommandUnitSpawner;
-            _redCommandUnitSpawner = redCommandUnitSpawner;
+            _coroutinerRunner = coroutinerRunner;
+            _aiUnitSpawnerFactory = aiUnitSpawnerFactory;
         }
 
         public void StartSpawnTimer(CommandColor commandColor) =>
@@ -40,11 +38,11 @@ namespace Assets.CodeBase.Infrastructure.Services.AiUnitControll
             switch (commandColor)
             {
                 case CommandColor.Green:
-                    _greenCommandUnitSpawner.Spawn(UnitType.GreenCommandMelee, _greenCommandUnitSpawner.transform.position, Quaternion.identity);
+                    _aiUnitSpawnerFactory.UnitSpawner.Spawn(UnitType.GreenCommandMelee, _aiUnitSpawnerFactory.UnitSpawner.transform.position, Quaternion.identity);
                     break;
 
                 case CommandColor.Red:
-                    _redCommandUnitSpawner.Spawn(UnitType.RedCommandMelee, _redCommandUnitSpawner.transform.position, Quaternion.identity);
+                    _aiUnitSpawnerFactory.UnitSpawner.Spawn(UnitType.RedCommandMelee, _aiUnitSpawnerFactory.UnitSpawner.transform.position, Quaternion.identity);
                     break;
             }
         }

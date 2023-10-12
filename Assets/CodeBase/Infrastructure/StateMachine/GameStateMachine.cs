@@ -22,7 +22,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
             _states = new Dictionary<Type, IExitableState>()
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, coroutinerRunner, sceneLoader, allServices),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, allServices.Single<ISpawnersFactory>(), sceneLoader, allServices.Single<IAiUnitSpawnControll>(), allServices.Single<IChooseCommandMediator>(), allServices.Single<IUiFactory>(), allServices.Single<IGreenCommandUnitsHandler>(), allServices.Single<IRedCommandUnitsHandler>(), allServices.Single<IStaticDataService>(), allServices.Single<IUnitFactory>())
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IChooseCommandMediator>(), allServices.Single<IUiFactory>(), allServices.Single<IStaticDataService>())
             };
         }
 
