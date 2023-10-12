@@ -10,20 +10,20 @@ namespace Assets.CodeBase.Logic.Spawners
     public class RedCommandUnitSpawner : MonoBehaviour
     {
         private RedCommandUnit _previousUnit;
-        private IUnitFactory _greenCommandUnitFactory;
+        private IUnitFactory _unitFactory;
         private IRedCommandUnitsHandler _redCommandUnitsHandler;
         private IGreenCommandUnitsHandler _greenCommandUnitsHandler;
 
         public void Construct(IUnitFactory warriorFactory, IRedCommandUnitsHandler redCommandUnitsHandler, IGreenCommandUnitsHandler greenCommandUnitsHandler)
         {
-            _greenCommandUnitFactory = warriorFactory;
+            _unitFactory = warriorFactory;
             _redCommandUnitsHandler = redCommandUnitsHandler;
             _greenCommandUnitsHandler = greenCommandUnitsHandler;
         }
 
         public void Spawn(UnitType unitType, Vector3 position, Quaternion rotation)
         {
-            GameObject gameObject = _greenCommandUnitFactory.CreateUnit(unitType, position, rotation);
+            GameObject gameObject = _unitFactory.CreateUnit(unitType, position, rotation);
             RedCommandUnit unit = gameObject.GetComponent<RedCommandUnit>();
 
             unit.PreviousUnit = _previousUnit;

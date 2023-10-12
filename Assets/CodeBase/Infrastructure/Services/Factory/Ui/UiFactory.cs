@@ -1,4 +1,5 @@
 ﻿using Assets.CodeBase.Infrastructure.Services.AssetProvider;
+using Assets.CodeBase.Infrastructure.Services.Factory.Spawners;
 using Assets.CodeBase.Infrastructure.Services.StaticData;
 using UnityEngine;
 
@@ -7,12 +8,14 @@ namespace Assets.CodeBase.Infrastructure.Services.Factory.Ui
     public class UiFactory : IUiFactory
     {
         private readonly IAssets _assets;
+        private readonly ISpawnersFactory _spawnersFactory;
         private readonly IStaticDataService _staticDataService;
         private Transform _uiRoot;
 
-        public UiFactory(IAssets assets, IStaticDataService staticDataService)
+        public UiFactory(IAssets assets, ISpawnersFactory spawnersFactory, IStaticDataService staticDataService)
         {
             _assets = assets;
+            _spawnersFactory = spawnersFactory;
             _staticDataService = staticDataService;
         }
 
@@ -30,11 +33,25 @@ namespace Assets.CodeBase.Infrastructure.Services.Factory.Ui
             switch (commandColor)
             {
                 case CommandColor.Green:
-                    _assets.Instantiate(AssetPath.GreenCommandHumanUiPath, _uiRoot);
+                    GameObject greenUigameObject = _assets.Instantiate(AssetPath.GreenCommandHumanUiPath, _uiRoot);
+
+                    foreach (QueueUnit queueUnit in greenUigameObject.GetComponentsInChildren<QueueUnit>())
+                    {
+                        queueUnit.Construct(_spawnersFactory);
+                        queueUnit.CommandColor = CommandColor.Green;
+                    }
+
                     break;
 
                 case CommandColor.Red:
-                    _assets.Instantiate(AssetPath.RedCommandHumanUiPath, _uiRoot);
+                    GameObject redUigameObject = _assets.Instantiate(AssetPath.RedCommandHumanUiPath, _uiRoot);
+
+                    foreach (QueueUnit queueUnit in redUigameObject.GetComponentsInChildren<QueueUnit>())
+                    {
+                        queueUnit.Construct(_spawnersFactory);
+                        queueUnit.CommandColor = CommandColor.Red;
+                    }
+
                     break;
             }
         }

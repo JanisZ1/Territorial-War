@@ -1,4 +1,4 @@
-using Assets.CodeBase.Logic.Spawners;
+using Assets.CodeBase.Infrastructure.Services.Factory.Spawners;
 using Assets.CodeBase.StaticData;
 using System;
 using System.Collections.Generic;
@@ -9,17 +9,20 @@ public class QueueUnit : MonoBehaviour
 {
     [SerializeField] private UiSpawnSlider _uiSpawnSlider;
     [SerializeField] private List<float> _productionList = new List<float>();
-    [SerializeField] private GreenCommandUnitSpawner _greenCommandUnitSpawner;
     [SerializeField] private Button _queueButton;
+    [SerializeField] private UnitType _unitType;
+    public CommandColor CommandColor;
+
     public event Action UnitAdded;
 
     private int _maximumUnitsAdded = 5;
-
     private bool _unitProduced;
-
-    [SerializeField] private UnitType _unitType;
+    private ISpawnersFactory _spawnersFactory;
 
     public float Delay { get; private set; } = 3;
+
+    public void Construct(ISpawnersFactory spawnersFactory) =>
+        _spawnersFactory = spawnersFactory;
 
     private void OnEnable() =>
         _queueButton.onClick.AddListener(AddUnit);
@@ -55,8 +58,15 @@ public class QueueUnit : MonoBehaviour
     {
         _productionList.RemoveAt(0);
 
-        _greenCommandUnitSpawner.Spawn(_unitType, _greenCommandUnitSpawner.transform.position, Quaternion.identity);
-
+        switch (CommandColor)
+        {
+            case CommandColor.Green:
+                _spawnersFactory.GreenCommandUnitSpawner.Spawn(_unitType, _spawnersFactory.GreenCommandUnitSpawner.transform.position, Quaternion.identity);
+                break;
+            case CommandColor.Red:
+                _spawnersFactory.RedCommandUnitSpawner.Spawn(_unitType, _spawnersFactory.RedCommandUnitSpawner.transform.position, Quaternion.identity);
+                break;
+        }
         _unitProduced = false;
     }
 }

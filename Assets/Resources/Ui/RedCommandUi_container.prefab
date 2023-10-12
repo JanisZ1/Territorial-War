@@ -1086,7 +1086,7 @@ MonoBehaviour:
   _productionList: []
   _greenCommandUnitSpawner: {fileID: 0}
   _queueButton: {fileID: 4830837581837897020}
-  _unitType: 0
+  _unitType: 2
 --- !u!1 &8365797795319960803
 GameObject:
   m_ObjectHideFlags: 0
@@ -1226,7 +1226,7 @@ MonoBehaviour:
   _productionList: []
   _greenCommandUnitSpawner: {fileID: 0}
   _queueButton: {fileID: 2256989068354016135}
-  _unitType: 1
+  _unitType: 3
 --- !u!1 &8843291532613679706
 GameObject:
   m_ObjectHideFlags: 0
