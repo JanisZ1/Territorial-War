@@ -22,9 +22,9 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
         private readonly IGreenCommandUnitsHandler _greenCommandUnitsHandler;
         private readonly IRedCommandUnitsHandler _redCommandUnitsHandler;
         private readonly IStaticDataService _staticDataService;
-        private readonly IUnitFactory _greenCommandUnitFactory;
+        private readonly IUnitFactory _unitFactory;
 
-        public LoadLevelState(GameStateMachine gameStateMachine, ISpawnersFactory spawnersFactory, SceneLoader sceneLoader, IAiUnitSpawnControll aiUnitSpawnControll, IChooseCommandMediator chooseCommandMediator, IUiFactory uiFactory, IGreenCommandUnitsHandler greenCommandUnitsHandler, IRedCommandUnitsHandler redCommandUnitsHandler, IStaticDataService staticDataService, IUnitFactory greenCommandUnitFactory)
+        public LoadLevelState(GameStateMachine gameStateMachine, ISpawnersFactory spawnersFactory, SceneLoader sceneLoader, IAiUnitSpawnControll aiUnitSpawnControll, IChooseCommandMediator chooseCommandMediator, IUiFactory uiFactory, IGreenCommandUnitsHandler greenCommandUnitsHandler, IRedCommandUnitsHandler redCommandUnitsHandler, IStaticDataService staticDataService, IUnitFactory unitFactory)
         {
             _gameStateMachine = gameStateMachine;
             _spawnersFactory = spawnersFactory;
@@ -35,7 +35,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
             _greenCommandUnitsHandler = greenCommandUnitsHandler;
             _redCommandUnitsHandler = redCommandUnitsHandler;
             _staticDataService = staticDataService;
-            _greenCommandUnitFactory = greenCommandUnitFactory;
+            _unitFactory = unitFactory;
         }
 
         public void Enter(string scene) =>
@@ -65,7 +65,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
         {
             GameObject gameObject = _spawnersFactory.CreateCommandSpawner(CommandColor.Green);
             GreenCommandUnitSpawner greenCommandUnitSpawner = gameObject.GetComponentInChildren<GreenCommandUnitSpawner>();
-            greenCommandUnitSpawner.Construct(_greenCommandUnitFactory, _redCommandUnitsHandler, _greenCommandUnitsHandler);
+            greenCommandUnitSpawner.Construct(_unitFactory, _redCommandUnitsHandler, _greenCommandUnitsHandler);
 
             return greenCommandUnitSpawner;
         }
@@ -74,7 +74,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
         {
             GameObject gameObject = _spawnersFactory.CreateCommandSpawner(CommandColor.Red);
             RedCommandUnitSpawner redCommandUnitSpawner = gameObject.GetComponentInChildren<RedCommandUnitSpawner>();
-            redCommandUnitSpawner.Construct(_greenCommandUnitFactory, _redCommandUnitsHandler, _greenCommandUnitsHandler);
+            redCommandUnitSpawner.Construct(_unitFactory, _redCommandUnitsHandler, _greenCommandUnitsHandler);
 
             return redCommandUnitSpawner;
         }

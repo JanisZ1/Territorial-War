@@ -48,7 +48,7 @@ namespace Assets.CodeBase.Infrastructure
             _services.Register<IRedCommandUnitsHandler>(new RedCommandUnitsHandler());
             _services.Register<IGreenCommandUnitsHandler>(new GreenCommandUnitsHandler());
             _services.Register<IUnitFactory>(new UnitFactory(_services.Single<IStaticDataService>()));
-            _services.Register<ISpawnersFactory>(new SpawnersFactory(_services.Single<IAssets>()));
+            _services.Register<ISpawnersFactory>(new SpawnersFactory(_services.Single<IStaticDataService>()));
             _services.Register<IUiFactory>(new UiFactory(_services.Single<IAssets>(), _services.Single<ISpawnersFactory>(), _services.Single<IStaticDataService>()));
             _services.Register<IHumanControlUiFactory>(new HumanControlUiFactory(_services.Single<IUiFactory>(), _services.Single<IStaticDataService>()));
             _services.Register<IAiUnitSpawnControll>(new AiUnitSpawnControll(_coroutinerRunner));

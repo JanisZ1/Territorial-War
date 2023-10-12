@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.CodeBase.Logic.Spawners
 {
-    public class RedCommandUnitSpawner : MonoBehaviour
+    public class RedCommandUnitSpawner : UnitSpawner
     {
         private RedCommandUnit _previousUnit;
         private IUnitFactory _unitFactory;
@@ -21,7 +21,7 @@ namespace Assets.CodeBase.Logic.Spawners
             _greenCommandUnitsHandler = greenCommandUnitsHandler;
         }
 
-        public void Spawn(UnitType unitType, Vector3 position, Quaternion rotation)
+        public override void Spawn(UnitType unitType, Vector3 position, Quaternion rotation)
         {
             GameObject gameObject = _unitFactory.CreateUnit(unitType, position, rotation);
             RedCommandUnit unit = gameObject.GetComponent<RedCommandUnit>();

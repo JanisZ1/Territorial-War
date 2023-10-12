@@ -11,7 +11,6 @@ public class QueueUnit : MonoBehaviour
     [SerializeField] private List<float> _productionList = new List<float>();
     [SerializeField] private Button _queueButton;
     [SerializeField] private UnitType _unitType;
-    public CommandColor CommandColor;
 
     public event Action UnitAdded;
 
@@ -58,15 +57,8 @@ public class QueueUnit : MonoBehaviour
     {
         _productionList.RemoveAt(0);
 
-        switch (CommandColor)
-        {
-            case CommandColor.Green:
-                _spawnersFactory.GreenCommandUnitSpawner.Spawn(_unitType, _spawnersFactory.GreenCommandUnitSpawner.transform.position, Quaternion.identity);
-                break;
-            case CommandColor.Red:
-                _spawnersFactory.RedCommandUnitSpawner.Spawn(_unitType, _spawnersFactory.RedCommandUnitSpawner.transform.position, Quaternion.identity);
-                break;
-        }
+        _spawnersFactory.UnitSpawner.Spawn(_unitType, _spawnersFactory.UnitSpawner.transform.position, Quaternion.identity);
+
         _unitProduced = false;
     }
 }

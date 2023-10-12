@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.CodeBase.StaticData
 {
@@ -7,6 +6,5 @@ namespace Assets.CodeBase.StaticData
     public class LevelStaticData : ScriptableObject
     {
         public string LevelName;
-        public List<SpawnerStaticData> Spawners;
     }
 }
