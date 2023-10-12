@@ -6,22 +6,23 @@ namespace Assets.CodeBase.Infrastructure.Services.ChooseCommandMediator
 {
     public class ChooseCommandMediator : IChooseCommandMediator
     {
-        private readonly IHumanControlUiFactory _humanControlToolsFactory;
-        private readonly IHumanSpawnerFactory _spawnersFactory;
+        private readonly IHumanControlUiFactory _humanControlToolsUiFactory;
+        private readonly IHumanSpawnerFactory _humanSpawnerFactory;
         private readonly IAiUnitSpawnerFactory _aiUnitSpawnerFactory;
         private readonly IAiUnitSpawnControll _aiUnitSpawnControll;
 
-        public ChooseCommandMediator(IHumanControlUiFactory humanControlToolsFactory, IHumanSpawnerFactory spawnersFactory, IAiUnitSpawnerFactory aiUnitSpawnerFactory, IAiUnitSpawnControll aiUnitSpawnControll)
+        public ChooseCommandMediator(IHumanControlUiFactory humanControlToolsFactory, IHumanSpawnerFactory humanSpawnerFactory, IAiUnitSpawnerFactory aiUnitSpawnerFactory, IAiUnitSpawnControll aiUnitSpawnControll)
         {
-            _humanControlToolsFactory = humanControlToolsFactory;
-            _spawnersFactory = spawnersFactory;
+            _humanControlToolsUiFactory = humanControlToolsFactory;
+            _humanSpawnerFactory = humanSpawnerFactory;
             _aiUnitSpawnerFactory = aiUnitSpawnerFactory;
             _aiUnitSpawnControll = aiUnitSpawnControll;
         }
 
         public void ChooseCommand(CommandColor commandColor)
         {
-            _humanControlToolsFactory.CreateHumanControlledTools(commandColor);
+            _humanControlToolsUiFactory.CreateHumanControlledTools(commandColor);
+            _humanSpawnerFactory.CreateCommandSpawner(commandColor);
 
             switch (commandColor)
             {

@@ -1,5 +1,4 @@
 ﻿using Assets.CodeBase.Infrastructure.Services.Factory.Spawners;
-using Assets.CodeBase.Infrastructure.Services.StaticData;
 using Assets.CodeBase.StaticData;
 using System.Collections;
 using UnityEngine;
