@@ -21,9 +21,12 @@ namespace Assets.CodeBase.Infrastructure.Services.ChooseCommandMediator
 
         public void ChooseCommand(CommandColor commandColor)
         {
-            _uiFactory.CreateHumanControlledUi(commandColor);
-            _humanSpawnerFactory.CreateCommandSpawner(commandColor);
+            CreateHumanControlTools(commandColor);
+            CreateOppositeAiControlToolsOf(commandColor);
+        }
 
+        private void CreateOppositeAiControlToolsOf(CommandColor commandColor)
+        {
             switch (commandColor)
             {
                 case CommandColor.Green:
@@ -34,6 +37,12 @@ namespace Assets.CodeBase.Infrastructure.Services.ChooseCommandMediator
                     StartAiGreenUnitsSpawn();
                     break;
             }
+        }
+
+        private void CreateHumanControlTools(CommandColor commandColor)
+        {
+            _uiFactory.CreateHumanControlledUi(commandColor);
+            _humanSpawnerFactory.CreateCommandSpawner(commandColor);
         }
 
         private void StartAiGreenUnitsSpawn()
