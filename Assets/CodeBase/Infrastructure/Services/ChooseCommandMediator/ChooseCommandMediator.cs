@@ -2,6 +2,7 @@
 using Assets.CodeBase.Infrastructure.Services.Factory.Spawners;
 using Assets.CodeBase.Infrastructure.Services.Factory.Ui;
 using Assets.CodeBase.Logic.Ui;
+using Assets.CodeBase.StaticData;
 using UnityEngine;
 
 namespace Assets.CodeBase.Infrastructure.Services.ChooseCommandMediator
@@ -59,7 +60,17 @@ namespace Assets.CodeBase.Infrastructure.Services.ChooseCommandMediator
 
         private void CreateHumanControlTools(CommandColor commandColor)
         {
-            _uiFactory.CreateHumanControlledUi(commandColor);
+            switch (commandColor)
+            {
+                case CommandColor.Green:
+                    _uiFactory.CreateHumanControlledUi(WindowType.GreenCommandUi);
+                    break;
+
+                case CommandColor.Red:
+                    _uiFactory.CreateHumanControlledUi(WindowType.RedCommandUi);
+                    break;
+            }
+
             _humanSpawnerFactory.CreateCommandSpawner(commandColor);
         }
 

@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bffd11210b1bc7f488314ca3b4896dcb, type: 3}
-  m_Name: Main
+  m_Script: {fileID: 11500000, guid: 14ee441668824fa4085144bb6057393d, type: 3}
+  m_Name: GreenCommandUi
   m_EditorClassIdentifier: 
-  LevelName: Main
+  WindowType: 1
+  Prefab: {fileID: 5207447565832610612, guid: 2cb2c5f4a46120a42b1249d8349cb49d, type: 3}

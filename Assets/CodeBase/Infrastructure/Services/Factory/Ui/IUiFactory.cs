@@ -6,8 +6,7 @@ namespace Assets.CodeBase.Infrastructure.Services.Factory.Ui
     public interface IUiFactory : IService
     {
         void CreateUiRoot();
-        GameObject CreateChooseCommandButtons();
-        void CreateHumanControlledUi(CommandColor commandColor);
+        void CreateHumanControlledUi(WindowType windowType);
         GameObject CreateWindow(WindowType windowType);
     }
 }

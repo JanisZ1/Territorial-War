@@ -1,7 +1,6 @@
 ﻿using Assets.CodeBase.Infrastructure.Services.AssetProvider;
 using Assets.CodeBase.Infrastructure.Services.Factory.Spawners;
 using Assets.CodeBase.Infrastructure.Services.StaticData;
-using Assets.CodeBase.Logic.Ui;
 using Assets.CodeBase.StaticData;
 using UnityEngine;
 
@@ -10,50 +9,28 @@ namespace Assets.CodeBase.Infrastructure.Services.Factory.Ui
     public class UiFactory : IUiFactory
     {
         private readonly IAssets _assets;
-        private readonly IHumanUnitSpawnerFactory _spawnersFactory;
+        private readonly IHumanUnitSpawnerFactory _humanUnitSpawnerFactory;
         private readonly IStaticDataService _staticDataService;
         private Transform _uiRoot;
 
-        public UiFactory(IAssets assets, IHumanUnitSpawnerFactory spawnersFactory, IStaticDataService staticDataService)
+        public UiFactory(IAssets assets, IHumanUnitSpawnerFactory humanUnitSpawnerFactory, IStaticDataService staticDataService)
         {
             _assets = assets;
-            _spawnersFactory = spawnersFactory;
+            _humanUnitSpawnerFactory = humanUnitSpawnerFactory;
             _staticDataService = staticDataService;
         }
 
         public void CreateUiRoot() =>
             _uiRoot = _assets.Instantiate(AssetPath.UiRootPath).transform;
 
-        public GameObject CreateChooseCommandButtons()
+        public void CreateHumanControlledUi(WindowType windowType)
         {
-            GameObject chooseCommandButtons = _assets.Instantiate(AssetPath.ChooseCommandUiPath, _uiRoot);
-            return chooseCommandButtons;
-        }
+            WindowStaticData windowData = _staticDataService.ForWindow(windowType);
 
-        public void CreateHumanControlledUi(CommandColor commandColor)
-        {
-            switch (commandColor)
-            {
-                case CommandColor.Green:
-                    GameObject greenUigameObject = _assets.Instantiate(AssetPath.GreenCommandHumanUiPath, _uiRoot);
+            GameObject window = Object.Instantiate(windowData.Prefab, _uiRoot);
 
-                    foreach (QueueUnit queueUnit in greenUigameObject.GetComponentsInChildren<QueueUnit>())
-                    {
-                        queueUnit.Construct(_spawnersFactory);
-                    }
-
-                    break;
-
-                case CommandColor.Red:
-                    GameObject redUigameObject = _assets.Instantiate(AssetPath.RedCommandHumanUiPath, _uiRoot);
-
-                    foreach (QueueUnit queueUnit in redUigameObject.GetComponentsInChildren<QueueUnit>())
-                    {
-                        queueUnit.Construct(_spawnersFactory);
-                    }
-
-                    break;
-            }
+            foreach (QueueUnit queueUnit in window.GetComponentsInChildren<QueueUnit>())
+                queueUnit.Construct(_humanUnitSpawnerFactory);
         }
 
         public GameObject CreateWindow(WindowType windowType)

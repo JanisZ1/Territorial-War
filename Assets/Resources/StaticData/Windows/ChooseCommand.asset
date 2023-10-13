@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ChooseCommand
   m_EditorClassIdentifier: 
   WindowType: 0
-  Prefab: {fileID: 0}
+  Prefab: {fileID: 404677489435149296, guid: 6d642ba271b035e49abac8b5edece59f, type: 3}

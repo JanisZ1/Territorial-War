@@ -2,6 +2,8 @@
 {
     public enum WindowType
     {
-        ChooseCommand = 0
+        ChooseCommand = 0,
+        GreenCommandUi = 1,
+        RedCommandUi = 2
     }
 }
