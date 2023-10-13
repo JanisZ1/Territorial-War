@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.CodeBase.Infrastructure.Services.Factory.Spawners
 {
-    public interface IHumanSpawnerFactory : IService
+    public interface IHumanUnitSpawnerFactory : IService
     {
         GameObject CreateCommandSpawner(CommandColor commandColor);
         UnitSpawner UnitSpawner { get; }

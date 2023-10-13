@@ -16,11 +16,11 @@ public class QueueUnit : MonoBehaviour
 
     private int _maximumUnitsAdded = 5;
     private bool _unitProduced;
-    private IHumanSpawnerFactory _spawnersFactory;
+    private IHumanUnitSpawnerFactory _spawnersFactory;
 
     public float Delay { get; private set; } = 3;
 
-    public void Construct(IHumanSpawnerFactory spawnersFactory) =>
+    public void Construct(IHumanUnitSpawnerFactory spawnersFactory) =>
         _spawnersFactory = spawnersFactory;
 
     private void OnEnable() =>

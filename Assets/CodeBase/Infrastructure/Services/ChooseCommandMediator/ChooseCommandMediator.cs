@@ -7,11 +7,11 @@ namespace Assets.CodeBase.Infrastructure.Services.ChooseCommandMediator
     public class ChooseCommandMediator : IChooseCommandMediator
     {
         private readonly IHumanControlUiFactory _humanControlToolsUiFactory;
-        private readonly IHumanSpawnerFactory _humanSpawnerFactory;
+        private readonly IHumanUnitSpawnerFactory _humanSpawnerFactory;
         private readonly IAiUnitSpawnerFactory _aiUnitSpawnerFactory;
         private readonly IAiUnitSpawnControll _aiUnitSpawnControll;
 
-        public ChooseCommandMediator(IHumanControlUiFactory humanControlToolsFactory, IHumanSpawnerFactory humanSpawnerFactory, IAiUnitSpawnerFactory aiUnitSpawnerFactory, IAiUnitSpawnControll aiUnitSpawnControll)
+        public ChooseCommandMediator(IHumanControlUiFactory humanControlToolsFactory, IHumanUnitSpawnerFactory humanSpawnerFactory, IAiUnitSpawnerFactory aiUnitSpawnerFactory, IAiUnitSpawnControll aiUnitSpawnControll)
         {
             _humanControlToolsUiFactory = humanControlToolsFactory;
             _humanSpawnerFactory = humanSpawnerFactory;

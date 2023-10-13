@@ -14,7 +14,7 @@ namespace Assets.CodeBase.Logic.Spawners
         private IRedCommandUnitsHandler _redCommandUnitsHandler;
         private IGreenCommandUnitsHandler _greenCommandUnitsHandler;
 
-        public void Construct(IUnitFactory warriorFactory, IRedCommandUnitsHandler redCommandUnitsHandler, IGreenCommandUnitsHandler greenCommandUnitsHandler)
+        public override void Construct(IUnitFactory warriorFactory, IRedCommandUnitsHandler redCommandUnitsHandler, IGreenCommandUnitsHandler greenCommandUnitsHandler)
         {
             _unitFactory = warriorFactory;
             _redCommandUnitsHandler = redCommandUnitsHandler;

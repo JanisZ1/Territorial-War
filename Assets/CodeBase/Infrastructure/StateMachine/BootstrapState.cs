@@ -47,12 +47,12 @@ namespace Assets.CodeBase.Infrastructure
             _services.Register<IRedCommandUnitsHandler>(new RedCommandUnitsHandler());
             _services.Register<IGreenCommandUnitsHandler>(new GreenCommandUnitsHandler());
             _services.Register<IUnitFactory>(new UnitFactory(_services.Single<IStaticDataService>()));
-            _services.Register<IHumanSpawnerFactory>(new HumanSpawnerFactory(_services.Single<IStaticDataService>(), _services.Single<IUnitFactory>(), _services.Single<IRedCommandUnitsHandler>(), _services.Single<IGreenCommandUnitsHandler>()));
+            _services.Register<IHumanUnitSpawnerFactory>(new HumanUnitSpawnerFactory(_services.Single<IStaticDataService>(), _services.Single<IUnitFactory>(), _services.Single<IRedCommandUnitsHandler>(), _services.Single<IGreenCommandUnitsHandler>()));
             _services.Register<IAiUnitSpawnerFactory>(new AiUnitSpawnerFactory(_services.Single<IStaticDataService>(), _services.Single<IUnitFactory>(), _services.Single<IRedCommandUnitsHandler>(), _services.Single<IGreenCommandUnitsHandler>()));
-            _services.Register<IUiFactory>(new UiFactory(_services.Single<IAssets>(), _services.Single<IHumanSpawnerFactory>(), _services.Single<IStaticDataService>()));
+            _services.Register<IUiFactory>(new UiFactory(_services.Single<IAssets>(), _services.Single<IHumanUnitSpawnerFactory>(), _services.Single<IStaticDataService>()));
             _services.Register<IHumanControlUiFactory>(new HumanControlUiFactory(_services.Single<IUiFactory>()));
             _services.Register<IAiUnitSpawnControll>(new AiUnitSpawnControll(_coroutinerRunner, _services.Single<IAiUnitSpawnerFactory>()));
-            _services.Register<IChooseCommandMediator>(new ChooseCommandMediator(_services.Single<IHumanControlUiFactory>(), _services.Single<IHumanSpawnerFactory>(), _services.Single<IAiUnitSpawnerFactory>(), _services.Single<IAiUnitSpawnControll>()));
+            _services.Register<IChooseCommandMediator>(new ChooseCommandMediator(_services.Single<IHumanControlUiFactory>(), _services.Single<IHumanUnitSpawnerFactory>(), _services.Single<IAiUnitSpawnerFactory>(), _services.Single<IAiUnitSpawnControll>()));
         }
 
         private void EnterLoadLevel() =>

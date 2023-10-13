@@ -30,17 +30,7 @@ namespace Assets.CodeBase.Infrastructure.Services.Factory.Spawners
             SpawnerStaticData spawnerStaticData = _staticDataService.ForSpawner(commandColor);
 
             UnitSpawner = Object.Instantiate(spawnerStaticData.Prefab).GetComponent<UnitSpawner>();
-
-            //TODO: Delete code dublicate in this and human spawner factory
-            switch (commandColor)
-            {
-                case CommandColor.Green:
-                    UnitSpawner.GetComponent<GreenCommandUnitSpawner>().Construct(_unitFactory, _redCommandUnitsHandler, _greenCommandUnitsHandler);
-                    break;
-                case CommandColor.Red:
-                    UnitSpawner.GetComponent<RedCommandUnitSpawner>().Construct(_unitFactory, _redCommandUnitsHandler, _greenCommandUnitsHandler);
-                    break;
-            }
+            UnitSpawner.Construct(_unitFactory, _redCommandUnitsHandler, _greenCommandUnitsHandler);
 
             return UnitSpawner.gameObject;
         }
