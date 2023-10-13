@@ -1,5 +1,6 @@
 ﻿using Assets.CodeBase.Infrastructure.Services.Factory.Spawners;
 using Assets.CodeBase.StaticData;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -18,32 +19,38 @@ namespace Assets.CodeBase.Infrastructure.Services.AiUnitControll
             _aiUnitSpawnerFactory = aiUnitSpawnerFactory;
         }
 
-        public void StartSpawnTimer(CommandColor commandColor) =>
-            _coroutinerRunner.StartCoroutine(SpawnWarriorDelay(commandColor));
+        public void StartSpawnTimer(CommandColor commandColor)
+        {
+            UnitType unitType = ChooseUnitType(commandColor);
+            _coroutinerRunner.StartCoroutine(SpawnUnitProcess(unitType));
+        }
 
-        private IEnumerator SpawnWarriorDelay(CommandColor commandColor)
+        private IEnumerator SpawnUnitProcess(UnitType unitType)
         {
             WaitForSeconds delay = new WaitForSeconds(_spawnDelay);
 
             while (true)
             {
-                ChooseCommandSpawner(commandColor);
+                SpawnUnit(unitType);
                 yield return delay;
             }
         }
 
-        private void ChooseCommandSpawner(CommandColor commandColor)
+        private void SpawnUnit(UnitType unitType) =>
+            _aiUnitSpawnerFactory.UnitSpawner.Spawn(unitType, _aiUnitSpawnerFactory.UnitSpawner.transform.position, Quaternion.identity);
+
+        private UnitType ChooseUnitType(CommandColor commandColor)
         {
             switch (commandColor)
             {
                 case CommandColor.Green:
-                    _aiUnitSpawnerFactory.UnitSpawner.Spawn(UnitType.GreenCommandMelee, _aiUnitSpawnerFactory.UnitSpawner.transform.position, Quaternion.identity);
-                    break;
+                    return UnitType.GreenCommandMelee;
 
                 case CommandColor.Red:
-                    _aiUnitSpawnerFactory.UnitSpawner.Spawn(UnitType.RedCommandMelee, _aiUnitSpawnerFactory.UnitSpawner.transform.position, Quaternion.identity);
-                    break;
+                    return UnitType.RedCommandMelee;
             }
+
+            return UnitType.GreenCommandMelee;
         }
     }
 }
