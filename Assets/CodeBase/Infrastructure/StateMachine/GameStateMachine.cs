@@ -1,11 +1,7 @@
 ﻿using Assets.CodeBase.Infrastructure.Services;
-using Assets.CodeBase.Infrastructure.Services.AiUnitControll;
-using Assets.CodeBase.Infrastructure.Services.Factory.Spawners;
 using Assets.CodeBase.Infrastructure.Services.Factory.Ui;
-using Assets.CodeBase.Infrastructure.Services.Factory.Unit;
-using Assets.CodeBase.Infrastructure.Services.GreenCommandUnitsHandler;
-using Assets.CodeBase.Infrastructure.Services.RedCommandUnitsHandler;
 using Assets.CodeBase.Infrastructure.Services.StaticData;
+using Assets.CodeBase.Infrastructure.Services.Window;
 using System;
 using System.Collections.Generic;
 
@@ -22,7 +18,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
             _states = new Dictionary<Type, IExitableState>()
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, coroutinerRunner, sceneLoader, allServices),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IChooseCommandMediator>(), allServices.Single<IUiFactory>(), allServices.Single<IStaticDataService>())
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IUiFactory>(), allServices.Single<IWindowService>(), allServices.Single<IStaticDataService>())
             };
         }
 

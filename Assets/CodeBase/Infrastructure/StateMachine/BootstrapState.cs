@@ -8,6 +8,7 @@ using Assets.CodeBase.Infrastructure.Services.Factory.Unit;
 using Assets.CodeBase.Infrastructure.Services.GreenCommandUnitsHandler;
 using Assets.CodeBase.Infrastructure.Services.RedCommandUnitsHandler;
 using Assets.CodeBase.Infrastructure.Services.StaticData;
+using Assets.CodeBase.Infrastructure.Services.Window;
 using Assets.CodeBase.Infrastructure.StateMachine;
 
 namespace Assets.CodeBase.Infrastructure
@@ -51,6 +52,7 @@ namespace Assets.CodeBase.Infrastructure
             _services.Register<IUiFactory>(new UiFactory(_services.Single<IAssets>(), _services.Single<IHumanUnitSpawnerFactory>(), _services.Single<IStaticDataService>()));
             _services.Register<IAiUnitSpawnControll>(new AiUnitSpawnControll(_coroutinerRunner, _services.Single<IAiUnitSpawnerFactory>()));
             _services.Register<IChooseCommandMediator>(new ChooseCommandMediator(_services.Single<IUiFactory>(), _services.Single<IHumanUnitSpawnerFactory>(), _services.Single<IAiUnitSpawnerFactory>(), _services.Single<IAiUnitSpawnControll>()));
+            _services.Register<IWindowService>(new WindowService(_services.Single<IUiFactory>(), _services.Single<IChooseCommandMediator>()));
         }
 
         private void EnterLoadLevel() =>

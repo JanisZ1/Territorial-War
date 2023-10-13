@@ -1,6 +1,8 @@
 ﻿using Assets.CodeBase.Infrastructure.Services.AiUnitControll;
 using Assets.CodeBase.Infrastructure.Services.Factory.Spawners;
 using Assets.CodeBase.Infrastructure.Services.Factory.Ui;
+using Assets.CodeBase.Logic.Ui;
+using UnityEngine;
 
 namespace Assets.CodeBase.Infrastructure.Services.ChooseCommandMediator
 {
@@ -10,6 +12,7 @@ namespace Assets.CodeBase.Infrastructure.Services.ChooseCommandMediator
         private readonly IHumanUnitSpawnerFactory _humanSpawnerFactory;
         private readonly IAiUnitSpawnerFactory _aiUnitSpawnerFactory;
         private readonly IAiUnitSpawnControll _aiUnitSpawnControll;
+        private GameObject _window;
 
         public ChooseCommandMediator(IUiFactory uiFactory, IHumanUnitSpawnerFactory humanSpawnerFactory, IAiUnitSpawnerFactory aiUnitSpawnerFactory, IAiUnitSpawnControll aiUnitSpawnControll)
         {
@@ -19,10 +22,25 @@ namespace Assets.CodeBase.Infrastructure.Services.ChooseCommandMediator
             _aiUnitSpawnControll = aiUnitSpawnControll;
         }
 
-        public void ChooseCommand(CommandColor commandColor)
+        public void SubscribeToChooseCommand(GameObject window)
+        {
+            _window = window;
+
+            foreach (ChooseCommandButton chooseButton in window.GetComponentsInChildren<ChooseCommandButton>())
+                chooseButton.CommandColorChoosed += CommandColorChoosed;
+        }
+
+        private void CommandColorChoosed(CommandColor commandColor)
         {
             CreateHumanControlTools(commandColor);
             CreateOppositeAiControlToolsOf(commandColor);
+            UnSubscribeFromChooseCommand();
+        }
+
+        private void UnSubscribeFromChooseCommand()
+        {
+            foreach (ChooseCommandButton chooseButton in _window.GetComponentsInChildren<ChooseCommandButton>())
+                chooseButton.CommandColorChoosed -= CommandColorChoosed;
         }
 
         private void CreateOppositeAiControlToolsOf(CommandColor commandColor)

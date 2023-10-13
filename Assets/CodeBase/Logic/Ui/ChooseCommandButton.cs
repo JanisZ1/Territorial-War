@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.CodeBase.Logic.Ui
@@ -6,12 +7,10 @@ namespace Assets.CodeBase.Logic.Ui
     public class ChooseCommandButton : MonoBehaviour
     {
         [SerializeField] private Button _button;
+        [SerializeField] private GameObject _window;
         [SerializeField] private CommandColor _commandColor;
 
-        private IChooseCommandMediator _chooseCommandMediator;
-
-        public void Construct(IChooseCommandMediator chooseCommandMediator) =>
-            _chooseCommandMediator = chooseCommandMediator;
+        public event Action<CommandColor> CommandColorChoosed;
 
         private void Start() =>
             _button.onClick.AddListener(ChooseCommand);
@@ -19,7 +18,10 @@ namespace Assets.CodeBase.Logic.Ui
         private void OnDestroy() =>
             _button.onClick.RemoveListener(ChooseCommand);
 
-        private void ChooseCommand() =>
-            _chooseCommandMediator.ChooseCommand(_commandColor);
+        private void ChooseCommand()
+        {
+            CommandColorChoosed?.Invoke(_commandColor);
+            Destroy(_window);
+        }
     }
 }

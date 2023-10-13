@@ -471,6 +471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 7384102889454320400}
+  _window: {fileID: 404677489435149296}
   _commandColor: 1
 --- !u!1 &8924005611329340772
 GameObject:
@@ -608,4 +609,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 612295637698135113}
+  _window: {fileID: 404677489435149296}
   _commandColor: 0

@@ -1,6 +1,7 @@
 ﻿using Assets.CodeBase.Infrastructure.Services;
+using UnityEngine;
 
 public interface IChooseCommandMediator : IService
 {
-    void ChooseCommand(CommandColor commandColor);
+    void SubscribeToChooseCommand(GameObject window);
 }

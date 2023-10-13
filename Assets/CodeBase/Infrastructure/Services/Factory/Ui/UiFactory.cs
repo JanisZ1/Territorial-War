@@ -1,6 +1,8 @@
 ﻿using Assets.CodeBase.Infrastructure.Services.AssetProvider;
 using Assets.CodeBase.Infrastructure.Services.Factory.Spawners;
 using Assets.CodeBase.Infrastructure.Services.StaticData;
+using Assets.CodeBase.Logic.Ui;
+using Assets.CodeBase.StaticData;
 using UnityEngine;
 
 namespace Assets.CodeBase.Infrastructure.Services.Factory.Ui
@@ -52,6 +54,14 @@ namespace Assets.CodeBase.Infrastructure.Services.Factory.Ui
 
                     break;
             }
+        }
+
+        public GameObject CreateWindow(WindowType windowType)
+        {
+            WindowStaticData windowData = _staticDataService.ForWindow(windowType);
+            GameObject window = Object.Instantiate(windowData.Prefab, _uiRoot);
+
+            return window;
         }
     }
 }

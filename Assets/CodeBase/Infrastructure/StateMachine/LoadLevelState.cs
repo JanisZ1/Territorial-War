@@ -1,7 +1,7 @@
 ﻿using Assets.CodeBase.Infrastructure.Services.Factory.Ui;
 using Assets.CodeBase.Infrastructure.Services.StaticData;
-using Assets.CodeBase.Logic.Ui;
-using UnityEngine;
+using Assets.CodeBase.Infrastructure.Services.Window;
+using Assets.CodeBase.StaticData;
 
 namespace Assets.CodeBase.Infrastructure.StateMachine
 {
@@ -9,16 +9,16 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
     {
         private readonly GameStateMachine _gameStateMachine;
         private readonly SceneLoader _sceneLoader;
-        private readonly IChooseCommandMediator _chooseCommandMediator;
         private readonly IUiFactory _uiFactory;
+        private readonly IWindowService _windowService;
         private readonly IStaticDataService _staticDataService;
 
-        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, IChooseCommandMediator chooseCommandMediator, IUiFactory uiFactory, IStaticDataService staticDataService)
+        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, IUiFactory uiFactory, IWindowService windowService, IStaticDataService staticDataService)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
-            _chooseCommandMediator = chooseCommandMediator;
             _uiFactory = uiFactory;
+            _windowService = windowService;
             _staticDataService = staticDataService;
         }
 
@@ -29,16 +29,11 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
         {
             _staticDataService.Load();
             _uiFactory.CreateUiRoot();
-            CreateChooseCommandButtons();
+            OpenChooseCommandWindow();
         }
 
-        private void CreateChooseCommandButtons()
-        {
-            GameObject chooseCommandButtons = _uiFactory.CreateChooseCommandButtons();
-
-            foreach (ChooseCommandButton chooseButton in chooseCommandButtons.GetComponentsInChildren<ChooseCommandButton>())
-                chooseButton.Construct(_chooseCommandMediator);
-        }
+        private void OpenChooseCommandWindow() => 
+            _windowService.OpenWindow(WindowType.ChooseCommand);
 
         public void Exit()
         {
