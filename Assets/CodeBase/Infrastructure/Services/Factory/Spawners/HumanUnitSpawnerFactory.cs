@@ -17,7 +17,7 @@ namespace Assets.CodeBase.Infrastructure.Services.Factory.Spawners
 
         public UnitSpawner UnitSpawner { get; private set; }
 
-        public HumanUnitSpawnerFactory(IStaticDataService staticDataService, IUnitFactory unitFactory, IRedCommandUnitsHandler redCommandUnitsHandler,IGreenCommandUnitsHandler greenCommandUnitsHandler)
+        public HumanUnitSpawnerFactory(IStaticDataService staticDataService, IUnitFactory unitFactory, IRedCommandUnitsHandler redCommandUnitsHandler, IGreenCommandUnitsHandler greenCommandUnitsHandler)
         {
             _staticDataService = staticDataService;
             _unitFactory = unitFactory;

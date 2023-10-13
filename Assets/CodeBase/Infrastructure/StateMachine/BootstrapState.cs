@@ -2,7 +2,6 @@
 using Assets.CodeBase.Infrastructure.Services.AiUnitControll;
 using Assets.CodeBase.Infrastructure.Services.AssetProvider;
 using Assets.CodeBase.Infrastructure.Services.ChooseCommandMediator;
-using Assets.CodeBase.Infrastructure.Services.Factory.HumanControlTools;
 using Assets.CodeBase.Infrastructure.Services.Factory.Spawners;
 using Assets.CodeBase.Infrastructure.Services.Factory.Ui;
 using Assets.CodeBase.Infrastructure.Services.Factory.Unit;
@@ -50,9 +49,8 @@ namespace Assets.CodeBase.Infrastructure
             _services.Register<IHumanUnitSpawnerFactory>(new HumanUnitSpawnerFactory(_services.Single<IStaticDataService>(), _services.Single<IUnitFactory>(), _services.Single<IRedCommandUnitsHandler>(), _services.Single<IGreenCommandUnitsHandler>()));
             _services.Register<IAiUnitSpawnerFactory>(new AiUnitSpawnerFactory(_services.Single<IStaticDataService>(), _services.Single<IUnitFactory>(), _services.Single<IRedCommandUnitsHandler>(), _services.Single<IGreenCommandUnitsHandler>()));
             _services.Register<IUiFactory>(new UiFactory(_services.Single<IAssets>(), _services.Single<IHumanUnitSpawnerFactory>(), _services.Single<IStaticDataService>()));
-            _services.Register<IHumanControlUiFactory>(new HumanControlUiFactory(_services.Single<IUiFactory>()));
             _services.Register<IAiUnitSpawnControll>(new AiUnitSpawnControll(_coroutinerRunner, _services.Single<IAiUnitSpawnerFactory>()));
-            _services.Register<IChooseCommandMediator>(new ChooseCommandMediator(_services.Single<IHumanControlUiFactory>(), _services.Single<IHumanUnitSpawnerFactory>(), _services.Single<IAiUnitSpawnerFactory>(), _services.Single<IAiUnitSpawnControll>()));
+            _services.Register<IChooseCommandMediator>(new ChooseCommandMediator(_services.Single<IUiFactory>(), _services.Single<IHumanUnitSpawnerFactory>(), _services.Single<IAiUnitSpawnerFactory>(), _services.Single<IAiUnitSpawnControll>()));
         }
 
         private void EnterLoadLevel() =>
