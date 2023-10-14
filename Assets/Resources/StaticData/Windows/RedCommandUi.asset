@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: RedCommandUi
   m_EditorClassIdentifier: 
   WindowType: 2
-  Prefab: {fileID: 5225116037659125576, guid: 8a0027148027826469654cf155191058, type: 3}
+  Prefab: {fileID: 6062055512314667439, guid: 8a0027148027826469654cf155191058, type: 3}
