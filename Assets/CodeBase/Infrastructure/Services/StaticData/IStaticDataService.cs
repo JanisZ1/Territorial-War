@@ -7,5 +7,7 @@ namespace Assets.CodeBase.Infrastructure.Services.StaticData
         void Load();
         LevelStaticData ForLevel(string level);
         UnitStaticData ForUnit(UnitType unitType);
-    }
+        SpawnerStaticData ForSpawner(CommandColor commandColor);
+        WindowStaticData ForWindow(WindowType windowType);
+    }    
 }

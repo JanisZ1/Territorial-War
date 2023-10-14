@@ -1,14 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.CodeBase.StaticData
 {
-    [Serializable]
-    public class SpawnerStaticData
+    [CreateAssetMenu(fileName = "SpawnerData", menuName = "StaticData/SpawnerData")]
+    public class SpawnerStaticData : ScriptableObject
     {
-        public Vector3 Position;
-
-        public SpawnerStaticData(Vector3 position) =>
-            Position = position;
+        public CommandColor CommandColor;
+        public GameObject Prefab;
     }
 }

@@ -13,5 +13,3 @@ MonoBehaviour:
   m_Name: Main
   m_EditorClassIdentifier: 
   LevelName: Main
-  Spawners:
-  - Position: {x: -4.4240003, y: 0.5, z: 0}

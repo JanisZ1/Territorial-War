@@ -1,4 +1,4 @@
-﻿using Assets.CodeBase.Infrastructure.Services.Factory;
+﻿using Assets.CodeBase.Infrastructure.Services.Factory.Unit;
 using Assets.CodeBase.Infrastructure.Services.GreenCommandUnitsHandler;
 using Assets.CodeBase.Infrastructure.Services.RedCommandUnitsHandler;
 using Assets.CodeBase.Logic.GreenCommand;
@@ -7,23 +7,23 @@ using UnityEngine;
 
 namespace Assets.CodeBase.Logic.Spawners
 {
-    public class GreenCommandUnitSpawner : MonoBehaviour
+    public class GreenCommandUnitSpawner : UnitSpawner
     {
         private GreenCommandUnit _previousUnit;
-        private IUnitFactory _greenCommandUnitFactory;
+        private IUnitFactory _unitFactory;
         private IRedCommandUnitsHandler _redCommandUnitsHandler;
         private IGreenCommandUnitsHandler _greenCommandUnitsHandler;
 
-        public void Construct(IUnitFactory warriorFactory, IRedCommandUnitsHandler redCommandUnitsHandler, IGreenCommandUnitsHandler greenCommandUnitsHandler)
+        public override void Construct(IUnitFactory warriorFactory, IRedCommandUnitsHandler redCommandUnitsHandler, IGreenCommandUnitsHandler greenCommandUnitsHandler)
         {
-            _greenCommandUnitFactory = warriorFactory;
+            _unitFactory = warriorFactory;
             _redCommandUnitsHandler = redCommandUnitsHandler;
             _greenCommandUnitsHandler = greenCommandUnitsHandler;
         }
 
-        public void Spawn(UnitType unitType, Vector3 position, Quaternion rotation)
+        public override void Spawn(UnitType unitType, Vector3 position, Quaternion rotation)
         {
-            GameObject gameObject = _greenCommandUnitFactory.CreateUnit(unitType, position, rotation);
+            GameObject gameObject = _unitFactory.CreateUnit(unitType, position, rotation);
             GreenCommandUnit unit = gameObject.GetComponent<GreenCommandUnit>();
 
             unit.PreviousUnit = _previousUnit;

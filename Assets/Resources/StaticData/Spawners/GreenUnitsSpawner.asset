@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688edd5e59cc70a4ea378277aabdf726, type: 3}
+  m_Name: GreenUnitsSpawner
+  m_EditorClassIdentifier: 
+  Position: {x: 0, y: 0, z: 0}
+  CommandColor: 0
+  Prefab: {fileID: 6064575705485205035, guid: 20f69bc631b251645ae6b1b90c5211e1, type: 3}

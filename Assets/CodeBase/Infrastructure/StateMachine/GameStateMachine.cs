@@ -1,8 +1,7 @@
 ﻿using Assets.CodeBase.Infrastructure.Services;
-using Assets.CodeBase.Infrastructure.Services.Factory;
-using Assets.CodeBase.Infrastructure.Services.GreenCommandUnitsHandler;
-using Assets.CodeBase.Infrastructure.Services.RedCommandUnitsHandler;
+using Assets.CodeBase.Infrastructure.Services.Factory.Ui;
 using Assets.CodeBase.Infrastructure.Services.StaticData;
+using Assets.CodeBase.Infrastructure.Services.Window;
 using System;
 using System.Collections.Generic;
 
@@ -14,12 +13,12 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
 
         private IExitableState _currentState;
 
-        public GameStateMachine(SceneLoader sceneLoader, AllServices allServices)
+        public GameStateMachine(ICoroutinerRunner coroutinerRunner, SceneLoader sceneLoader, AllServices allServices)
         {
             _states = new Dictionary<Type, IExitableState>()
             {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, allServices),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IGreenCommandUnitsHandler>(), allServices.Single<IRedCommandUnitsHandler>(), allServices.Single<IStaticDataService>(), allServices.Single<IUnitFactory>())
+                [typeof(BootstrapState)] = new BootstrapState(this, coroutinerRunner, sceneLoader, allServices),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IUiFactory>(), allServices.Single<IWindowService>(), allServices.Single<IStaticDataService>())
             };
         }
 
