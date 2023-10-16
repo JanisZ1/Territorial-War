@@ -624,7 +624,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 7870300527242330917}
   m_HandleRect: {fileID: 0}
@@ -649,7 +649,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slider: {fileID: 6224315171794868768}
-  _queueUnit: {fileID: 3615385816669665819}
 --- !u!1 &2618953099980672641
 GameObject:
   m_ObjectHideFlags: 0
