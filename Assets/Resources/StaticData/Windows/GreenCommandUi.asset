@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: GreenCommandUi
   m_EditorClassIdentifier: 
   WindowType: 1
-  Prefab: {fileID: 5207447565832610612, guid: 2cb2c5f4a46120a42b1249d8349cb49d, type: 3}
+  Prefab: {fileID: 8218394180810939274, guid: 2cb2c5f4a46120a42b1249d8349cb49d, type: 3}

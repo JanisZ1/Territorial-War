@@ -1,18 +1,13 @@
 using Assets.CodeBase.Infrastructure.Services.Factory.Spawners;
 using Assets.CodeBase.StaticData;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class QueueUnit : MonoBehaviour
 {
     [SerializeField] private UiSpawnSlider _uiSpawnSlider;
-    [SerializeField] private List<float> _productionList = new List<float>();
-    [SerializeField] private Button _queueButton;
-    [SerializeField] private UnitType _unitType;
-
-    public event Action UnitAdded;
+    private List<UnitType> _productionList = new List<UnitType>();
+    [SerializeField] private UnitBuyButton[] _unitBuyButtons;
 
     private int _maximumUnitsAdded = 5;
     private bool _unitProduced;
@@ -23,16 +18,22 @@ public class QueueUnit : MonoBehaviour
     public void Construct(IHumanUnitSpawnerFactory spawnersFactory) =>
         _spawnersFactory = spawnersFactory;
 
-    private void OnEnable() =>
-        _queueButton.onClick.AddListener(AddUnit);
+    private void Start()
+    {
+        foreach (UnitBuyButton unitBuyButton in _unitBuyButtons)
+            unitBuyButton.Clicked += AddUnit;
+    }
 
-    private void OnDisable() =>
-        _queueButton.onClick.RemoveListener(AddUnit);
+    private void OnDestroy()
+    {
+        foreach (UnitBuyButton unitBuyButton in _unitBuyButtons)
+            unitBuyButton.Clicked -= AddUnit;
+    }
 
-    private void AddUnit()
+    public void AddUnit(UnitType unitType)
     {
         if (_productionList.Count < _maximumUnitsAdded)
-            _productionList.Add(Delay);
+            _productionList.Add(unitType);
     }
 
     private bool UnitsIsInProduction() =>
@@ -49,15 +50,15 @@ public class QueueUnit : MonoBehaviour
 
     private void StartNext()
     {
-        _uiSpawnSlider.StartChangeSliderValue();
-        Invoke(nameof(CreateUnit), _productionList[0]);
+        _uiSpawnSlider.StartChangeSliderValue(Delay);
+        Invoke(nameof(CreateUnit), Delay);
     }
 
     private void CreateUnit()
     {
-        _productionList.RemoveAt(0);
+        _spawnersFactory.UnitSpawner.Spawn(_productionList[0], _spawnersFactory.UnitSpawner.transform.position, Quaternion.identity);
 
-        _spawnersFactory.UnitSpawner.Spawn(_unitType, _spawnersFactory.UnitSpawner.transform.position, Quaternion.identity);
+        _productionList.RemoveAt(0);
 
         _unitProduced = false;
     }
