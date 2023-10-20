@@ -19,7 +19,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
             GameObject gameObject = _assets.Instantiate(AssetPath.ParabolaPath);
 
             Parabola parabola = gameObject.GetComponent<Parabola>();
-            parabola.Construct(_scanningLineFactory.ScanningLine);
             parabola.Focus = focusPosition;
 
             return gameObject;

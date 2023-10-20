@@ -6,40 +6,15 @@ namespace Assets.CodeBase.Logic.GlobalMap
     public class Parabola : MonoBehaviour
     {
         [SerializeField] private LineRenderer _lineRenderer;
-        [SerializeField] private ScanningLine _scanningLine;
         public Vector3 Focus;
 
-        public void Construct(ScanningLine scanningLine) =>
-            _scanningLine = scanningLine;
-
-        private void Update()
-        {
-            MoveTransformToScanningLine();
-
-            Vector2 topPoint = CalculateFocusPosition();
-            InitializeFirstHalfOfParabola(topPoint);
-        }
-
-        private void MoveTransformToScanningLine() =>
+        private void Update() =>
             transform.position = Focus;
 
-        private Vector2 CalculateFocusPosition()
+        public void InitializeFirstHalfOfParabola(Vector2 focusPosition)
         {
-            Vector3 scanningLinePosition = _scanningLine.transform.position;
+            Focus = new Vector3(focusPosition.x, 0, focusPosition.y);
 
-            Vector3 scanningLineleftCorner = _scanningLine.LineRenderer.GetPosition(0);
-            Vector3 scanningLineRightCorner = _scanningLine.LineRenderer.GetPosition(1);
-
-            Vector3 scanningLineMiddle = (scanningLineleftCorner + scanningLineRightCorner) * 0.5f;
-            //sweeping Line Focus Position for test purposes
-            Focus = new Vector3(scanningLineMiddle.x, scanningLinePosition.y, scanningLinePosition.z);
-
-            Vector2 result = new Vector2(Focus.x, Focus.z);
-            return result;
-        }
-
-        private void InitializeFirstHalfOfParabola(Vector2 focusPosition)
-        {
             List<Vector3> segments = new List<Vector3>();
             float stepCount = _lineRenderer.positionCount;
             float step = focusPosition.y / stepCount;
