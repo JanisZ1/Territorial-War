@@ -8,39 +8,41 @@ namespace Assets.CodeBase.Logic.GlobalMap
         [SerializeField] private LineRenderer _lineRenderer;
         [SerializeField] private ScanningLine _scanningLine;
         public Vector3 Focus;
-        private float _directrix;
-        private int _index;
 
         public void Construct(ScanningLine scanningLine) =>
             _scanningLine = scanningLine;
-        private void Start()
-        {
-            _index = 9;
-        }
+
         private void Update()
         {
-            Vector2 topPoint = CalculateTopPointPosition();
-            InitializeLineRendererPoints(topPoint);
+            MoveTransformToScanningLine();
+
+            Vector2 topPoint = CalculateFocusPosition();
+            InitializeFirstHalfOfParabola(topPoint);
         }
 
-        private Vector2 CalculateTopPointPosition()
+        private void MoveTransformToScanningLine() =>
+            transform.position = Focus;
+
+        private Vector2 CalculateFocusPosition()
         {
+            Vector3 scanningLinePosition = _scanningLine.transform.position;
+
             Vector3 scanningLineleftCorner = _scanningLine.LineRenderer.GetPosition(0);
             Vector3 scanningLineRightCorner = _scanningLine.LineRenderer.GetPosition(1);
 
-            Vector3 scanningLineMiddle = scanningLineleftCorner + scanningLineRightCorner * 0.5f;
+            Vector3 scanningLineMiddle = (scanningLineleftCorner + scanningLineRightCorner) * 0.5f;
+            //sweeping Line Focus Position for test purposes
+            Focus = new Vector3(scanningLineMiddle.x, scanningLinePosition.y, scanningLinePosition.z);
 
-            Vector3 topPointPosition = Focus + scanningLineMiddle / 2;
-
-            Vector2 result = new Vector2(topPointPosition.x, topPointPosition.z);
+            Vector2 result = new Vector2(Focus.x, Focus.z);
             return result;
         }
 
-        private void InitializeLineRendererPoints(Vector2 topPointPosition)
+        private void InitializeFirstHalfOfParabola(Vector2 focusPosition)
         {
             List<Vector3> segments = new List<Vector3>();
             float stepCount = _lineRenderer.positionCount;
-            float step = topPointPosition.x / stepCount;
+            float step = focusPosition.y / stepCount;
 
             int firstParabolaindex = 0;
             for (int i = 0; i < (float)_lineRenderer.positionCount / 2; i++)
@@ -55,17 +57,15 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 firstParabolaindex++;
             }
 
-            Copy(firstParabolaindex, segments);
+            CopyFirstHalfToSecondHalf(firstParabolaindex, segments);
         }
 
-        private void Copy(int firstParabolaindex, List<Vector3> segments)
+        private void CopyFirstHalfToSecondHalf(int firstParabolaindex, List<Vector3> segments)
         {
             int secondParabolaindex = firstParabolaindex - 1;
 
             for (int i = segments.Count - 1; i >= 0; i--)
             {
-                Debug.Log(secondParabolaindex);
-
                 Vector3 segmentPosition = new Vector3(segments[i].x, 0, segments[i].z);
 
                 _lineRenderer.SetPosition(secondParabolaindex, new Vector3(-segmentPosition.x, 0, segmentPosition.z));
