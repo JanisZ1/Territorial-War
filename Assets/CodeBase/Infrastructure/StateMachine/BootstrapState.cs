@@ -10,6 +10,7 @@ using Assets.CodeBase.Infrastructure.Services.RedCommandUnitsHandler;
 using Assets.CodeBase.Infrastructure.Services.StaticData;
 using Assets.CodeBase.Infrastructure.Services.Window;
 using Assets.CodeBase.Infrastructure.StateMachine;
+using Assets.CodeBase.Logic.GlobalMap;
 
 namespace Assets.CodeBase.Infrastructure
 {
@@ -46,6 +47,7 @@ namespace Assets.CodeBase.Infrastructure
             _services.Register<IStaticDataService>(new StaticDataService());
             _services.Register<IRedCommandUnitsHandler>(new RedCommandUnitsHandler());
             _services.Register<IGreenCommandUnitsHandler>(new GreenCommandUnitsHandler());
+            _services.Register<IParabolaFactory>(new ParabolaFactory(_services.Single<IAssets>()));
             _services.Register<IUnitFactory>(new UnitFactory(_services.Single<IStaticDataService>()));
             _services.Register<IHumanUnitSpawnerFactory>(new HumanUnitSpawnerFactory(_services.Single<IStaticDataService>(), _services.Single<IUnitFactory>(), _services.Single<IRedCommandUnitsHandler>(), _services.Single<IGreenCommandUnitsHandler>()));
             _services.Register<IAiUnitSpawnerFactory>(new AiUnitSpawnerFactory(_services.Single<IStaticDataService>(), _services.Single<IUnitFactory>(), _services.Single<IRedCommandUnitsHandler>(), _services.Single<IGreenCommandUnitsHandler>()));

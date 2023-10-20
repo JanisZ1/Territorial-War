@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.CodeBase.Logic.GlobalMap
 {
-    public class VoronoiDiagram : MonoBehaviour
+    public class PixelColorCalculator : MonoBehaviour
     {
         [SerializeField] private Texture2D _texture;
         [SerializeField] private int _resolution = 128;
@@ -50,6 +50,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
             texture.filterMode = FilterMode.Point;
             texture.SetPixels(pixelColors);
             texture.Apply();
+            Debug.Log(texture.GetPixel(32, 20));
             return texture;
         }
 
@@ -69,6 +70,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
             }
             return index;
         }
+
         private List<Vector2Int> ConvertToPixelCoordinates()
         {
             List<Vector2Int> convertedPoints = new List<Vector2Int>();
