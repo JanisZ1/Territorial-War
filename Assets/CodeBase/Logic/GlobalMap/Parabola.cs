@@ -11,7 +11,10 @@ namespace Assets.CodeBase.Logic.GlobalMap
         private void Update() =>
             transform.position = Focus;
 
-        public void InitializeFirstHalfOfParabola(Vector2 focusPosition)
+        public void Initialize(Vector2 parabolaTop) =>
+            InitializeFirstHalfOfParabola(parabolaTop);
+
+        private void InitializeFirstHalfOfParabola(Vector2 focusPosition)
         {
             Focus = new Vector3(focusPosition.x, 0, focusPosition.y);
 
