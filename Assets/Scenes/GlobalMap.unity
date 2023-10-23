@@ -464,6 +464,10 @@ PrefabInstance:
       propertyPath: LineRenderer
       value: 
       objectReference: {fileID: 956656137}
+    - target: {fileID: 3511185674158610470, guid: 25d1f54b3960d1d418cd54b585dbf54f, type: 3}
+      propertyPath: _lineRenderer
+      value: 
+      objectReference: {fileID: 956656137}
     - target: {fileID: 3723482822622509648, guid: 25d1f54b3960d1d418cd54b585dbf54f, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -1178,8 +1182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f0a68326723544b96196b37917bb3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lineRenderer: {fileID: 1442605503}
-  Focus: {x: 0, y: 0, z: 0}
+  LineRenderer: {fileID: 1442605503}
+  ParabolaTop: {x: 0, y: 0, z: 0}
 --- !u!120 &1442605503 stripped
 LineRenderer:
   m_CorrespondingSourceObject: {fileID: 2310735219752637037, guid: 3edd48ee2f2122e4c9bd8f317f43bc8a, type: 3}

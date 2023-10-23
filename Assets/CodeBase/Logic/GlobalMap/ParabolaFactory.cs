@@ -14,15 +14,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
             _scanningLineFactory = scanningLineFactory;
         }
 
-        public GameObject CreateParabola(Vector2 focusPosition)
-        {
-            GameObject gameObject = _assets.Instantiate(AssetPath.ParabolaPath);
-
-            Parabola parabola = gameObject.GetComponent<Parabola>();
-            parabola.Focus = focusPosition;
-
-            return gameObject;
-        }
+        public GameObject CreateParabola(Vector2 focusPosition) =>
+            _assets.Instantiate(AssetPath.ParabolaPath);
     }
 }
 

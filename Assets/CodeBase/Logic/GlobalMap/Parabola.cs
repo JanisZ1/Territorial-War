@@ -5,50 +5,46 @@ namespace Assets.CodeBase.Logic.GlobalMap
 {
     public class Parabola : MonoBehaviour
     {
-        [SerializeField] private LineRenderer _lineRenderer;
-        public Vector3 Focus;
+        public LineRenderer LineRenderer;
 
-        private void Update() =>
-            transform.position = Focus;
+        public void Initialize(Vector2 parabolaTop, Vector2 focusPoint, Vector2 directrix) =>
+            InitializeFirstHalfOfParabola(parabolaTop, focusPoint, directrix);
 
-        public void Initialize(Vector2 parabolaTop) =>
-            InitializeFirstHalfOfParabola(parabolaTop);
-
-        private void InitializeFirstHalfOfParabola(Vector2 focusPosition)
+        private void InitializeFirstHalfOfParabola(Vector2 parabolaTop, Vector2 focusPoint, Vector2 directrix)
         {
-            Focus = new Vector3(focusPosition.x, 0, focusPosition.y);
-
             List<Vector3> segments = new List<Vector3>();
-            float stepCount = _lineRenderer.positionCount;
-            float step = focusPosition.y / stepCount;
+            float stepCount = LineRenderer.positionCount;
 
-            int firstParabolaindex = 0;
-            for (int i = 0; i < (float)_lineRenderer.positionCount / 2; i++)
+            float fromX = focusPoint.x + 0.4f;
+            float toX = focusPoint.x - 0.4f;
+
+            float xStep = Mathf.Abs(toX + fromX) / stepCount;
+
+            List<float> xPositions = UpdateXPositions(stepCount, fromX, xStep);
+
+            for (int i = 0; i < xPositions.Count; i++)
             {
-                float x = step + ((i - ((float)_lineRenderer.positionCount / 2)) * step);
-                float y = Mathf.Pow(x, 2);
+                float x = xPositions[i];
+                float y = Mathf.Pow(x - focusPoint.x, 2) / (2 * (focusPoint.y - directrix.y)) + ((focusPoint.y + directrix.y) / 2);
 
                 Vector3 segmentPosition = new Vector3(x, 0, y);
 
-                _lineRenderer.SetPosition(firstParabolaindex, segmentPosition);
+                LineRenderer.SetPosition(i, segmentPosition);
                 segments.Add(segmentPosition);
-                firstParabolaindex++;
             }
-
-            CopyFirstHalfToSecondHalf(firstParabolaindex, segments);
         }
 
-        private void CopyFirstHalfToSecondHalf(int firstParabolaindex, List<Vector3> segments)
+        private List<float> UpdateXPositions(float stepCount, float fromX, float xStep)
         {
-            int secondParabolaindex = firstParabolaindex - 1;
+            List<float> xPositions = new List<float>();
 
-            for (int i = segments.Count - 1; i >= 0; i--)
+            for (float i = 0; i < stepCount; i++)
             {
-                Vector3 segmentPosition = new Vector3(segments[i].x, 0, segments[i].z);
-
-                _lineRenderer.SetPosition(secondParabolaindex, new Vector3(-segmentPosition.x, 0, segmentPosition.z));
-                secondParabolaindex++;
+                float x = fromX + i * xStep;
+                xPositions.Add(x);
             }
+
+            return xPositions;
         }
     }
 }

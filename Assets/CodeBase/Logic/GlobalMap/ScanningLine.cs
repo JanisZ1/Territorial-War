@@ -8,7 +8,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
         [SerializeField] private Vector3 _point;
         [SerializeField] private Parabola _parabola;
 
-        public LineRenderer LineRenderer;
+        [SerializeField] private LineRenderer _lineRenderer;
 
         private void Update() =>
             MoveForward();
@@ -20,8 +20,9 @@ namespace Assets.CodeBase.Logic.GlobalMap
             if (transform.position.z < _point.z)
             {
                 Vector2 parabolaTop = CalculateParabolaTop();
+                Vector2 directrix = new Vector2(transform.position.x, transform.position.z);
 
-                _parabola.Initialize(parabolaTop);
+                _parabola.Initialize(parabolaTop, new Vector2(_point.x, _point.z), directrix);
             }
         }
 
