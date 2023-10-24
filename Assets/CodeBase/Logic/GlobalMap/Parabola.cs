@@ -6,8 +6,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
     public class Parabola : MonoBehaviour
     {
         public LineRenderer LineRenderer;
-        [SerializeField] private float _fromX;
-        [SerializeField] private float _toX;
+        [SerializeField] private Edge _edge;
 
         public void Initialize(Vector2 parabolaTop, Vector2 focusPoint, Vector2 directrix) =>
             InitializeFirstHalfOfParabola(parabolaTop, focusPoint, directrix);
@@ -17,8 +16,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
             List<Vector3> segments = new List<Vector3>();
             float stepCount = LineRenderer.positionCount;
 
-            float fromX = focusPoint.x - 5;
-            float toX = focusPoint.x + 5;
+            float fromX = _edge.StartPosition.x;
+            float toX = _edge.EndPosition.x;
 
             float xStep = (toX - fromX) / stepCount;
 
