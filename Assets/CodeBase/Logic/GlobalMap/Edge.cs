@@ -5,6 +5,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
     public class Edge : MonoBehaviour
     {
         [SerializeField] private LineRenderer _linerenderer;
+        public float Y { get; private set; } = 10;
 
         public Vector3 StartPosition;
         public Vector3 EndPosition;
