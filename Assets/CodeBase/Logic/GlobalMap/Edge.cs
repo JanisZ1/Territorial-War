@@ -10,7 +10,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         public Vector3 EndPosition { get; private set; }
 
-        public float Y { get; private set; } = 10;
+        private readonly float _y = 10;
 
         public void SetStartPosition(float focusPointX, float sqrDelta) =>
             StartPosition = new Vector3(focusPointX - sqrDelta, 0, 10);
@@ -22,6 +22,17 @@ namespace Assets.CodeBase.Logic.GlobalMap
         {
             _linerenderer.SetPosition(0, StartPosition);
             _linerenderer.SetPosition(1, EndPosition);
+        }
+
+        public float SqurtDelta(float focusPointY, float halfOfDistanceFromFocusToDirectrix)
+        {
+            //edge from X to X position calculation
+            float delta = (_y - focusPointY + halfOfDistanceFromFocusToDirectrix) * 4 * halfOfDistanceFromFocusToDirectrix;
+
+            if (delta < 0)
+                return 0;
+
+            return Mathf.Sqrt(delta);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.CodeBase.Data;
+using UnityEngine;
 
 namespace Assets.CodeBase.Logic.GlobalMap
 {
@@ -10,33 +11,42 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         [SerializeField] private LineRenderer _lineRenderer;
 
-        private void Update() =>
-            MoveForward();
+        private Vector2 _directrix;
+        private Vector2 _focus;
 
-        private void MoveForward()
+        private void Start() =>
+            _focus = _point.ConvertToVector2();
+
+        private void Update()
         {
+            MoveBack();
+            ScanTerritory();
+
+            _directrix = transform.position.ConvertToVector2();
+        }
+
+        private void MoveBack() =>
             transform.position += _speed * Time.deltaTime * Vector3.back;
 
-            if (transform.position.z < _point.z)
+        private void ScanTerritory()
+        {
+            if (_directrix.y < _focus.y)
             {
-                Vector2 parabolaTop = CalculateParabolaTop();
-                Vector2 directrix = new Vector2(transform.position.x, transform.position.z);
+                Vector2 focusPoint = _point.ConvertToVector2();
+                float halfOfDistanceToFocus = focusPoint.YDistance(to: _directrix) / 2;
 
-                _parabola.InitializeParabola(focusPoint: new Vector2(_point.x, _point.z), directrix);
+                Vector2 parabolaTop = CalculateParabolaTop(focusPoint, halfOfDistanceToFocus);
+
+                _parabola.Initialize(focusPoint, _directrix, halfOfDistanceToFocus);
             }
         }
 
-        private Vector2 CalculateParabolaTop()
+        private Vector2 CalculateParabolaTop(Vector2 focusPoint, float halfOfDistanceToFocus)
         {
-            Vector2 pointPosition = new Vector2(_point.x, _point.z);
-            float halfOfDistanceToFocus = HalfOfDistanceToFocus(pointPosition);
+            Vector2 parabolaTop = new Vector2(focusPoint.x, focusPoint.y - halfOfDistanceToFocus);
 
-            Vector2 parabolaTop = new Vector2(_point.x, _point.z - halfOfDistanceToFocus);
             return parabolaTop;
         }
-
-        private float HalfOfDistanceToFocus(Vector2 pointPosition) =>
-            Vector2.Distance(new Vector2(0, pointPosition.y), new Vector2(0, transform.position.z)) / 2;
     }
 }
 

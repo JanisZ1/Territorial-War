@@ -1304,8 +1304,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _linerenderer: {fileID: 959810455}
-  StartPosition: {x: 0, y: 0, z: 0}
-  EndPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &959810457
 Transform:
   m_ObjectHideFlags: 0
@@ -1338,10 +1336,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f0a68326723544b96196b37917bb3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LineRenderer: {fileID: 1442605503}
+  _lineRenderer: {fileID: 1442605503}
   _edge: {fileID: 959810456}
-  _fromX: 0
-  _toX: 0
 --- !u!120 &1442605503 stripped
 LineRenderer:
   m_CorrespondingSourceObject: {fileID: 2310735219752637037, guid: 3edd48ee2f2122e4c9bd8f317f43bc8a, type: 3}

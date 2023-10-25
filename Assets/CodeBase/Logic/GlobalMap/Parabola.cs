@@ -5,28 +5,18 @@ namespace Assets.CodeBase.Logic.GlobalMap
 {
     public class Parabola : MonoBehaviour
     {
-        public LineRenderer LineRenderer;
+        [SerializeField] private LineRenderer _lineRenderer;
         [SerializeField] private Edge _edge;
-        [SerializeField] private float _offset;
 
-        public void InitializeParabola(Vector2 focusPoint, Vector2 directrix)
+        public void Initialize(Vector2 focusPoint, Vector2 directrix, float halfOfDistanceFromFocusToDirectrix)
         {
-            List<Vector3> segments = new List<Vector3>();
-            float stepCount = LineRenderer.positionCount;
-            float halfOfDistanceFromFocusToDirectrix = Vector2.Distance(new Vector2(0, focusPoint.y), new Vector2(0, directrix.y)) / 2;
+            float stepCount = _lineRenderer.positionCount;
 
-            float delta = (_edge.Y - focusPoint.y + halfOfDistanceFromFocusToDirectrix) * 4 * halfOfDistanceFromFocusToDirectrix;
-
-            if (delta < 0)
-                return;
-
-            float sqrDelta = Mathf.Sqrt(delta);
-
-            _edge.SetStartPosition(focusPoint.x, sqrDelta);
-            _edge.SetEndPosition(focusPoint.x, sqrDelta);
+            SetEdgeStartAndEndPosition(focusPoint, halfOfDistanceFromFocusToDirectrix);
 
             float fromX = _edge.StartPosition.x;
             float toX = _edge.EndPosition.x;
+
             float xStep = XStep(stepCount, fromX, toX);
 
             List<float> xPositions = UpdateXPositions(stepCount, fromX, xStep);
@@ -34,19 +24,25 @@ namespace Assets.CodeBase.Logic.GlobalMap
             for (int i = 0; i < xPositions.Count; i++)
             {
                 float x = xPositions[i];
-
-                //parabola equation
-                float y = Mathf.Pow(x - focusPoint.x, 2) / (2 * (focusPoint.y - directrix.y)) + ((focusPoint.y + directrix.y) / 2);
+                float y = CalculateY(focusPoint, directrix, x);
 
                 Vector3 segmentPosition = new Vector3(x, 0, y);
 
-                LineRenderer.SetPosition(i, segmentPosition);
-                segments.Add(segmentPosition);
+                _lineRenderer.SetPosition(i, segmentPosition);
             }
         }
 
-        private float XStep(float stepCount, float fromX, float toX) =>
-            Mathf.Abs(toX - fromX) / (stepCount - 1);
+        private void SetEdgeStartAndEndPosition(Vector2 focusPoint, float halfOfDistanceFromFocusToDirectrix)
+        {
+            float sqrDelta = _edge.SqurtDelta(focusPoint.y, halfOfDistanceFromFocusToDirectrix);
+
+            _edge.SetStartPosition(focusPoint.x, sqrDelta);
+            _edge.SetEndPosition(focusPoint.x, sqrDelta);
+        }
+
+        private float CalculateY(Vector2 focusPoint, Vector2 directrix, float x) =>
+            //parabola equation
+            Mathf.Pow(x - focusPoint.x, 2) / (2 * (focusPoint.y - directrix.y)) + ((focusPoint.y + directrix.y) / 2);
 
         private List<float> UpdateXPositions(float stepCount, float fromX, float xStep)
         {
@@ -60,5 +56,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
             return xPositions;
         }
+
+        private float XStep(float stepCount, float fromX, float toX) =>
+            Mathf.Abs(toX - fromX) / (stepCount - 1);
     }
 }
