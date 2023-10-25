@@ -7,6 +7,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
     {
         public LineRenderer LineRenderer;
         [SerializeField] private Edge _edge;
+        [SerializeField] private float _offset;
 
         public void Initialize(Vector2 parabolaTop, Vector2 focusPoint, Vector2 directrix) =>
             InitializeFirstHalfOfParabola(parabolaTop, focusPoint, directrix);
@@ -16,18 +17,21 @@ namespace Assets.CodeBase.Logic.GlobalMap
             List<Vector3> segments = new List<Vector3>();
             float stepCount = LineRenderer.positionCount;
             float distanceFromFocusToDirectrix = Vector2.Distance(new Vector2(0, focusPoint.y), new Vector2(0, directrix.y));
-            float distanceFromFocusToEdge = Vector2.Distance(new Vector2(0, focusPoint.y), new Vector2(0, _edge.Y));
-            Debug.Log(distanceFromFocusToEdge);
-            Debug.Log(distanceFromFocusToDirectrix);
-            float yDistance = (distanceFromFocusToDirectrix + distanceFromFocusToEdge) / 2f;
-            Debug.Log(yDistance);
-            _edge.StartPosition = new Vector3(focusPoint.x - yDistance, 0, 10);
-            _edge.EndPosition = new Vector3(focusPoint.x + yDistance, 0, 10);
+
+            float delta = (_edge.Y - focusPoint.y + distanceFromFocusToDirectrix / 2) * 4 * distanceFromFocusToDirectrix / 2;
+
+            if (delta < 0)
+                return;
+
+            float sqrDelta = Mathf.Sqrt(delta);
+
+            _edge.StartPosition = new Vector3(focusPoint.x - sqrDelta, 0, 10);
+            _edge.EndPosition = new Vector3(focusPoint.x + sqrDelta, 0, 10);
 
             float fromX = _edge.StartPosition.x;
             float toX = _edge.EndPosition.x;
 
-            float xStep = (toX - fromX) / stepCount;
+            float xStep = Mathf.Abs(toX - fromX) / stepCount;
 
             List<float> xPositions = UpdateXPositions(stepCount, fromX, xStep);
 
