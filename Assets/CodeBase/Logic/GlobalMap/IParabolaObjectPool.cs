@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Assets.CodeBase.Logic.GlobalMap
 {
-    public interface IParabolaFactory : IService
+    public interface IParabolaObjectPool : IService
     {
-        void CreateAndStoreParabolas(int sitesCount);
+        List<Parabola> StoredParabolas { get; }
     }
 }
 

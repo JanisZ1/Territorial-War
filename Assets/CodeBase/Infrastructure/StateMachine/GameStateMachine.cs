@@ -2,6 +2,7 @@
 using Assets.CodeBase.Infrastructure.Services.Factory.Ui;
 using Assets.CodeBase.Infrastructure.Services.StaticData;
 using Assets.CodeBase.Infrastructure.Services.Window;
+using Assets.CodeBase.Logic.GlobalMap;
 using System;
 using System.Collections.Generic;
 
@@ -18,7 +19,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
             _states = new Dictionary<Type, IExitableState>()
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, coroutinerRunner, sceneLoader, allServices),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IUiFactory>(), allServices.Single<IWindowService>(), allServices.Single<IStaticDataService>())
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IUiFactory>(), allServices.Single<IScanningLineFactory>(), allServices.Single<IParabolaFactory>(), allServices.Single<IWindowService>(), allServices.Single<IStaticDataService>())
             };
         }
 

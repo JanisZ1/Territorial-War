@@ -6,16 +6,20 @@ namespace Assets.CodeBase.Logic.GlobalMap
     public class ScanningLineFactory : IScanningLineFactory
     {
         private readonly IAssets _assets;
+        private readonly IParabolaObjectPool _parabolaObjectPool;
 
-        public ScanningLine ScanningLine { get; private set; }
-
-        public ScanningLineFactory(IAssets assets) =>
+        public ScanningLineFactory(IAssets assets, IParabolaObjectPool parabolaObjectPool)
+        {
             _assets = assets;
+            _parabolaObjectPool = parabolaObjectPool;
+        }
 
         public GameObject CreateScanningLine()
         {
             GameObject gameObject = _assets.Instantiate(AssetPath.ParabolaPath);
-            ScanningLine = gameObject.GetComponent<ScanningLine>();
+
+            ScanningLine scanningLine = gameObject.GetComponent<ScanningLine>();
+            scanningLine.Construct(_parabolaObjectPool);
 
             return gameObject;
         }
