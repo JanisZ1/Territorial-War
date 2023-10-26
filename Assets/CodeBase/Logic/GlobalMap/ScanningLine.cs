@@ -19,10 +19,10 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private void Update()
         {
+            _directrix = transform.position.ConvertToVector2();
+
             MoveBack();
             ScanTerritory();
-
-            _directrix = transform.position.ConvertToVector2();
         }
 
         private void MoveBack() =>
