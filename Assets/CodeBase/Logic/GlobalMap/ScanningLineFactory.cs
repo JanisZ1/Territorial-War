@@ -14,9 +14,9 @@ namespace Assets.CodeBase.Logic.GlobalMap
             _parabolaObjectPool = parabolaObjectPool;
         }
 
-        public GameObject CreateScanningLine()
+        public GameObject CreateScanningLine(Vector3 at)
         {
-            GameObject gameObject = _assets.Instantiate(AssetPath.ScanningLinePath);
+            GameObject gameObject = _assets.Instantiate(AssetPath.ScanningLinePath, at, Quaternion.identity);
 
             ScanningLine scanningLine = gameObject.GetComponent<ScanningLine>();
             scanningLine.Construct(_parabolaObjectPool);
