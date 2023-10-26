@@ -6,11 +6,24 @@ namespace Assets.CodeBase.Logic.GlobalMap
     public class Parabola : MonoBehaviour
     {
         [SerializeField] private LineRenderer _lineRenderer;
-        [SerializeField] private Edge _edge;
+
+        private IEdgeFactory _edgeFactory;
+        private Edge _edge;
+
+        private bool _edgeCreated;
+
+        public void Construct(IEdgeFactory edgeFactory) =>
+            _edgeFactory = edgeFactory;
 
         public void Initialize(Vector2 focusPoint, Vector2 directrix, float halfOfDistanceFromFocusToDirectrix)
         {
             float stepCount = _lineRenderer.positionCount;
+
+            if (!_edgeCreated)
+            {
+                _edge = _edgeFactory.CreateEdge();
+                _edgeCreated = true;
+            }
 
             SetEdgeStartAndEndPosition(focusPoint, halfOfDistanceFromFocusToDirectrix);
 
@@ -34,7 +47,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private void SetEdgeStartAndEndPosition(Vector2 focusPoint, float halfOfDistanceFromFocusToDirectrix)
         {
-            float sqrDelta = _edge.SqurtDelta(focusPoint.y, halfOfDistanceFromFocusToDirectrix);
+            float sqrDelta = _edge.SqrtDelta(focusPoint.y, halfOfDistanceFromFocusToDirectrix);
 
             _edge.SetStartPosition(focusPoint.x, sqrDelta);
             _edge.SetEndPosition(focusPoint.x, sqrDelta);

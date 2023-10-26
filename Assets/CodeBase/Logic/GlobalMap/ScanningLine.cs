@@ -12,10 +12,9 @@ namespace Assets.CodeBase.Logic.GlobalMap
         [SerializeField] private LineRenderer _lineRenderer;
 
         private IParabolaObjectPool _parabolaObjectPool;
-
         private Vector2 _directrix;
 
-        public void Construct(IParabolaObjectPool parabolaObjectPool) =>
+        public void Construct(IParabolaObjectPool parabolaObjectPool) => 
             _parabolaObjectPool = parabolaObjectPool;
 
         private void Update()

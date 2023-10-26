@@ -7,11 +7,13 @@ namespace Assets.CodeBase.Logic.GlobalMap
     {
         private readonly IAssets _assets;
         private readonly IParabolaObjectPool _parabolaObjectPool;
+        private readonly IEdgeFactory _edgeFactory;
 
-        public ParabolaFactory(IAssets assets, IParabolaObjectPool parabolaObjectPool)
+        public ParabolaFactory(IAssets assets, IParabolaObjectPool parabolaObjectPool, IEdgeFactory edgeFactory)
         {
             _assets = assets;
             _parabolaObjectPool = parabolaObjectPool;
+            _edgeFactory = edgeFactory;
         }
 
         public void CreateAndStoreParabolas(int sitesCount)
@@ -21,6 +23,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 GameObject gameObject = _assets.Instantiate(AssetPath.ParabolaPath);
 
                 Parabola parabola = gameObject.GetComponent<Parabola>();
+                parabola.Construct(_edgeFactory);
                 gameObject.SetActive(false);
                 _parabolaObjectPool.StoredParabolas.Add(parabola);
             }
