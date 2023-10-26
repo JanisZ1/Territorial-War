@@ -22,7 +22,7 @@ namespace Assets.CodeBase.Infrastructure
         private readonly AllServices _services;
 
         private const string Bootstrap = "Bootstrap";
-        private const string Main = "Main";
+        private const string GlobalMap = "GlobalMap";
 
         public BootstrapState(GameStateMachine gameStateMachine, ICoroutinerRunner coroutinerRunner, SceneLoader sceneLoader, AllServices services)
         {
@@ -61,6 +61,6 @@ namespace Assets.CodeBase.Infrastructure
         }
 
         private void EnterLoadLevel() =>
-            _gameStateMachine.Enter<LoadLevelState>(Main);
+            _gameStateMachine.Enter<LoadLevelState>(GlobalMap);
     }
 }

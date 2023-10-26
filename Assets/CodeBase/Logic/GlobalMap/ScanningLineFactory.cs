@@ -16,7 +16,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         public GameObject CreateScanningLine()
         {
-            GameObject gameObject = _assets.Instantiate(AssetPath.ParabolaPath);
+            GameObject gameObject = _assets.Instantiate(AssetPath.ScanningLinePath);
 
             ScanningLine scanningLine = gameObject.GetComponent<ScanningLine>();
             scanningLine.Construct(_parabolaObjectPool);
