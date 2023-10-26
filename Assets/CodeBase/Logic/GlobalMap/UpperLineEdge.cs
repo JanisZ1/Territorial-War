@@ -2,7 +2,7 @@
 
 namespace Assets.CodeBase.Logic.GlobalMap
 {
-    public class Edge : MonoBehaviour
+    public class UpperLineEdge : MonoBehaviour
     {
         [SerializeField] private LineRenderer _linerenderer;
 

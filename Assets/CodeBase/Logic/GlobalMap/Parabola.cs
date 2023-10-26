@@ -8,7 +8,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
         [SerializeField] private LineRenderer _lineRenderer;
 
         private IEdgeFactory _edgeFactory;
-        private Edge _edge;
+        private UpperLineEdge _upperLineEdge;
 
         private bool _edgeCreated;
 
@@ -21,14 +21,14 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
             if (!_edgeCreated)
             {
-                _edge = _edgeFactory.CreateEdge();
+                _upperLineEdge = _edgeFactory.CreateUpperLineEdge();
                 _edgeCreated = true;
             }
 
             SetEdgeStartAndEndPosition(focusPoint, halfOfDistanceFromFocusToDirectrix);
 
-            float fromX = _edge.StartPosition.x;
-            float toX = _edge.EndPosition.x;
+            float fromX = _upperLineEdge.StartPosition.x;
+            float toX = _upperLineEdge.EndPosition.x;
 
             float xStep = XStep(stepCount, fromX, toX);
 
@@ -47,10 +47,10 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private void SetEdgeStartAndEndPosition(Vector2 focusPoint, float halfOfDistanceFromFocusToDirectrix)
         {
-            float sqrDelta = _edge.SqrtDelta(focusPoint.y, halfOfDistanceFromFocusToDirectrix);
+            float sqrDelta = _upperLineEdge.SqrtDelta(focusPoint.y, halfOfDistanceFromFocusToDirectrix);
 
-            _edge.SetStartPosition(focusPoint.x, sqrDelta);
-            _edge.SetEndPosition(focusPoint.x, sqrDelta);
+            _upperLineEdge.SetStartPosition(focusPoint.x, sqrDelta);
+            _upperLineEdge.SetEndPosition(focusPoint.x, sqrDelta);
         }
 
         private float CalculateY(Vector2 focusPoint, Vector2 directrix, float x) =>

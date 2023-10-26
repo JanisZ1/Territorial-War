@@ -8,8 +8,9 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         public EdgeFactory(IAssets assets) =>
             _assets = assets;
-        public Edge CreateEdge() =>
-            _assets.Instantiate(AssetPath.EdgePath).GetComponent<Edge>();
+
+        public UpperLineEdge CreateUpperLineEdge() =>
+            _assets.Instantiate(AssetPath.UpperLineEdgePath).GetComponent<UpperLineEdge>();
     }
 }
 
