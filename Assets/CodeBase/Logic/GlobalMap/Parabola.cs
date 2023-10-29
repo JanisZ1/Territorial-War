@@ -25,7 +25,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 _edgeCreated = true;
             }
 
-            SetEdgeStartAndEndPosition(focusPoint, halfOfDistanceFromFocusToDirectrix);
+            SetUpperLineEdgeStartAndEndPosition(focusPoint, halfOfDistanceFromFocusToDirectrix);
 
             float fromX = _upperLineEdge.StartPosition.x;
             float toX = _upperLineEdge.EndPosition.x;
@@ -45,7 +45,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
             }
         }
 
-        private void SetEdgeStartAndEndPosition(Vector2 focusPoint, float halfOfDistanceFromFocusToDirectrix)
+        private void SetUpperLineEdgeStartAndEndPosition(Vector2 focusPoint, float halfOfDistanceFromFocusToDirectrix)
         {
             float sqrDelta = _upperLineEdge.SqrtDelta(focusPoint.y, halfOfDistanceFromFocusToDirectrix);
 

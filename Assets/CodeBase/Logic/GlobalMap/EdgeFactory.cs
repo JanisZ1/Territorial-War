@@ -11,6 +11,9 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         public UpperLineEdge CreateUpperLineEdge() =>
             _assets.Instantiate(AssetPath.UpperLineEdgePath).GetComponent<UpperLineEdge>();
+
+        public ParabolaEdge CreateParabolaEdge() =>
+            _assets.Instantiate(AssetPath.ParabolaEdgePath).GetComponent<ParabolaEdge>();
     }
 }
 

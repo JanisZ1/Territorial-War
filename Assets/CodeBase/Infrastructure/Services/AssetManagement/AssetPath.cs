@@ -8,5 +8,6 @@
         public const string ScanningLinePath = "GlobalMap/ScanningLine";
         public const string ParabolaPath = "GlobalMap/Parabola";
         public const string UpperLineEdgePath = "GlobalMap/UpperLineEdge";
+        public const string ParabolaEdgePath = "GlobalMap/ParabolaEdge";
     }
 }
