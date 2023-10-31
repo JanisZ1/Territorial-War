@@ -9,14 +9,17 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private IEdgeFactory _edgeFactory;
         private UpperLineEdge _upperLineEdge;
-
         private bool _edgeCreated;
+
+        public Vector2 FocusPoint { get; private set; }
 
         public void Construct(IEdgeFactory edgeFactory) =>
             _edgeFactory = edgeFactory;
 
         public void Initialize(Vector2 focusPoint, Vector2 directrix, float halfOfDistanceFromFocusToDirectrix)
         {
+            FocusPoint = focusPoint;
+
             float stepCount = _lineRenderer.positionCount;
 
             if (!_edgeCreated)

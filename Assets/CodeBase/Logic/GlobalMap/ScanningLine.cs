@@ -13,8 +13,9 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private IParabolaObjectPool _parabolaObjectPool;
         private Vector2 _directrix;
+        private List<Parabola> _initializedParabolas = new List<Parabola>();
 
-        public void Construct(IParabolaObjectPool parabolaObjectPool) => 
+        public void Construct(IParabolaObjectPool parabolaObjectPool) =>
             _parabolaObjectPool = parabolaObjectPool;
 
         private void Update()
@@ -42,9 +43,18 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
                     Parabola parabola = _parabolaObjectPool.StoredParabolas[i];
                     InitializeParabola(parabola, focusPoint, halfOfDistanceToFocus);
+
+                    if (!_initializedParabolas.Contains(parabola))
+                    {
+                        _initializedParabolas.Add(parabola);
+                        SortParabolasFromLeftToRight();
+                    }
                 }
             }
         }
+
+        private void SortParabolasFromLeftToRight() =>
+            _initializedParabolas.Sort((x1, x2) => x1.FocusPoint.x.CompareTo(x2.FocusPoint.x));
 
         private void InitializeParabola(Parabola parabola, Vector2 focusPoint, float halfOfDistanceToFocus)
         {
