@@ -48,8 +48,47 @@ namespace Assets.CodeBase.Logic.GlobalMap
                     {
                         _initializedParabolas.Add(parabola);
                         SortParabolasFromLeftToRight();
+                        FindIntersections();
                     }
                 }
+            }
+        }
+
+        private void FindIntersections()
+        {
+            for (int i = 0; i < _initializedParabolas.Count - 1; i++)
+            {
+                Parabola parabola = _initializedParabolas[i];
+                Parabola nextparabola = _initializedParabolas[i + 1];
+
+                float firstParabolahalfOfDistanceFromFocusToDirectrix = parabola.HalfOfDistanceFromFocusToDirectrix;
+                float nextParabolahalfOfDistanceFromFocusToDirectrix = nextparabola.HalfOfDistanceFromFocusToDirectrix;
+
+                float parabolaTopX = parabola.FocusPoint.x;
+                float parabolaTopY = parabola.FocusPoint.y - _directrix.y;
+
+                float nextParabolaTopX = nextparabola.FocusPoint.x;
+                float nextParabolaTopY = nextparabola.FocusPoint.y - _directrix.y;
+
+                float A = firstParabolahalfOfDistanceFromFocusToDirectrix - nextParabolahalfOfDistanceFromFocusToDirectrix;
+
+                float B = 2 * (nextParabolahalfOfDistanceFromFocusToDirectrix * parabolaTopX
+                    - firstParabolahalfOfDistanceFromFocusToDirectrix * nextParabolaTopX);
+
+                float C = firstParabolahalfOfDistanceFromFocusToDirectrix * nextParabolaTopX * nextParabolaTopX
+                    - nextParabolahalfOfDistanceFromFocusToDirectrix * parabolaTopX * parabolaTopX + 4
+                    * (firstParabolahalfOfDistanceFromFocusToDirectrix * nextParabolahalfOfDistanceFromFocusToDirectrix * nextParabolaTopY
+                    - firstParabolahalfOfDistanceFromFocusToDirectrix * nextParabolahalfOfDistanceFromFocusToDirectrix * parabolaTopY);
+
+                float delta = B * B - 4 * A * C;
+
+                if (delta < 0)
+                    return;
+
+                float sqrDelta = Mathf.Sqrt(delta);
+
+                float from = -B - sqrDelta / 2 / A;
+                float to = -B + sqrDelta / 2 / A;
             }
         }
 

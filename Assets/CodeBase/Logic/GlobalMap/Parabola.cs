@@ -11,6 +11,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
         private UpperLineEdge _upperLineEdge;
         private bool _edgeCreated;
 
+        public float HalfOfDistanceFromFocusToDirectrix { get; private set; }
+
         public Vector2 FocusPoint { get; private set; }
 
         public void Construct(IEdgeFactory edgeFactory) =>
@@ -19,6 +21,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
         public void Initialize(Vector2 focusPoint, Vector2 directrix, float halfOfDistanceFromFocusToDirectrix)
         {
             FocusPoint = focusPoint;
+            HalfOfDistanceFromFocusToDirectrix = halfOfDistanceFromFocusToDirectrix;
 
             float stepCount = _lineRenderer.positionCount;
 
