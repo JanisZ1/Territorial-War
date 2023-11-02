@@ -9,20 +9,24 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private IEdgeFactory _edgeFactory;
         private UpperLineEdge _upperLineEdge;
+
         private bool _edgeCreated;
 
-        public float HalfOfDistanceFromFocusToDirectrix { get; private set; }
+        private float _delta;
+        private float _a;
+        private float _b;
 
-        public Vector2 FocusPoint { get; private set; }
+        public Vector2 FocusPoint { get; set; }
+
+        public Vector2 Top { get; internal set; }
+
+        public float DistanceToDirectrix { get; internal set; }
 
         public void Construct(IEdgeFactory edgeFactory) =>
             _edgeFactory = edgeFactory;
 
-        public void Initialize(Vector2 focusPoint, Vector2 directrix, float halfOfDistanceFromFocusToDirectrix)
+        public void InitializeUpperLineEdge(Vector2 directrix)
         {
-            FocusPoint = focusPoint;
-            HalfOfDistanceFromFocusToDirectrix = halfOfDistanceFromFocusToDirectrix;
-
             float stepCount = _lineRenderer.positionCount;
 
             if (!_edgeCreated)
@@ -31,7 +35,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 _edgeCreated = true;
             }
 
-            SetUpperLineEdgeStartAndEndPosition(focusPoint, halfOfDistanceFromFocusToDirectrix);
+            SetUpperLineEdgeStartAndEndPosition(FocusPoint, DistanceToDirectrix);
 
             float fromX = _upperLineEdge.StartPosition.x;
             float toX = _upperLineEdge.EndPosition.x;
@@ -39,11 +43,11 @@ namespace Assets.CodeBase.Logic.GlobalMap
             float xStep = XStep(stepCount, fromX, toX);
 
             List<float> xPositions = UpdateXPositions(stepCount, fromX, xStep);
-
+            Debug.Log("11111111111");
             for (int i = 0; i < xPositions.Count; i++)
             {
                 float x = xPositions[i];
-                float y = CalculateY(focusPoint, directrix, x);
+                float y = CalculateY(FocusPoint, directrix, x);
 
                 Vector3 segmentPosition = new Vector3(x, 0, y);
 
@@ -51,6 +55,46 @@ namespace Assets.CodeBase.Logic.GlobalMap
             }
         }
 
+        public bool HasIntersectionPointsWith(Parabola otherParabola)
+        {
+            float distanceToDirectrix = DistanceToDirectrix;
+            float otherParabolaDistanceToDirectrix = otherParabola.DistanceToDirectrix;
+
+            float parabolaTopX = Top.x;
+            float parabolaTopY = Top.y;
+
+            float nextParabolaTopX = otherParabola.Top.x;
+            float nextParabolaTopY = otherParabola.Top.y;
+
+            float A = distanceToDirectrix - otherParabolaDistanceToDirectrix;
+
+            float B = 2 * (otherParabolaDistanceToDirectrix * parabolaTopX
+                - distanceToDirectrix * nextParabolaTopX);
+
+            float C = distanceToDirectrix * nextParabolaTopX * nextParabolaTopX
+                - otherParabolaDistanceToDirectrix * parabolaTopX * parabolaTopX + 4
+                * (distanceToDirectrix * otherParabolaDistanceToDirectrix * nextParabolaTopY
+                - distanceToDirectrix * otherParabolaDistanceToDirectrix * parabolaTopY);
+
+            float delta = B * B - 4 * A * C;
+
+            _a = A;
+            _b = B;
+
+            if (delta < 0)
+                return false;
+
+            return true;
+        }
+
+        public void InitializeParabolaEdge()
+        {
+            float sqrDelta = Mathf.Sqrt(_delta);
+
+            float from = -_b - sqrDelta / 2 / _a;
+            float to = -_b + sqrDelta / 2 / _a;
+            Debug.Log("2222222222");
+        }
         private void SetUpperLineEdgeStartAndEndPosition(Vector2 focusPoint, float halfOfDistanceFromFocusToDirectrix)
         {
             float sqrDelta = _upperLineEdge.SqrtDelta(focusPoint.y, halfOfDistanceFromFocusToDirectrix);

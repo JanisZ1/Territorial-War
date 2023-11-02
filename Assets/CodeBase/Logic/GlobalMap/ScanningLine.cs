@@ -42,64 +42,37 @@ namespace Assets.CodeBase.Logic.GlobalMap
                     Vector2 parabolaTop = CalculateParabolaTop(focusPoint, halfOfDistanceToFocus);
 
                     Parabola parabola = _parabolaObjectPool.StoredParabolas[i];
-                    InitializeParabola(parabola, focusPoint, halfOfDistanceToFocus);
+                    parabola.Top = parabolaTop;
+                    parabola.DistanceToDirectrix = halfOfDistanceToFocus;
+                    parabola.FocusPoint = focusPoint;
 
                     if (!_initializedParabolas.Contains(parabola))
                     {
                         _initializedParabolas.Add(parabola);
                         SortParabolasFromLeftToRight();
-                        FindIntersections();
                     }
+
+                    if (i < _initializedParabolas.Count - 1)
+                    {
+                        if (parabola.HasIntersectionPointsWith(_initializedParabolas[i + 1]))
+                            parabola.InitializeParabolaEdge();
+                        else
+                            parabola.InitializeUpperLineEdge(_directrix);
+                    }
+                    else
+                    {
+                        parabola.InitializeUpperLineEdge(_directrix);
+                    }
+                    ActivateParabola(parabola);
                 }
-            }
-        }
-
-        private void FindIntersections()
-        {
-            for (int i = 0; i < _initializedParabolas.Count - 1; i++)
-            {
-                Parabola parabola = _initializedParabolas[i];
-                Parabola nextparabola = _initializedParabolas[i + 1];
-
-                float firstParabolahalfOfDistanceFromFocusToDirectrix = parabola.HalfOfDistanceFromFocusToDirectrix;
-                float nextParabolahalfOfDistanceFromFocusToDirectrix = nextparabola.HalfOfDistanceFromFocusToDirectrix;
-
-                float parabolaTopX = parabola.FocusPoint.x;
-                float parabolaTopY = parabola.FocusPoint.y - _directrix.y;
-
-                float nextParabolaTopX = nextparabola.FocusPoint.x;
-                float nextParabolaTopY = nextparabola.FocusPoint.y - _directrix.y;
-
-                float A = firstParabolahalfOfDistanceFromFocusToDirectrix - nextParabolahalfOfDistanceFromFocusToDirectrix;
-
-                float B = 2 * (nextParabolahalfOfDistanceFromFocusToDirectrix * parabolaTopX
-                    - firstParabolahalfOfDistanceFromFocusToDirectrix * nextParabolaTopX);
-
-                float C = firstParabolahalfOfDistanceFromFocusToDirectrix * nextParabolaTopX * nextParabolaTopX
-                    - nextParabolahalfOfDistanceFromFocusToDirectrix * parabolaTopX * parabolaTopX + 4
-                    * (firstParabolahalfOfDistanceFromFocusToDirectrix * nextParabolahalfOfDistanceFromFocusToDirectrix * nextParabolaTopY
-                    - firstParabolahalfOfDistanceFromFocusToDirectrix * nextParabolahalfOfDistanceFromFocusToDirectrix * parabolaTopY);
-
-                float delta = B * B - 4 * A * C;
-
-                if (delta < 0)
-                    return;
-
-                float sqrDelta = Mathf.Sqrt(delta);
-
-                float from = -B - sqrDelta / 2 / A;
-                float to = -B + sqrDelta / 2 / A;
             }
         }
 
         private void SortParabolasFromLeftToRight() =>
             _initializedParabolas.Sort((x1, x2) => x1.FocusPoint.x.CompareTo(x2.FocusPoint.x));
 
-        private void InitializeParabola(Parabola parabola, Vector2 focusPoint, float halfOfDistanceToFocus)
-        {
-            parabola.Initialize(focusPoint, _directrix, halfOfDistanceToFocus);
+        private void ActivateParabola(Parabola parabola) =>
             parabola.gameObject.SetActive(true);
-        }
 
         private Vector2 CalculateParabolaTop(Vector2 focusPoint, float halfOfDistanceToFocus)
         {
