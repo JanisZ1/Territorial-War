@@ -12,7 +12,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
         [SerializeField] private LineRenderer _lineRenderer;
 
         private IParabolaObjectPool _parabolaObjectPool;
-        private Vector2 _directrix;
+        public static Vector2 Directrix;
         private List<Parabola> _initializedParabolas = new List<Parabola>();
 
         public void Construct(IParabolaObjectPool parabolaObjectPool) =>
@@ -20,7 +20,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private void Update()
         {
-            _directrix = transform.position.ConvertToVector2();
+            Directrix = transform.position.ConvertToVector2();
 
             MoveBack();
             ScanTerritory();
@@ -35,9 +35,9 @@ namespace Assets.CodeBase.Logic.GlobalMap
             {
                 Vector2 focusPoint = _sites[i].ConvertToVector2();
 
-                if (_directrix.y < focusPoint.y)
+                if (Directrix.y < focusPoint.y)
                 {
-                    float halfOfDistanceToFocus = focusPoint.YDistance(to: _directrix) / 2;
+                    float halfOfDistanceToFocus = focusPoint.YDistance(to: Directrix) / 2;
 
                     Vector2 parabolaTop = CalculateParabolaTop(focusPoint, halfOfDistanceToFocus);
 
@@ -57,11 +57,11 @@ namespace Assets.CodeBase.Logic.GlobalMap
                         if (parabola.HasIntersectionPointsWith(_initializedParabolas[i + 1]))
                             parabola.InitializeParabolaEdge();
                         else
-                            parabola.InitializeUpperLineEdge(_directrix);
+                            parabola.InitializeUpperLineEdge(Directrix);
                     }
                     else
                     {
-                        parabola.InitializeUpperLineEdge(_directrix);
+                        parabola.InitializeUpperLineEdge(Directrix);
                     }
                     ActivateParabola(parabola);
                 }
@@ -82,4 +82,3 @@ namespace Assets.CodeBase.Logic.GlobalMap
         }
     }
 }
-

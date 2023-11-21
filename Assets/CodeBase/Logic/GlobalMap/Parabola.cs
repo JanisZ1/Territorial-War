@@ -9,8 +9,10 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private IEdgeFactory _edgeFactory;
         private UpperLineEdge _upperLineEdge;
+        private ParabolaEdge _parabolaEdge;
 
         private bool _edgeCreated;
+        private bool _parabolaEdgeCreated;
 
         private float _delta;
         private float _a;
@@ -80,6 +82,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
             _a = A;
             _b = B;
+            _delta = delta;
 
             if (delta < 0)
                 return false;
@@ -89,12 +92,33 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         public void InitializeParabolaEdge()
         {
-            float sqrDelta = Mathf.Sqrt(_delta);
+            if (!_parabolaEdgeCreated)
+            {
+                _parabolaEdge = _edgeFactory.CreateParabolaEdge();
+                _parabolaEdgeCreated = true;
+            }
 
-            float from = -_b - sqrDelta / 2 / _a;
-            float to = -_b + sqrDelta / 2 / _a;
+            float sqrDelta = Mathf.Sqrt(_delta);
+            float fromX = (-_b - sqrDelta) / (2 * _a);
+            float toX = (-_b + sqrDelta) / (2 * _a);
+
+            int stepCount = _lineRenderer.positionCount;
+
+            float xStep = XStep(stepCount, fromX, toX);
+
+            List<float> xPositions = UpdateXPositions(stepCount, fromX, xStep);
+            for (int i = 0; i < xPositions.Count; i++)
+            {
+                float x = xPositions[i];
+                float y = CalculateY(FocusPoint, ScanningLine.Directrix, x);
+
+                Vector3 segmentPosition = new Vector3(x, 0, y);
+
+                _lineRenderer.SetPosition(i, segmentPosition);
+            }
             Debug.Log("2222222222");
         }
+
         private void SetUpperLineEdgeStartAndEndPosition(Vector2 focusPoint, float halfOfDistanceFromFocusToDirectrix)
         {
             float sqrDelta = _upperLineEdge.SqrtDelta(focusPoint.y, halfOfDistanceFromFocusToDirectrix);
