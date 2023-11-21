@@ -4,7 +4,10 @@ namespace Assets.CodeBase.Logic.GlobalMap
 {
     public class BeachLine : MonoBehaviour
     {
-        [SerializeField] private EventQueue _eventQueue;
+        private EventQueue _eventQueue;
+
+        public void Construct(EventQueue eventQueue) =>
+            _eventQueue = eventQueue;
 
         private void Start() =>
             _eventQueue.SiteEventHappened += SiteEventHappened;

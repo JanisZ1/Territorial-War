@@ -12,7 +12,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
         [SerializeField] private LineRenderer _lineRenderer;
 
         private IParabolaObjectPool _parabolaObjectPool;
-        public static Vector2 Directrix;
+        public static Vector2 Directrix = new Vector2(0, 10);
         private List<Parabola> _initializedParabolas = new List<Parabola>();
 
         public void Construct(IParabolaObjectPool parabolaObjectPool) =>

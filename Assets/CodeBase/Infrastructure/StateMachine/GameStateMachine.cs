@@ -19,7 +19,7 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
             _states = new Dictionary<Type, IExitableState>()
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, coroutinerRunner, sceneLoader, allServices),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IUiFactory>(), allServices.Single<IScanningLineFactory>(), allServices.Single<IParabolaFactory>(), allServices.Single<IWindowService>(), allServices.Single<IStaticDataService>())
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, allServices.Single<IBeachLineFactory>(), allServices.Single<IEventQueueFactory>(), allServices.Single<IUiFactory>(), allServices.Single<IScanningLineFactory>(), allServices.Single<IParabolaFactory>(), allServices.Single<IWindowService>(), allServices.Single<IStaticDataService>())
             };
         }
 

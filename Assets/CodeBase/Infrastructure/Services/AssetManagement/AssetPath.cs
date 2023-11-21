@@ -9,5 +9,7 @@
         public const string ParabolaPath = "GlobalMap/Parabola";
         public const string UpperLineEdgePath = "GlobalMap/UpperLineEdge";
         public const string ParabolaEdgePath = "GlobalMap/ParabolaEdge";
+        public const string EventQueuePath = "GlobalMap/EventQueue";
+        public const string BeachLinePath = "GlobalMap/BeachLine";
     }
 }

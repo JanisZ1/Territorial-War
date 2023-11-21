@@ -12,16 +12,20 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
         private const string GlobalMap = "GlobalMap";
         private readonly GameStateMachine _gameStateMachine;
         private readonly SceneLoader _sceneLoader;
+        private readonly IBeachLineFactory _beachLineFactory;
+        private readonly IEventQueueFactory _eventQueueFactory;
         private readonly IUiFactory _uiFactory;
         private readonly IScanningLineFactory _scanningLineFactory;
         private readonly IParabolaFactory _parabolaFactory;
         private readonly IWindowService _windowService;
         private readonly IStaticDataService _staticDataService;
 
-        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, IUiFactory uiFactory, IScanningLineFactory scanningLineFactory, IParabolaFactory parabolaFactory, IWindowService windowService, IStaticDataService staticDataService)
+        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, IBeachLineFactory beachLineFactory, IEventQueueFactory eventQueueFactory, IUiFactory uiFactory, IScanningLineFactory scanningLineFactory, IParabolaFactory parabolaFactory, IWindowService windowService, IStaticDataService staticDataService)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
+            _beachLineFactory = beachLineFactory;
+            _eventQueueFactory = eventQueueFactory;
             _uiFactory = uiFactory;
             _scanningLineFactory = scanningLineFactory;
             _parabolaFactory = parabolaFactory;
@@ -44,6 +48,8 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
                 _parabolaFactory.CreateAndStoreParabolas(sitesCount);
                 //TODO: Static data for ScanningLineCreationPosition
                 _scanningLineFactory.CreateScanningLine(new UnityEngine.Vector3(0, 0, 10));
+                _eventQueueFactory.CreateEventQueue();
+                _beachLineFactory.CreateBeachLine();
             }
             else
             {

@@ -8,15 +8,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
     {
         public event Action<Vector2> SiteEventHappened;
 
-        private ScanningLine _scanningLine;
-
-        private List<Vector2> _sites = new List<Vector2>();
-
-        public void Construct(ScanningLine scanningLine, List<Vector2> sites)
-        {
-            _scanningLine = scanningLine;
-            _sites = sites;
-        }
+        [SerializeField] private List<Vector2> _sites = new List<Vector2>();
 
         private void Update() =>
             CheckSiteEvents();
@@ -24,7 +16,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
         private void CheckSiteEvents()
         {
             for (int i = 0; i < _sites.Count; i++)
-                if (_sites[i].y < ScanningLine.Directrix.y)
+                if (ScanningLine.Directrix.y < _sites[i].y)
                     InvokeSiteEventWithMaxY(i);
         }
 
