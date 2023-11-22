@@ -1,11 +1,11 @@
 ﻿using Assets.CodeBase.Infrastructure.Services;
-using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.CodeBase.Logic.GlobalMap
 {
     public interface IParabolaFactory : IService
     {
-        void CreateAndStoreParabolas(int sitesCount);
+        Parabola CreateParabola(Vector2 focusPointPosition);
     }
 }
 

@@ -44,8 +44,6 @@ namespace Assets.CodeBase.Infrastructure.StateMachine
             {
                 //TODO: Static data for sites count
                 int sitesCount = 4;
-
-                _parabolaFactory.CreateAndStoreParabolas(sitesCount);
                 //TODO: Static data for ScanningLineCreationPosition
                 _scanningLineFactory.CreateScanningLine(new UnityEngine.Vector3(0, 0, 10));
                 _eventQueueFactory.CreateEventQueue();

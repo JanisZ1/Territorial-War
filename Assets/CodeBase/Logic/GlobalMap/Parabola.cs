@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Assets.CodeBase.Data;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.CodeBase.Logic.GlobalMap
@@ -24,8 +25,31 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         public float DistanceToDirectrix { get; internal set; }
 
-        public void Construct(IEdgeFactory edgeFactory) =>
+        public void Construct(IEdgeFactory edgeFactory, Vector2 focusPoint)
+        {
             _edgeFactory = edgeFactory;
+            FocusPoint = focusPoint;
+        }
+
+        private void Update()
+        {
+            float halfOfDistanceToFocus = FocusPoint.YDistance(to: ScanningLine.Directrix) / 2;
+
+            Vector2 parabolaTop = CalculateParabolaTop(FocusPoint, halfOfDistanceToFocus);
+            Top = parabolaTop;
+            DistanceToDirectrix = halfOfDistanceToFocus;
+
+            CalculateParabolaTop(FocusPoint, halfOfDistanceToFocus);
+
+            InitializeUpperLineEdge(ScanningLine.Directrix);
+        }
+
+        private Vector2 CalculateParabolaTop(Vector2 focusPoint, float halfOfDistanceToFocus)
+        {
+            Vector2 parabolaTop = new Vector2(focusPoint.x, focusPoint.y - halfOfDistanceToFocus);
+
+            return parabolaTop;
+        }
 
         public void InitializeUpperLineEdge(Vector2 directrix)
         {

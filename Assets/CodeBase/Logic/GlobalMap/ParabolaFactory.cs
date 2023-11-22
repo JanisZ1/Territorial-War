@@ -6,27 +6,21 @@ namespace Assets.CodeBase.Logic.GlobalMap
     public class ParabolaFactory : IParabolaFactory
     {
         private readonly IAssets _assets;
-        private readonly IParabolaObjectPool _parabolaObjectPool;
         private readonly IEdgeFactory _edgeFactory;
 
-        public ParabolaFactory(IAssets assets, IParabolaObjectPool parabolaObjectPool, IEdgeFactory edgeFactory)
+        public ParabolaFactory(IAssets assets, IEdgeFactory edgeFactory)
         {
             _assets = assets;
-            _parabolaObjectPool = parabolaObjectPool;
             _edgeFactory = edgeFactory;
         }
 
-        public void CreateAndStoreParabolas(int sitesCount)
+        public Parabola CreateParabola(Vector2 focusPointPosition)
         {
-            for (int i = 0; i < sitesCount; i++)
-            {
-                GameObject gameObject = _assets.Instantiate(AssetPath.ParabolaPath);
+            Parabola parabola = _assets.Instantiate(AssetPath.ParabolaPath).GetComponent<Parabola>();
 
-                Parabola parabola = gameObject.GetComponent<Parabola>();
-                parabola.Construct(_edgeFactory);
-                gameObject.SetActive(false);
-                _parabolaObjectPool.StoredParabolas.Add(parabola);
-            }
+            parabola.Construct(_edgeFactory, focusPointPosition);
+
+            return parabola;
         }
     }
 }

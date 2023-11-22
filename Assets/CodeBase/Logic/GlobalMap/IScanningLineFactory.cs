@@ -5,7 +5,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
 {
     public interface IScanningLineFactory : IService
     {
-        GameObject CreateScanningLine(Vector3 at);
+        ScanningLine CreateScanningLine(Vector3 at);
     }
 }
 
