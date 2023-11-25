@@ -18,12 +18,17 @@ namespace Assets.CodeBase.Logic.GlobalMap
         private float _delta;
         private float _a;
         private float _b;
+        private float _firstX;
+        private float _secondX;
 
         public Vector2 FocusPoint { get; set; }
 
         public Vector2 Top { get; internal set; }
 
         public float DistanceToDirectrix { get; internal set; }
+
+        //Also the intersection point with other parabola
+        public float RightEndX { get; set; }
 
         public void Construct(IEdgeFactory edgeFactory, Vector2 focusPoint)
         {
@@ -69,7 +74,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
             float xStep = XStep(stepCount, fromX, toX);
 
             List<float> xPositions = UpdateXPositions(stepCount, fromX, xStep);
-            Debug.Log("11111111111");
+
             for (int i = 0; i < xPositions.Count; i++)
             {
                 float x = xPositions[i];
@@ -81,37 +86,46 @@ namespace Assets.CodeBase.Logic.GlobalMap
             }
         }
 
-        public bool HasIntersectionPointsWith(Parabola otherParabola)
+        private void OnDrawGizmos()
         {
-            float distanceToDirectrix = DistanceToDirectrix;
-            float otherParabolaDistanceToDirectrix = otherParabola.DistanceToDirectrix;
+            Gizmos.DrawSphere(new Vector3(_firstX, 0, 8), 0.5f);
+            Gizmos.DrawSphere(new Vector3(_secondX, 0, 8), 0.5f);
+        }
 
-            float parabolaTopX = Top.x;
-            float parabolaTopY = Top.y;
+        public float FindIntersectionPointXWith(Parabola otherParabola)
+        {
+            float b1md = FocusPoint.y - ScanningLine.Directrix.y;
+            float b2md = otherParabola.FocusPoint.y - ScanningLine.Directrix.y;
 
-            float nextParabolaTopX = otherParabola.Top.x;
-            float nextParabolaTopY = otherParabola.Top.y;
+            //solving the equation
+            float a1 = 1 / (2 * b1md);
+            float a2 = 1 / (2 * b2md);
 
-            float A = distanceToDirectrix - otherParabolaDistanceToDirectrix;
+            float b1 = a1 * (2 * FocusPoint.x);
+            float b2 = a2 * (2 * otherParabola.FocusPoint.x);
 
-            float B = 2 * (otherParabolaDistanceToDirectrix * parabolaTopX
-                - distanceToDirectrix * nextParabolaTopX);
+            float c1 = (a1 * (FocusPoint.x * FocusPoint.x)) + (b1md / 2);
+            float c2 = (a2 * (otherParabola.FocusPoint.x * otherParabola.FocusPoint.x)) + (b2md / 2);
 
-            float C = distanceToDirectrix * nextParabolaTopX * nextParabolaTopX
-                - otherParabolaDistanceToDirectrix * parabolaTopX * parabolaTopX + 4
-                * (distanceToDirectrix * otherParabolaDistanceToDirectrix * nextParabolaTopY
-                - distanceToDirectrix * otherParabolaDistanceToDirectrix * parabolaTopY);
+            //diving one equation from other
+            float a = a1 - a2;
+            //Subtract b1 from b2 because otherwise the sign is not correct
+            float b = b2 - b1;
+            float c = c1 - c2;
 
-            float delta = B * B - 4 * A * C;
+            float discriminant = b * b - 4 * a * c;
 
-            _a = A;
-            _b = B;
-            _delta = delta;
+            _firstX = (-b + Mathf.Sqrt(discriminant)) / (2 * a);
+            _secondX = (-b - Mathf.Sqrt(discriminant)) / (2 * a);
 
-            if (delta < 0)
-                return false;
+            float firstY = CalculateY(FocusPoint, new Vector2(0, ScanningLine.Directrix.y), _firstX);
+            float secondY = CalculateY(FocusPoint, new Vector2(0, ScanningLine.Directrix.y), _secondX);
 
-            return true;
+            //Get the less y, that is on the beach line, other is behind
+            if (firstY < secondY)
+                return _firstX;
+
+            return _secondX;
         }
 
         public void InitializeParabolaEdge()
@@ -140,7 +154,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
                 _lineRenderer.SetPosition(i, segmentPosition);
             }
-            Debug.Log("2222222222");
         }
 
         private void SetUpperLineEdgeStartAndEndPosition(Vector2 focusPoint, float halfOfDistanceFromFocusToDirectrix)

@@ -50,7 +50,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
             texture.filterMode = FilterMode.Point;
             texture.SetPixels(pixelColors);
             texture.Apply();
-            Debug.Log(texture.GetPixel(32, 20));
+            //Debug.Log(texture.GetPixel(32, 20));
             return texture;
         }
 

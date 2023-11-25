@@ -22,8 +22,23 @@ namespace Assets.CodeBase.Logic.GlobalMap
         private void OnDestroy() =>
             _eventQueue.SiteEventHappened -= SiteEventHappened;
 
-        private void SiteEventHappened(Vector2 sitePosition) =>
-            _parabolaFactory.CreateParabola(sitePosition);
+        private void Update()
+        {
+            for (int i = 0; i < _parabolas.Count - 1; i++)
+            {
+                Parabola parabola = _parabolas[i];
+                Parabola nextParabola = _parabolas[i + 1];
+                float x = parabola.FindIntersectionPointXWith(nextParabola);
+                parabola.RightEndX = x;
+            }
+        }
+
+        private void SiteEventHappened(Vector2 sitePosition)
+        {
+            Parabola parabola = _parabolaFactory.CreateParabola(sitePosition);
+            _parabolas.Add(parabola);
+            SortParabolasFromLeftToRight();
+        }
 
         private void SortParabolasFromLeftToRight() =>
             _parabolas.Sort((x1, x2) => x1.FocusPoint.x.CompareTo(x2.FocusPoint.x));
