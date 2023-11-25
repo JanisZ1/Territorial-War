@@ -37,13 +37,18 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 Parabola parabola = _parabolas[i];
                 Parabola nextParabola = _parabolas[i + 1];
 
-                float x = parabola.FindIntersectionPointXWith(nextParabola);
-                parabola.RightEndX = x;
+                Vector2 intersectionPoint = parabola.FindRightIntersectionPointWith(nextParabola);
+                parabola.RightEnd = intersectionPoint;
+
+                if (parabola.ParabolaEdge)
+                    parabola.InitializeParabolaEdge();
             }
         }
 
         private void SiteEventHappened(Vector2 sitePosition)
         {
+            FindArcIntersected(sitePosition);
+
             Parabola parabola = _parabolaFactory.CreateParabola(sitePosition);
             _parabolas.Add(parabola);
             SortParabolasFromLeftToRight();
@@ -51,8 +56,29 @@ namespace Assets.CodeBase.Logic.GlobalMap
             //TODO: Check parabola arc that is intersected with new parabola
             UpperLineEdge upperLineEdge = _edgeFactory.CreateUpperLineEdge();
             parabola.UpperLineEdge = upperLineEdge;
+
+            
         }
 
+        private Parabola FindArcIntersected(Vector2 newParabolaPosition)
+        {
+            Parabola parabolaIntersected = null;
+
+            for (int i = 0; i < _parabolas.Count - 1; i++)
+            {
+                Parabola parabola = _parabolas[i];
+                Parabola nextParabola = _parabolas[i + 1];
+
+                if (newParabolaPosition.x < parabola.RightEnd.x && newParabolaPosition.x > nextParabola.RightEnd.x)
+                {
+                    ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge();
+                    nextParabola.ParabolaEdge = parabolaEdge;
+                    return parabolaIntersected;
+                }
+            }
+
+            return parabolaIntersected;
+        }
         private void SortParabolasFromLeftToRight() =>
             _parabolas.Sort((x1, x2) => x1.FocusPoint.x.CompareTo(x2.FocusPoint.x));
     }
