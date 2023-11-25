@@ -18,7 +18,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
         {
             Parabola parabola = _assets.Instantiate(AssetPath.ParabolaPath).GetComponent<Parabola>();
 
-            parabola.Construct(_edgeFactory, focusPointPosition);
+            parabola.Construct(focusPointPosition);
 
             return parabola;
         }

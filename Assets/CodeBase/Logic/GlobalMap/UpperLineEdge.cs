@@ -13,10 +13,10 @@ namespace Assets.CodeBase.Logic.GlobalMap
         private readonly float _y = 10;
 
         public void SetStartPosition(float focusPointX, float sqrDelta) =>
-            StartPosition = new Vector3(focusPointX - sqrDelta, 0, 10);
+            StartPosition = new Vector3(focusPointX - sqrDelta, 0, _y);
 
         public void SetEndPosition(float focusPointX, float sqrDelta) =>
-            EndPosition = new Vector3(focusPointX + sqrDelta, 0, 10);
+            EndPosition = new Vector3(focusPointX + sqrDelta, 0, _y);
 
         private void Update()
         {

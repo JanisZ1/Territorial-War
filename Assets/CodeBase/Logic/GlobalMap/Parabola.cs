@@ -8,70 +8,44 @@ namespace Assets.CodeBase.Logic.GlobalMap
     {
         [SerializeField] private LineRenderer _lineRenderer;
 
-        private IEdgeFactory _edgeFactory;
-        private UpperLineEdge _upperLineEdge;
-        private ParabolaEdge _parabolaEdge;
-
-        private bool _edgeCreated;
-        private bool _parabolaEdgeCreated;
-
         private float _delta;
         private float _a;
         private float _b;
         private float _firstX;
         private float _secondX;
 
+        public UpperLineEdge UpperLineEdge { get; set; }
+
+        private ParabolaEdge ParabolaEdge { get; set; }
+
         public Vector2 FocusPoint { get; set; }
-
-        public Vector2 Top { get; internal set; }
-
-        public float DistanceToDirectrix { get; internal set; }
 
         //Also the intersection point with other parabola
         public float RightEndX { get; set; }
 
-        public void Construct(IEdgeFactory edgeFactory, Vector2 focusPoint)
-        {
-            _edgeFactory = edgeFactory;
+        public void Construct(Vector2 focusPoint) =>
             FocusPoint = focusPoint;
-        }
 
-        private void Update()
-        {
-            float halfOfDistanceToFocus = FocusPoint.YDistance(to: ScanningLine.Directrix) / 2;
-
-            Vector2 parabolaTop = CalculateParabolaTop(FocusPoint, halfOfDistanceToFocus);
-            Top = parabolaTop;
-            DistanceToDirectrix = halfOfDistanceToFocus;
-
-            CalculateParabolaTop(FocusPoint, halfOfDistanceToFocus);
-
+        private void Update() =>
             InitializeUpperLineEdge(ScanningLine.Directrix);
-        }
 
-        private Vector2 CalculateParabolaTop(Vector2 focusPoint, float halfOfDistanceToFocus)
+        private void OnDrawGizmos()
         {
-            Vector2 parabolaTop = new Vector2(focusPoint.x, focusPoint.y - halfOfDistanceToFocus);
-
-            return parabolaTop;
+            Gizmos.DrawSphere(new Vector3(_firstX, 0, 8), 0.5f);
+            Gizmos.DrawSphere(new Vector3(_secondX, 0, 8), 0.5f);
         }
 
         public void InitializeUpperLineEdge(Vector2 directrix)
         {
             float stepCount = _lineRenderer.positionCount;
 
-            if (!_edgeCreated)
-            {
-                _upperLineEdge = _edgeFactory.CreateUpperLineEdge();
-                _edgeCreated = true;
-            }
+            float fromX = UpperLineEdge.StartPosition.x;
 
-            SetUpperLineEdgeStartAndEndPosition(FocusPoint, DistanceToDirectrix);
-
-            float fromX = _upperLineEdge.StartPosition.x;
-            float toX = _upperLineEdge.EndPosition.x;
+            float toX = UpperLineEdge.EndPosition.x;
 
             float xStep = XStep(stepCount, fromX, toX);
+
+            SetUpperLineStartAndEndPosition(UpperLineEdge, FocusPoint);
 
             List<float> xPositions = UpdateXPositions(stepCount, fromX, xStep);
 
@@ -84,12 +58,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
                 _lineRenderer.SetPosition(i, segmentPosition);
             }
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawSphere(new Vector3(_firstX, 0, 8), 0.5f);
-            Gizmos.DrawSphere(new Vector3(_secondX, 0, 8), 0.5f);
         }
 
         public float FindIntersectionPointXWith(Parabola otherParabola)
@@ -130,12 +98,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         public void InitializeParabolaEdge()
         {
-            if (!_parabolaEdgeCreated)
-            {
-                _parabolaEdge = _edgeFactory.CreateParabolaEdge();
-                _parabolaEdgeCreated = true;
-            }
-
             float sqrDelta = Mathf.Sqrt(_delta);
             float fromX = (-_b - sqrDelta) / (2 * _a);
             float toX = (-_b + sqrDelta) / (2 * _a);
@@ -156,12 +118,13 @@ namespace Assets.CodeBase.Logic.GlobalMap
             }
         }
 
-        private void SetUpperLineEdgeStartAndEndPosition(Vector2 focusPoint, float halfOfDistanceFromFocusToDirectrix)
+        private void SetUpperLineStartAndEndPosition(UpperLineEdge upperLineEdge, Vector2 focusPoint)
         {
-            float sqrDelta = _upperLineEdge.SqrtDelta(focusPoint.y, halfOfDistanceFromFocusToDirectrix);
+            float halfOfDistanceToFocus = FocusPoint.YDistance(to: ScanningLine.Directrix) / 2;
+            float sqrDelta = upperLineEdge.SqrtDelta(focusPoint.y, halfOfDistanceToFocus);
 
-            _upperLineEdge.SetStartPosition(focusPoint.x, sqrDelta);
-            _upperLineEdge.SetEndPosition(focusPoint.x, sqrDelta);
+            upperLineEdge.SetStartPosition(focusPoint.x, sqrDelta);
+            upperLineEdge.SetEndPosition(focusPoint.x, sqrDelta);
         }
 
         private float CalculateY(Vector2 focusPoint, Vector2 directrix, float x) =>
