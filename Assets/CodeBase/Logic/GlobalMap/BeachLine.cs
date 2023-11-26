@@ -25,10 +25,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
         private void OnDestroy() =>
             _eventQueue.SiteEventHappened -= SiteEventHappened;
 
-        private void Update()
-        {
+        private void Update() =>
             UpdateParabolaIntersectionPoints();
-        }
 
         private void UpdateParabolaIntersectionPoints()
         {
@@ -48,37 +46,24 @@ namespace Assets.CodeBase.Logic.GlobalMap
         private void SiteEventHappened(Vector2 sitePosition)
         {
             FindArcIntersected(sitePosition);
+            ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge();
 
             Parabola parabola = _parabolaFactory.CreateParabola(sitePosition);
+            parabola.ParabolaEdge = parabolaEdge;
             _parabolas.Add(parabola);
             SortParabolasFromLeftToRight();
 
             //TODO: Check parabola arc that is intersected with new parabola
             UpperLineEdge upperLineEdge = _edgeFactory.CreateUpperLineEdge();
             parabola.UpperLineEdge = upperLineEdge;
-
-            
         }
 
         private Parabola FindArcIntersected(Vector2 newParabolaPosition)
         {
-            Parabola parabolaIntersected = null;
-
-            for (int i = 0; i < _parabolas.Count - 1; i++)
-            {
-                Parabola parabola = _parabolas[i];
-                Parabola nextParabola = _parabolas[i + 1];
-
-                if (newParabolaPosition.x < parabola.RightEnd.x && newParabolaPosition.x > nextParabola.RightEnd.x)
-                {
-                    ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge();
-                    nextParabola.ParabolaEdge = parabolaEdge;
-                    return parabolaIntersected;
-                }
-            }
-
-            return parabolaIntersected;
+            //TODO: Arc intersection code
+            return null;
         }
+
         private void SortParabolasFromLeftToRight() =>
             _parabolas.Sort((x1, x2) => x1.FocusPoint.x.CompareTo(x2.FocusPoint.x));
     }

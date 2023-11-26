@@ -11,9 +11,11 @@ namespace Assets.CodeBase.Logic.GlobalMap
         private float _delta;
 
         public Vector2 FirstIntersectionPoint { get; private set; }
-
+        private bool _edgeIsCreated;
         private float _firstX;
         private float _secondX;
+        private float _firstY;
+        private float _secondY;
 
         public UpperLineEdge UpperLineEdge { get; set; }
 
@@ -24,6 +26,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
         //Also the intersection point with other parabola
         public Vector2 RightEnd { get; set; }
 
+        public LineRenderer LineRenderer => _lineRenderer;
+
         public void Construct(Vector2 focusPoint) =>
             FocusPoint = focusPoint;
 
@@ -32,8 +36,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private void OnDrawGizmos()
         {
-            Gizmos.DrawSphere(new Vector3(_firstX, 0, 8), 0.5f);
-            Gizmos.DrawSphere(new Vector3(_secondX, 0, 8), 0.5f);
+            Gizmos.DrawSphere(new Vector3(_firstX, 0, _firstY), 0.5f);
+            Gizmos.DrawSphere(new Vector3(_secondX, 0, _secondY), 0.5f);
         }
 
         public void InitializeUpperLineEdge(Vector2 directrix)
@@ -84,23 +88,35 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
             float discriminant = b * b - 4 * a * c;
 
+            if (discriminant < 0)
+                return new Vector2(0, 0);
+
             _firstX = (-b + Mathf.Sqrt(discriminant)) / (2 * a);
             _secondX = (-b - Mathf.Sqrt(discriminant)) / (2 * a);
 
-            float firstY = CalculateY(FocusPoint, new Vector2(0, ScanningLine.Directrix.y), _firstX);
-            float secondY = CalculateY(FocusPoint, new Vector2(0, ScanningLine.Directrix.y), _secondX);
+            _firstY = CalculateY(FocusPoint, new Vector2(0, ScanningLine.Directrix.y), _firstX);
+            _secondY = CalculateY(FocusPoint, new Vector2(0, ScanningLine.Directrix.y), _secondX);
 
             //Get the less y, that is on the beach line, other is behind
-            if (firstY < secondY)
+            if (_firstY < _secondY)
             {
-                if (FirstIntersectionPoint.x == 0)
+                if (!_edgeIsCreated)
                 {
-                    FirstIntersectionPoint = new Vector2(_firstX, firstY);
+                    FirstIntersectionPoint = new Vector2(_firstX, _firstY);
+                    _edgeIsCreated = true;
                 }
-                return new Vector2(_firstX, firstY);
+                return new Vector2(_firstX, _firstY);
             }
 
-            return new Vector2(_secondX, secondY);
+            else
+            {
+                if (!_edgeIsCreated)
+                {
+                    FirstIntersectionPoint = new Vector2(_secondX, _secondY);
+                    _edgeIsCreated = true;
+                }
+                return new Vector2(_secondX, _secondY);
+            }
         }
 
         public void InitializeParabolaEdge()
