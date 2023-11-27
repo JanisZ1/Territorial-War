@@ -8,10 +8,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
     {
         [SerializeField] private LineRenderer _lineRenderer;
 
-        private float _delta;
-
         public Vector2 FirstIntersectionPoint { get; private set; }
-        private bool _edgeIsCreated;
+        public bool EdgeIsCreated;
         private float _firstX;
         private float _secondX;
         private float _firstY;
@@ -26,7 +24,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
         //Also the intersection point with other parabola
         public Vector2 RightEnd { get; set; }
 
-        public LineRenderer LineRenderer => _lineRenderer;
+        public bool IntersectingOtherParabola { get; private set; }
 
         public void Construct(Vector2 focusPoint) =>
             FocusPoint = focusPoint;
@@ -86,7 +84,12 @@ namespace Assets.CodeBase.Logic.GlobalMap
             float discriminant = b * b - 4 * a * c;
 
             if (discriminant < 0)
+            {
+                IntersectingOtherParabola = false;
                 return new Vector2(0, 0);
+            }
+
+            IntersectingOtherParabola = true;
 
             _firstX = (-b + Mathf.Sqrt(discriminant)) / (2 * a);
             _secondX = (-b - Mathf.Sqrt(discriminant)) / (2 * a);
@@ -97,20 +100,20 @@ namespace Assets.CodeBase.Logic.GlobalMap
             //Get the less y, that is on the beach line, other is behind
             if (_firstY < _secondY)
             {
-                if (!_edgeIsCreated)
+                if (!EdgeIsCreated)
                 {
                     FirstIntersectionPoint = new Vector2(_firstX, _firstY);
-                    _edgeIsCreated = true;
+                    EdgeIsCreated = true;
                 }
                 return new Vector2(_firstX, _firstY);
             }
 
             else
             {
-                if (!_edgeIsCreated)
+                if (!EdgeIsCreated)
                 {
                     FirstIntersectionPoint = new Vector2(_secondX, _secondY);
-                    _edgeIsCreated = true;
+                    EdgeIsCreated = true;
                 }
                 return new Vector2(_secondX, _secondY);
             }
@@ -118,8 +121,19 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         public void InitializeParabolaEdge()
         {
-            float fromX = FirstIntersectionPoint.x;
-            float toX = _firstX;
+            float fromX;
+            float toX;
+
+            if (_firstX < _secondX)
+            {
+                fromX = _firstX;
+                toX = _secondX;
+            }
+            else
+            {
+                fromX = _secondX;
+                toX = _firstX;
+            }
 
             int stepCount = _lineRenderer.positionCount;
 

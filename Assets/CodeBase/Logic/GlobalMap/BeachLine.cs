@@ -26,8 +26,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private void Update()
         {
-            UpdateParabolaDrawing();
             UpdateParabolaIntersectionPoints();
+            UpdateParabolaDrawing();
         }
 
         private void UpdateParabolaDrawing()
@@ -40,7 +40,9 @@ namespace Assets.CodeBase.Logic.GlobalMap
                     parabola.InitializeParabolaEdge();
 
                 if (parabola.UpperLineEdge)
+                {
                     parabola.InitializeUpperLineEdge(ScanningLine.Directrix);
+                }
             }
         }
 
@@ -64,9 +66,17 @@ namespace Assets.CodeBase.Logic.GlobalMap
             {
                 Parabola parabola = _parabolaFactory.CreateParabola(sitePosition);
                 ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge();
-
                 parabola.ParabolaEdge = parabolaEdge;
                 _parabolas.Add(parabola);
+
+                //Find intersection point of intersected parabola, because instead it dont draws an intersection edge
+                //TODO: Maybe the binary search tree will make easier to find intersections between parabolas
+                intersectedParabola.FindRightIntersectionPointWith(parabola);
+                if (intersectedParabola.IntersectingOtherParabola)
+                {
+                    ParabolaEdge parabolaEdge1 = _edgeFactory.CreateParabolaEdge();
+                    intersectedParabola.ParabolaEdge = parabolaEdge1;
+                }
             }
             else
             {
@@ -76,14 +86,15 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 parabola.UpperLineEdge = upperLineEdge;
                 _parabolas.Add(parabola);
             }
+
             Debug.Log(intersectedParabola?.FocusPoint);
-            
+
             SortParabolasFromLeftToRight();
         }
 
         private Parabola FindArcIntersected(Vector2 newParabolaPosition)
         {
-            if(_parabolas.Count == 1)
+            if (_parabolas.Count == 1)
             {
                 //TODO: Check that actually new parabola intersects arc
                 return _parabolas[0];
@@ -109,7 +120,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 }
                 else
                 {
-                    if(parabola.RightEnd.x < newParabolaPosition.x && nextParabola.RightEnd.x > newParabolaPosition.x)
+                    if (parabola.RightEnd.x < newParabolaPosition.x && nextParabola.RightEnd.x > newParabolaPosition.x)
                     {
                         Debug.Log("nextParabola");
                         return nextParabola;
