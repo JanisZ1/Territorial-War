@@ -45,7 +45,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private void SiteEventHappened(Vector2 sitePosition)
         {
-            FindArcIntersected(sitePosition);
+            Parabola intersectedParabola = FindArcIntersected(sitePosition);
+            Debug.Log(intersectedParabola?.FocusPoint);
             ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge();
 
             Parabola parabola = _parabolaFactory.CreateParabola(sitePosition);
@@ -60,7 +61,45 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private Parabola FindArcIntersected(Vector2 newParabolaPosition)
         {
-            //TODO: Arc intersection code
+            if(_parabolas.Count == 1)
+            {
+                //TODO: Check that actually new parabola intersects arc
+                return _parabolas[0];
+            }
+
+            for (int i = 0; i < _parabolas.Count - 1; i++)
+            {
+                Parabola parabola = _parabolas[i];
+                Parabola nextParabola = _parabolas[i + 1];
+
+                bool nextParabolaRightEndIsOutSideOfTheBeachLine = nextParabola.RightEnd.x == 0;
+
+                if (nextParabolaRightEndIsOutSideOfTheBeachLine)
+                {
+                    if (parabola.RightEnd.x < newParabolaPosition.x)
+                    {
+                        return nextParabola;
+                    }
+                    else
+                    {
+                        return parabola;
+                    }
+                }
+                else
+                {
+                    if(parabola.RightEnd.x < newParabolaPosition.x && nextParabola.RightEnd.x > newParabolaPosition.x)
+                    {
+                        Debug.Log("nextParabola");
+                        return nextParabola;
+                    }
+
+                    if (parabola.RightEnd.x > newParabolaPosition.x && nextParabola.RightEnd.x < newParabolaPosition.x)
+                    {
+                        Debug.Log("parabola");
+                        return parabola;
+                    }
+                }
+            }
             return null;
         }
 
