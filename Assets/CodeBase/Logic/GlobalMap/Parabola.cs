@@ -31,9 +31,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
         public void Construct(Vector2 focusPoint) =>
             FocusPoint = focusPoint;
 
-        private void Update() =>
-            InitializeUpperLineEdge(ScanningLine.Directrix);
-
         private void OnDrawGizmos()
         {
             Gizmos.DrawSphere(new Vector3(_firstX, 0, _firstY), 0.5f);

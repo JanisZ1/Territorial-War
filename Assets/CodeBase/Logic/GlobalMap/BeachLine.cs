@@ -10,7 +10,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
         private IEdgeFactory _edgeFactory;
 
         private List<Parabola> _parabolas = new List<Parabola>();
-        private List<UpperLineEdge> _upperLineEdges = new List<UpperLineEdge>();
 
         public void Construct(EventQueue eventQueue, IParabolaFactory parabolaFactory, IEdgeFactory edgeFactory)
         {
@@ -25,8 +24,25 @@ namespace Assets.CodeBase.Logic.GlobalMap
         private void OnDestroy() =>
             _eventQueue.SiteEventHappened -= SiteEventHappened;
 
-        private void Update() =>
+        private void Update()
+        {
+            UpdateParabolaDrawing();
             UpdateParabolaIntersectionPoints();
+        }
+
+        private void UpdateParabolaDrawing()
+        {
+            for (int i = 0; i < _parabolas.Count; i++)
+            {
+                Parabola parabola = _parabolas[i];
+
+                if (parabola.ParabolaEdge)
+                    parabola.InitializeParabolaEdge();
+
+                if (parabola.UpperLineEdge)
+                    parabola.InitializeUpperLineEdge(ScanningLine.Directrix);
+            }
+        }
 
         private void UpdateParabolaIntersectionPoints()
         {
@@ -37,26 +53,32 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
                 Vector2 intersectionPoint = parabola.FindRightIntersectionPointWith(nextParabola);
                 parabola.RightEnd = intersectionPoint;
-
-                if (parabola.ParabolaEdge)
-                    parabola.InitializeParabolaEdge();
             }
         }
 
         private void SiteEventHappened(Vector2 sitePosition)
         {
             Parabola intersectedParabola = FindArcIntersected(sitePosition);
+
+            if (intersectedParabola)
+            {
+                Parabola parabola = _parabolaFactory.CreateParabola(sitePosition);
+                ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge();
+
+                parabola.ParabolaEdge = parabolaEdge;
+                _parabolas.Add(parabola);
+            }
+            else
+            {
+                Parabola parabola = _parabolaFactory.CreateParabola(sitePosition);
+                UpperLineEdge upperLineEdge = _edgeFactory.CreateUpperLineEdge();
+
+                parabola.UpperLineEdge = upperLineEdge;
+                _parabolas.Add(parabola);
+            }
             Debug.Log(intersectedParabola?.FocusPoint);
-            ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge();
-
-            Parabola parabola = _parabolaFactory.CreateParabola(sitePosition);
-            parabola.ParabolaEdge = parabolaEdge;
-            _parabolas.Add(parabola);
+            
             SortParabolasFromLeftToRight();
-
-            //TODO: Check parabola arc that is intersected with new parabola
-            UpperLineEdge upperLineEdge = _edgeFactory.CreateUpperLineEdge();
-            parabola.UpperLineEdge = upperLineEdge;
         }
 
         private Parabola FindArcIntersected(Vector2 newParabolaPosition)
