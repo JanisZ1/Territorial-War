@@ -53,8 +53,10 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 Parabola parabola = _parabolas[i];
                 Parabola nextParabola = _parabolas[i + 1];
 
-                Vector2 intersectionPoint = parabola.FindRightIntersectionPointWith(nextParabola);
-                parabola.RightEnd = intersectionPoint;
+                parabola.FindRightIntersectionPointWith(nextParabola);
+
+                //also update the next to previous parabola intersection points
+                nextParabola.FindRightIntersectionPointWith(parabola);
             }
         }
 
@@ -68,15 +70,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge();
                 parabola.ParabolaEdge = parabolaEdge;
                 _parabolas.Add(parabola);
-
-                //Find intersection point of intersected parabola, because instead it dont draws an intersection edge
-                //TODO: Maybe the binary search tree will make easier to find intersections between parabolas
-                intersectedParabola.FindRightIntersectionPointWith(parabola);
-                if (intersectedParabola.IntersectingOtherParabola)
-                {
-                    ParabolaEdge parabolaEdge1 = _edgeFactory.CreateParabolaEdge();
-                    intersectedParabola.ParabolaEdge = parabolaEdge1;
-                }
             }
             else
             {
@@ -94,43 +87,14 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private Parabola FindArcIntersected(Vector2 newParabolaPosition)
         {
-            if (_parabolas.Count == 1)
-            {
-                //TODO: Check that actually new parabola intersects arc
-                return _parabolas[0];
-            }
-
-            for (int i = 0; i < _parabolas.Count - 1; i++)
+            for (int i = 0; i < _parabolas.Count; i++)
             {
                 Parabola parabola = _parabolas[i];
-                Parabola nextParabola = _parabolas[i + 1];
 
-                bool nextParabolaRightEndIsOutSideOfTheBeachLine = nextParabola.RightEnd.x == 0;
-
-                if (nextParabolaRightEndIsOutSideOfTheBeachLine)
+                if (newParabolaPosition.x > parabola.ParabolaStart.x && newParabolaPosition.x < parabola.ParabolaEnd.x)
                 {
-                    if (parabola.RightEnd.x < newParabolaPosition.x)
-                    {
-                        return nextParabola;
-                    }
-                    else
-                    {
-                        return parabola;
-                    }
-                }
-                else
-                {
-                    if (parabola.RightEnd.x < newParabolaPosition.x && nextParabola.RightEnd.x > newParabolaPosition.x)
-                    {
-                        Debug.Log("nextParabola");
-                        return nextParabola;
-                    }
-
-                    if (parabola.RightEnd.x > newParabolaPosition.x && nextParabola.RightEnd.x < newParabolaPosition.x)
-                    {
-                        Debug.Log("parabola");
-                        return parabola;
-                    }
+                    Debug.Log("parabola");
+                    return parabola;
                 }
             }
             return null;

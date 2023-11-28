@@ -8,7 +8,15 @@ namespace Assets.CodeBase.Logic.GlobalMap
     {
         [SerializeField] private LineRenderer _lineRenderer;
 
+        public Vector3 ParabolaStart { get; private set; }
+
+        public Vector3 ParabolaEnd { get; private set; }
+
         public Vector2 FirstIntersectionPoint { get; private set; }
+
+        //Also the right intersection point with other parabola
+        public Vector2 SecondIntersectionPoint { get; set; }
+
         public bool EdgeIsCreated;
         private float _firstX;
         private float _secondX;
@@ -21,13 +29,16 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         public Vector2 FocusPoint { get; set; }
 
-        //Also the intersection point with other parabola
-        public Vector2 RightEnd { get; set; }
-
         public bool IntersectingOtherParabola { get; private set; }
 
         public void Construct(Vector2 focusPoint) =>
             FocusPoint = focusPoint;
+
+        private void Update()
+        {
+            ParabolaStart = _lineRenderer.GetPosition(0);
+            ParabolaEnd = _lineRenderer.GetPosition(40);
+        }
 
         private void OnDrawGizmos()
         {
@@ -97,24 +108,18 @@ namespace Assets.CodeBase.Logic.GlobalMap
             _firstY = CalculateY(FocusPoint, new Vector2(0, ScanningLine.Directrix.y), _firstX);
             _secondY = CalculateY(FocusPoint, new Vector2(0, ScanningLine.Directrix.y), _secondX);
 
-            //Get the less y, that is on the beach line, other is behind
-            if (_firstY < _secondY)
+            //Get the intersection points from left to right
+            if (_firstX < _secondX)
             {
-                if (!EdgeIsCreated)
-                {
-                    FirstIntersectionPoint = new Vector2(_firstX, _firstY);
-                    EdgeIsCreated = true;
-                }
+                FirstIntersectionPoint = new Vector2(_firstX, _firstY);
+                SecondIntersectionPoint = new Vector2(_secondX, _secondY);
                 return new Vector2(_firstX, _firstY);
             }
 
             else
             {
-                if (!EdgeIsCreated)
-                {
-                    FirstIntersectionPoint = new Vector2(_secondX, _secondY);
-                    EdgeIsCreated = true;
-                }
+                FirstIntersectionPoint = new Vector2(_secondX, _secondY);
+                SecondIntersectionPoint = new Vector2(_firstX, _firstY);
                 return new Vector2(_secondX, _secondY);
             }
         }
@@ -139,7 +144,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
             float xStep = XStep(stepCount, fromX, toX);
 
-            SetParabolaEdgeStartAndEndPosition(ParabolaEdge, FirstIntersectionPoint, RightEnd);
+            SetParabolaEdgeStartAndEndPosition(ParabolaEdge, FirstIntersectionPoint, SecondIntersectionPoint);
 
             List<float> xPositions = UpdateXPositions(stepCount, fromX, xStep);
             for (int i = 0; i < xPositions.Count; i++)
