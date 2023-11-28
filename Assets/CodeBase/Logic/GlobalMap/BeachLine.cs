@@ -48,24 +48,11 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private void UpdateParabolaIntersectionPoints()
         {
-            for (int i = 0; i < _parabolas.Count - 1; i++)
+            for (int i = 0; i < _parabolas.Count; i++)
             {
                 Parabola parabola = _parabolas[i];
-                Parabola nextParabola = _parabolas[i + 1];
 
-                if (parabola.ParabolaEdge && nextParabola.ParabolaEdge)
-                {
-                    nextParabola.FindIntersectionPointsWith(parabola);
-                    continue;
-                }
-
-                if (parabola.ParabolaEdge)
-                {
-                    parabola.FindIntersectionPointsWith(nextParabola);
-                }
-                //also update the next to previous parabola intersection points
-                if (nextParabola.ParabolaEdge)
-                    nextParabola.FindIntersectionPointsWith(parabola);
+                parabola.FindIntersectionPointsWithNextParabola();
             }
         }
 
@@ -75,7 +62,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
             if (intersectedParabola)
             {
-                Parabola parabola = _parabolaFactory.CreateParabola(sitePosition);
+                Parabola parabola = _parabolaFactory.CreateParabola(sitePosition, intersectedParabola.FocusPoint);
                 ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge();
                 parabola.ParabolaEdge = parabolaEdge;
                 _parabolas.Add(parabola);

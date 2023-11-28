@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.CodeBase.Logic.GlobalMap
@@ -21,8 +22,16 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         public Vector2 FocusPoint { get; set; }
 
+        public Vector2 NextParabolaFocusPoint { get; set; }
+
         public void Construct(Vector2 focusPoint) =>
             FocusPoint = focusPoint;
+
+        public void Construct(Vector2 focusPointPosition, Vector2 nextParabolaFocusPointPosition)
+        {
+            FocusPoint = focusPointPosition;
+            NextParabolaFocusPoint = nextParabolaFocusPointPosition;
+        }
 
         private void Update()
         {
@@ -61,20 +70,20 @@ namespace Assets.CodeBase.Logic.GlobalMap
             }
         }
 
-        public Vector2 FindIntersectionPointsWith(Parabola otherParabola)
+        public Vector2 FindIntersectionPointsWithNextParabola()
         {
             float b1md = FocusPoint.y - ScanningLine.Directrix.y;
-            float b2md = otherParabola.FocusPoint.y - ScanningLine.Directrix.y;
+            float b2md = NextParabolaFocusPoint.y - ScanningLine.Directrix.y;
 
             //solving the equation
             float a1 = 1 / (2 * b1md);
             float a2 = 1 / (2 * b2md);
 
             float b1 = a1 * (2 * FocusPoint.x);
-            float b2 = a2 * (2 * otherParabola.FocusPoint.x);
+            float b2 = a2 * (2 * NextParabolaFocusPoint.x);
 
             float c1 = (a1 * (FocusPoint.x * FocusPoint.x)) + (b1md / 2);
-            float c2 = (a2 * (otherParabola.FocusPoint.x * otherParabola.FocusPoint.x)) + (b2md / 2);
+            float c2 = (a2 * (NextParabolaFocusPoint.x * NextParabolaFocusPoint.x)) + (b2md / 2);
 
             //diving one equation from other
             float a = a1 - a2;

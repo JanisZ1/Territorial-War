@@ -22,6 +22,15 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
             return parabola;
         }
+
+        public Parabola CreateParabola(Vector2 focusPointPosition, Vector2 nextParabolaFocusPointPosition)
+        {
+            Parabola parabola = _assets.Instantiate(AssetPath.ParabolaPath).GetComponent<Parabola>();
+
+            parabola.Construct(focusPointPosition, nextParabolaFocusPointPosition);
+
+            return parabola;
+        }
     }
 }
 
