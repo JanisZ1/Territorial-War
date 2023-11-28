@@ -18,11 +18,24 @@ namespace Assets.CodeBase.Logic.GlobalMap
             _edgeFactory = edgeFactory;
         }
 
-        private void Start() =>
+        private void Start()
+        {
             _eventQueue.SiteEventHappened += SiteEventHappened;
+            _eventQueue.CircleEventHappened += CircleEventHappened;
+        }
 
-        private void OnDestroy() =>
+        private void CircleEventHappened(float bottomPointOfCircle, Parabola secondParabola)
+        {
+            _parabolas.Remove(secondParabola);
+            Destroy(secondParabola.gameObject);
+            SortParabolasFromLeftToRight();
+        }
+
+        private void OnDestroy()
+        {
             _eventQueue.SiteEventHappened -= SiteEventHappened;
+            _eventQueue.CircleEventHappened -= CircleEventHappened;
+        }
 
         private void Update()
         {
@@ -74,6 +87,30 @@ namespace Assets.CodeBase.Logic.GlobalMap
             Debug.Log(intersectedParabola?.FocusPoint);
 
             SortParabolasFromLeftToRight();
+
+            FindCircleEvents();
+        }
+
+        private void FindCircleEvents()
+        {
+            for (int i = 0; i < _parabolas.Count - 2; i++)
+            {
+                Parabola firstParabola = _parabolas[i];
+                Parabola secondParabola = _parabolas[i + 1];
+                Parabola thirdParabola = _parabolas[i + 2];
+
+                Vector2 ab = (firstParabola.FocusPoint + secondParabola.FocusPoint) / 2;
+                Vector2 bc = (secondParabola.FocusPoint + thirdParabola.FocusPoint) / 2;
+                Vector2 ca = (thirdParabola.FocusPoint + firstParabola.FocusPoint) / 2;
+
+                Vector2 middlePoint = (ab + bc + ca) / 3;
+                float radius = Vector2.Distance(middlePoint, firstParabola.FocusPoint);
+
+                float circleEventPosition = middlePoint.y - radius;
+
+                _eventQueue.AddToCircleEventList(circleEventPosition, secondParabola);
+                Debug.Log(circleEventPosition);
+            }
         }
 
         private Parabola CreateIntersectedParabola(Vector2 sitePosition, Parabola intersectedParabola)

@@ -9,16 +9,26 @@ namespace Assets.CodeBase.Logic.GlobalMap
         public event Action<Vector2> SiteEventHappened;
         [SerializeField] private List<Vector2> _sites = new List<Vector2>();
 
-        public event Action<float> CircleEventHappened;
-        private List<float> _circleEvents;
+        public event Action<float, Parabola> CircleEventHappened;
+        private List<float> _circleEvents = new List<float>();
+        private List<Parabola> _parabolaCircleEvents = new List<Parabola>();
 
-        private void Update() =>
+        private void Update()
+        {
             CheckSiteEvents();
+            CheckCircleEvents();
+        }
 
-        public void AddToCircleEventList(float directrixYOnEventMoment) =>
-            _circleEvents.Add(directrixYOnEventMoment);
+        public void AddToCircleEventList(float directrixYOnEventMoment, Parabola secondParabola)
+        {
+            if (!_circleEvents.Contains(directrixYOnEventMoment))
+            {
+                _circleEvents.Add(directrixYOnEventMoment);
+                _parabolaCircleEvents.Add(secondParabola);
+            }
+        }
 
-        public void CheckCircleEvents()
+        private void CheckCircleEvents()
         {
             for (int i = 0; i < _circleEvents.Count; i++)
             {
@@ -44,8 +54,9 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private void InvokeCircleEventWithMaxY(int i)
         {
-            CircleEventHappened?.Invoke(_circleEvents[i]);
+            CircleEventHappened?.Invoke(_circleEvents[i], _parabolaCircleEvents[i]);
             _circleEvents.Remove(_circleEvents[i]);
+            _parabolaCircleEvents.Remove(_parabolaCircleEvents[i]);
         }
     }
 }
