@@ -53,10 +53,19 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 Parabola parabola = _parabolas[i];
                 Parabola nextParabola = _parabolas[i + 1];
 
-                parabola.FindRightIntersectionPointWith(nextParabola);
+                if (parabola.ParabolaEdge && nextParabola.ParabolaEdge)
+                {
+                    nextParabola.FindRightIntersectionPointWith(parabola);
+                    continue;
+                }
 
+                if (parabola.ParabolaEdge)
+                {
+                    parabola.FindRightIntersectionPointWith(nextParabola);
+                }
                 //also update the next to previous parabola intersection points
-                nextParabola.FindRightIntersectionPointWith(parabola);
+                if (nextParabola.ParabolaEdge)
+                    nextParabola.FindRightIntersectionPointWith(parabola);
             }
         }
 
