@@ -62,23 +62,35 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
             if (intersectedParabola)
             {
-                Parabola parabola = _parabolaFactory.CreateParabola(sitePosition, intersectedParabola.FocusPoint);
-                ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge();
-                parabola.ParabolaEdge = parabolaEdge;
+                Parabola parabola = CreateIntersectedParabola(sitePosition, intersectedParabola);
                 _parabolas.Add(parabola);
             }
             else
             {
-                Parabola parabola = _parabolaFactory.CreateParabola(sitePosition);
-                UpperLineEdge upperLineEdge = _edgeFactory.CreateUpperLineEdge();
-
-                parabola.UpperLineEdge = upperLineEdge;
+                Parabola parabola = CreateUpperLineParabola(sitePosition);
                 _parabolas.Add(parabola);
             }
 
             Debug.Log(intersectedParabola?.FocusPoint);
 
             SortParabolasFromLeftToRight();
+        }
+
+        private Parabola CreateIntersectedParabola(Vector2 sitePosition, Parabola intersectedParabola)
+        {
+            Parabola parabola = _parabolaFactory.CreateParabola(sitePosition, intersectedParabola.FocusPoint);
+            ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge();
+            parabola.ParabolaEdge = parabolaEdge;
+            return parabola;
+        }
+
+        private Parabola CreateUpperLineParabola(Vector2 sitePosition)
+        {
+            Parabola parabola = _parabolaFactory.CreateParabola(sitePosition);
+            UpperLineEdge upperLineEdge = _edgeFactory.CreateUpperLineEdge();
+
+            parabola.UpperLineEdge = upperLineEdge;
+            return parabola;
         }
 
         private Parabola FindArcIntersected(Vector2 newParabolaPosition)

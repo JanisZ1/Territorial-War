@@ -49,7 +49,7 @@ namespace Assets.CodeBase.Infrastructure
             _services.Register<IGreenCommandUnitsHandler>(new GreenCommandUnitsHandler());
             _services.Register<IEdgeFactory>(new EdgeFactory(_services.Single<IAssets>()));
             _services.Register<IEventQueueFactory>(new EventQueueFactory(_services.Single<IAssets>()));
-            _services.Register<IParabolaFactory>(new ParabolaFactory(_services.Single<IAssets>(), _services.Single<IEdgeFactory>()));
+            _services.Register<IParabolaFactory>(new ParabolaFactory(_services.Single<IAssets>()));
             _services.Register<IBeachLineFactory>(new BeachLineFactory(_services.Single<IAssets>(), _services.Single<IEventQueueFactory>(), _services.Single<IParabolaFactory>(), _services.Single<IEdgeFactory>()));
             _services.Register<IScanningLineFactory>(new ScanningLineFactory(_services.Single<IAssets>()));
             _services.Register<IUnitFactory>(new UnitFactory(_services.Single<IStaticDataService>()));

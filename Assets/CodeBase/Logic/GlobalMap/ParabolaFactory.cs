@@ -6,13 +6,9 @@ namespace Assets.CodeBase.Logic.GlobalMap
     public class ParabolaFactory : IParabolaFactory
     {
         private readonly IAssets _assets;
-        private readonly IEdgeFactory _edgeFactory;
 
-        public ParabolaFactory(IAssets assets, IEdgeFactory edgeFactory)
-        {
+        public ParabolaFactory(IAssets assets) =>
             _assets = assets;
-            _edgeFactory = edgeFactory;
-        }
 
         public Parabola CreateParabola(Vector2 focusPointPosition)
         {
