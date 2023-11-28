@@ -1,5 +1,4 @@
-﻿using Assets.CodeBase.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.CodeBase.Logic.GlobalMap
@@ -47,7 +46,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
             float xStep = XStep(stepCount, fromX, toX);
 
-            SetUpperLineStartAndEndPosition(UpperLineEdge, FocusPoint);
+            UpperLineEdge.SetUpperLineStartAndEndPosition(FocusPoint);
 
             List<float> xPositions = UpdateXPositions(stepCount, fromX, xStep);
 
@@ -96,7 +95,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
             float firstY = CalculateY(FocusPoint, new Vector2(0, ScanningLine.Directrix.y), firstX);
             float secondY = CalculateY(FocusPoint, new Vector2(0, ScanningLine.Directrix.y), secondX);
 
-            SetParabolaEdgeStartAndEndPosition(ParabolaEdge, _firstIntersectionPoint, _secondIntersectionPoint);
+            ParabolaEdge.SetParabolaEdgeStartAndEndPosition(_firstIntersectionPoint, _secondIntersectionPoint);
             //Get the intersection points from left to right
             if (firstX < secondX)
             {
@@ -129,21 +128,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
                 _lineRenderer.SetPosition(i, segmentPosition);
             }
-        }
-
-        private void SetUpperLineStartAndEndPosition(UpperLineEdge upperLineEdge, Vector2 focusPoint)
-        {
-            float halfOfDistanceToFocus = FocusPoint.YDistance(to: ScanningLine.Directrix) / 2;
-            float sqrDelta = upperLineEdge.SqrtDelta(focusPoint.y, halfOfDistanceToFocus);
-
-            upperLineEdge.SetStartPosition(focusPoint.x, sqrDelta);
-            upperLineEdge.SetEndPosition(focusPoint.x, sqrDelta);
-        }
-
-        private void SetParabolaEdgeStartAndEndPosition(ParabolaEdge parabolaEdge, Vector2 firstIntersectionPoint, Vector2 rightEnd)
-        {
-            parabolaEdge.SetStartPosition(firstIntersectionPoint.x, firstIntersectionPoint.y);
-            parabolaEdge.SetEndPosition(rightEnd.x, rightEnd.y);
         }
 
         private float CalculateY(Vector2 focusPoint, Vector2 directrix, float x) =>

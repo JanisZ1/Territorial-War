@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.CodeBase.Data;
+using UnityEngine;
 
 namespace Assets.CodeBase.Logic.GlobalMap
 {
@@ -12,10 +13,19 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private readonly float _y = 10;
 
-        public void SetStartPosition(float focusPointX, float sqrDelta) =>
+        public void SetUpperLineStartAndEndPosition(Vector2 focusPoint)
+        {
+            float halfOfDistanceToFocus = focusPoint.YDistance(to: ScanningLine.Directrix) / 2;
+            float sqrDelta = SqrtDelta(focusPoint.y, halfOfDistanceToFocus);
+
+            SetStartPosition(focusPoint.x, sqrDelta);
+            SetEndPosition(focusPoint.x, sqrDelta);
+        }
+
+        private void SetStartPosition(float focusPointX, float sqrDelta) =>
             StartPosition = new Vector3(focusPointX - sqrDelta, 0, _y);
 
-        public void SetEndPosition(float focusPointX, float sqrDelta) =>
+        private void SetEndPosition(float focusPointX, float sqrDelta) =>
             EndPosition = new Vector3(focusPointX + sqrDelta, 0, _y);
 
         private void Update()
@@ -24,7 +34,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
             _linerenderer.SetPosition(1, EndPosition);
         }
 
-        public float SqrtDelta(float focusPointY, float halfOfDistanceFromFocusToDirectrix)
+        private float SqrtDelta(float focusPointY, float halfOfDistanceFromFocusToDirectrix)
         {
             //edge from X to X position calculation
             float delta = (_y - focusPointY + halfOfDistanceFromFocusToDirectrix) * 4 * halfOfDistanceFromFocusToDirectrix;
