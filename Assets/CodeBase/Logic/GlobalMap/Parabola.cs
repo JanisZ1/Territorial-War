@@ -37,7 +37,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
             Gizmos.DrawSphere(new Vector3(_secondIntersectionPoint.x, 0, _secondIntersectionPoint.y), 0.5f);
         }
 
-        public void InitializeUpperLineEdge(Vector2 directrix)
+        public void DrawParabolaByUpperLineEdgeIntersection(Vector2 directrix)
         {
             int stepCount = _lineRenderer.positionCount;
 
@@ -96,6 +96,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
             float firstY = CalculateY(FocusPoint, new Vector2(0, ScanningLine.Directrix.y), firstX);
             float secondY = CalculateY(FocusPoint, new Vector2(0, ScanningLine.Directrix.y), secondX);
 
+            SetParabolaEdgeStartAndEndPosition(ParabolaEdge, _firstIntersectionPoint, _secondIntersectionPoint);
             //Get the intersection points from left to right
             if (firstX < secondX)
             {
@@ -112,29 +113,13 @@ namespace Assets.CodeBase.Logic.GlobalMap
             }
         }
 
-        public void InitializeParabolaEdge()
+        public void DrawParabolaByOtherParabolaIntersection()
         {
-            float fromX;
-            float toX;
-
-            if (_firstIntersectionPoint.x < _secondIntersectionPoint.x)
-            {
-                fromX = _firstIntersectionPoint.x;
-                toX = _secondIntersectionPoint.x;
-            }
-            else
-            {
-                fromX = _secondIntersectionPoint.x;
-                toX = _firstIntersectionPoint.x;
-            }
-
             int stepCount = _lineRenderer.positionCount;
 
-            float xStep = XStep(stepCount, fromX, toX);
+            float xStep = XStep(stepCount, fromX: _firstIntersectionPoint.x, toX: _secondIntersectionPoint.x);
 
-            SetParabolaEdgeStartAndEndPosition(ParabolaEdge, _firstIntersectionPoint, _secondIntersectionPoint);
-
-            List<float> xPositions = UpdateXPositions(stepCount, fromX, xStep);
+            List<float> xPositions = UpdateXPositions(stepCount, fromX: _firstIntersectionPoint.x, xStep);
             for (int i = 0; i < xPositions.Count; i++)
             {
                 float x = xPositions[i];

@@ -37,11 +37,11 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 Parabola parabola = _parabolas[i];
 
                 if (parabola.ParabolaEdge)
-                    parabola.InitializeParabolaEdge();
+                    parabola.DrawParabolaByOtherParabolaIntersection();
 
                 if (parabola.UpperLineEdge)
                 {
-                    parabola.InitializeUpperLineEdge(ScanningLine.Directrix);
+                    parabola.DrawParabolaByUpperLineEdgeIntersection(ScanningLine.Directrix);
                 }
             }
         }
