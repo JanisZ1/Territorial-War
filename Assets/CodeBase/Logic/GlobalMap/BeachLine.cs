@@ -99,6 +99,11 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 Parabola secondParabola = _parabolas[i + 1];
                 Parabola thirdParabola = _parabolas[i + 2];
 
+                if (firstParabola.FocusPoint.x == secondParabola.FocusPoint.x
+                    || secondParabola.FocusPoint.x == thirdParabola.FocusPoint.x
+                    || firstParabola.FocusPoint.x == thirdParabola.FocusPoint.x)
+                    continue;
+
                 Vector2 ab = (firstParabola.FocusPoint + secondParabola.FocusPoint) / 2;
                 Vector2 bc = (secondParabola.FocusPoint + thirdParabola.FocusPoint) / 2;
                 Vector2 ca = (thirdParabola.FocusPoint + firstParabola.FocusPoint) / 2;
