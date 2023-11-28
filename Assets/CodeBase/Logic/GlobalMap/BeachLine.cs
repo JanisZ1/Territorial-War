@@ -55,17 +55,17 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
                 if (parabola.ParabolaEdge && nextParabola.ParabolaEdge)
                 {
-                    nextParabola.FindRightIntersectionPointWith(parabola);
+                    nextParabola.FindIntersectionPointsWith(parabola);
                     continue;
                 }
 
                 if (parabola.ParabolaEdge)
                 {
-                    parabola.FindRightIntersectionPointWith(nextParabola);
+                    parabola.FindIntersectionPointsWith(nextParabola);
                 }
                 //also update the next to previous parabola intersection points
                 if (nextParabola.ParabolaEdge)
-                    nextParabola.FindRightIntersectionPointWith(parabola);
+                    nextParabola.FindIntersectionPointsWith(parabola);
             }
         }
 

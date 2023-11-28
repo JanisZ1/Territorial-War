@@ -12,24 +12,15 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         public Vector3 ParabolaEnd { get; private set; }
 
-        public Vector2 FirstIntersectionPoint { get; private set; }
-
-        //Also the right intersection point with other parabola
-        public Vector2 SecondIntersectionPoint { get; set; }
-
-        public bool EdgeIsCreated;
-        private float _firstX;
-        private float _secondX;
-        private float _firstY;
-        private float _secondY;
+        //intersection points with other parabola
+        private Vector2 _firstIntersectionPoint;
+        private Vector2 _secondIntersectionPoint;
 
         public UpperLineEdge UpperLineEdge { get; set; }
 
         public ParabolaEdge ParabolaEdge { get; set; }
 
         public Vector2 FocusPoint { get; set; }
-
-        public bool IntersectingOtherParabola { get; private set; }
 
         public void Construct(Vector2 focusPoint) =>
             FocusPoint = focusPoint;
@@ -42,8 +33,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private void OnDrawGizmos()
         {
-            Gizmos.DrawSphere(new Vector3(_firstX, 0, _firstY), 0.5f);
-            Gizmos.DrawSphere(new Vector3(_secondX, 0, _secondY), 0.5f);
+            Gizmos.DrawSphere(new Vector3(_firstIntersectionPoint.x, 0, _firstIntersectionPoint.y), 0.5f);
+            Gizmos.DrawSphere(new Vector3(_secondIntersectionPoint.x, 0, _secondIntersectionPoint.y), 0.5f);
         }
 
         public void InitializeUpperLineEdge(Vector2 directrix)
@@ -71,7 +62,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
             }
         }
 
-        public Vector2 FindRightIntersectionPointWith(Parabola otherParabola)
+        public Vector2 FindIntersectionPointsWith(Parabola otherParabola)
         {
             float b1md = FocusPoint.y - ScanningLine.Directrix.y;
             float b2md = otherParabola.FocusPoint.y - ScanningLine.Directrix.y;
@@ -96,31 +87,28 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
             if (discriminant < 0)
             {
-                IntersectingOtherParabola = false;
                 return new Vector2(0, 0);
             }
 
-            IntersectingOtherParabola = true;
+            float firstX = (-b + Mathf.Sqrt(discriminant)) / (2 * a);
+            float secondX = (-b - Mathf.Sqrt(discriminant)) / (2 * a);
 
-            _firstX = (-b + Mathf.Sqrt(discriminant)) / (2 * a);
-            _secondX = (-b - Mathf.Sqrt(discriminant)) / (2 * a);
-
-            _firstY = CalculateY(FocusPoint, new Vector2(0, ScanningLine.Directrix.y), _firstX);
-            _secondY = CalculateY(FocusPoint, new Vector2(0, ScanningLine.Directrix.y), _secondX);
+            float firstY = CalculateY(FocusPoint, new Vector2(0, ScanningLine.Directrix.y), firstX);
+            float secondY = CalculateY(FocusPoint, new Vector2(0, ScanningLine.Directrix.y), secondX);
 
             //Get the intersection points from left to right
-            if (_firstX < _secondX)
+            if (firstX < secondX)
             {
-                FirstIntersectionPoint = new Vector2(_firstX, _firstY);
-                SecondIntersectionPoint = new Vector2(_secondX, _secondY);
-                return new Vector2(_firstX, _firstY);
+                _firstIntersectionPoint = new Vector2(firstX, firstY);
+                _secondIntersectionPoint = new Vector2(secondX, secondY);
+                return new Vector2(firstX, firstY);
             }
 
             else
             {
-                FirstIntersectionPoint = new Vector2(_secondX, _secondY);
-                SecondIntersectionPoint = new Vector2(_firstX, _firstY);
-                return new Vector2(_secondX, _secondY);
+                _firstIntersectionPoint = new Vector2(secondX, secondY);
+                _secondIntersectionPoint = new Vector2(firstX, firstY);
+                return new Vector2(secondX, secondY);
             }
         }
 
@@ -129,22 +117,22 @@ namespace Assets.CodeBase.Logic.GlobalMap
             float fromX;
             float toX;
 
-            if (_firstX < _secondX)
+            if (_firstIntersectionPoint.x < _secondIntersectionPoint.x)
             {
-                fromX = _firstX;
-                toX = _secondX;
+                fromX = _firstIntersectionPoint.x;
+                toX = _secondIntersectionPoint.x;
             }
             else
             {
-                fromX = _secondX;
-                toX = _firstX;
+                fromX = _secondIntersectionPoint.x;
+                toX = _firstIntersectionPoint.x;
             }
 
             int stepCount = _lineRenderer.positionCount;
 
             float xStep = XStep(stepCount, fromX, toX);
 
-            SetParabolaEdgeStartAndEndPosition(ParabolaEdge, FirstIntersectionPoint, SecondIntersectionPoint);
+            SetParabolaEdgeStartAndEndPosition(ParabolaEdge, _firstIntersectionPoint, _secondIntersectionPoint);
 
             List<float> xPositions = UpdateXPositions(stepCount, fromX, xStep);
             for (int i = 0; i < xPositions.Count; i++)
