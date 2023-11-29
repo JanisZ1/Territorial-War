@@ -5,6 +5,11 @@ namespace Assets.CodeBase.Logic.GlobalMap
 {
     public class BeachLine : MonoBehaviour
     {
+        private float _upperBoundary = 10;
+        private float _lowerBoundary = 0;
+        private float _leftBoundary = 0;
+        private float _rightBoundary = 10;
+
         private EventQueue _eventQueue;
         private IParabolaFactory _parabolaFactory;
         private IEdgeFactory _edgeFactory;
@@ -60,13 +65,24 @@ namespace Assets.CodeBase.Logic.GlobalMap
                     Vector2 firstIntersectionPoint = parabola.FirstIntersectionPoint;
                     Vector2 secondIntersectionPoint = parabola.SecondIntersectionPoint;
 
-                    parabola.ParabolaEdge.SetParabolaEdgeStartAndEndPosition(firstIntersectionPoint, secondIntersectionPoint);
+                    Vector2 firstlimitedPoint = LimitByBeachLineBoundaries(firstIntersectionPoint);
+                    Vector2 secondlimitedPoint = LimitByBeachLineBoundaries(secondIntersectionPoint);
+
+                    parabola.ParabolaEdge.SetParabolaEdgeStartAndEndPosition(firstlimitedPoint, secondlimitedPoint);
                 }
                 if (parabola.UpperLineEdge)
                 {
                     parabola.UpperLineEdge.SetUpperLineStartAndEndPosition(parabola.FocusPoint);
                 }
             }
+        }
+
+        private Vector2 LimitByBeachLineBoundaries(Vector2 intersectionPoint)
+        {
+            float x = Mathf.Clamp(intersectionPoint.x, _leftBoundary, _rightBoundary);
+            float y = Mathf.Clamp(intersectionPoint.y, _lowerBoundary, _upperBoundary);
+
+            return new Vector2(x, y);
         }
 
         private void UpdateParabolaDrawing()
