@@ -5,10 +5,10 @@ namespace Assets.CodeBase.Logic.GlobalMap
 {
     public class BeachLine : MonoBehaviour
     {
-        private float _upperBoundary = 10;
-        private float _lowerBoundary = 0;
-        private float _leftBoundary = 0;
-        private float _rightBoundary = 10;
+        private static float _upperBoundary = 10;
+        private static float _lowerBoundary = 0;
+        private static float _leftBoundary = 0;
+        private static float _rightBoundary = 10;
 
         private EventQueue _eventQueue;
         private IParabolaFactory _parabolaFactory;
@@ -77,7 +77,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
             }
         }
 
-        private Vector2 LimitByBeachLineBoundaries(Vector2 intersectionPoint)
+        public static Vector2 LimitByBeachLineBoundaries(Vector2 intersectionPoint)
         {
             float x = Mathf.Clamp(intersectionPoint.x, _leftBoundary, _rightBoundary);
             float y = Mathf.Clamp(intersectionPoint.y, _lowerBoundary, _upperBoundary);

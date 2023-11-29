@@ -22,11 +22,23 @@ namespace Assets.CodeBase.Logic.GlobalMap
             SetEndPosition(focusPoint.x, sqrDelta);
         }
 
-        private void SetStartPosition(float focusPointX, float sqrDelta) =>
-            StartPosition = new Vector3(focusPointX - sqrDelta, 0, _y);
+        private void SetStartPosition(float focusPointX, float sqrDelta)
+        {
+            Vector2 startPosition = new Vector2(focusPointX - sqrDelta, _y);
 
-        private void SetEndPosition(float focusPointX, float sqrDelta) =>
-            EndPosition = new Vector3(focusPointX + sqrDelta, 0, _y);
+            Vector2 limitedPosition = BeachLine.LimitByBeachLineBoundaries(startPosition);
+
+            StartPosition = new Vector3(limitedPosition.x, 0, limitedPosition.y);
+        }
+
+        private void SetEndPosition(float focusPointX, float sqrDelta)
+        {
+            Vector2 startPosition = new Vector2(focusPointX + sqrDelta, _y);
+
+            Vector2 limitedPosition = BeachLine.LimitByBeachLineBoundaries(startPosition);
+
+            EndPosition = new Vector3(limitedPosition.x, 0, limitedPosition.y);
+        }
 
         private void Update()
         {
