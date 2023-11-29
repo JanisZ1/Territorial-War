@@ -67,7 +67,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
                     parabola.UpperLineEdge.SetUpperLineStartAndEndPosition(parabola.FocusPoint);
                 }
             }
-
         }
 
         private void UpdateParabolaDrawing()
@@ -84,11 +83,24 @@ namespace Assets.CodeBase.Logic.GlobalMap
                     parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
                 }
 
-                //first parabola dissecting by other parabola only the one left to right case coded
+                //first parabola dissecting by other parabola from left to right
                 if (parabola.ToNextParabolaEdge)
                 {
-                    float fromX = parabola.FirstIntersectionPoint.x;
-                    float toX = parabola.ToNextParabolaEdge.StartPosition.x;
+                    Debug.Log("ToNextParabolaEdge");
+                    if (parabola.UpperLineEdge)
+                    {
+                        float fromX = parabola.UpperLineEdge.StartPosition.x;
+                        float toX = parabola.ToNextParabolaEdge.StartPosition.x;
+                        parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
+                    }
+                    continue;
+                }
+
+                //first parabola dissecting by other parabola from right to left
+                if (parabola.FromNextParabolaEdge)
+                {
+                    float fromX = parabola.FromNextParabolaEdge.EndPosition.x;
+                    float toX = parabola.ParabolaEnd.x;
                     parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
                     continue;
                 }
@@ -165,8 +177,13 @@ namespace Assets.CodeBase.Logic.GlobalMap
             Parabola parabola = _parabolaFactory.CreateParabola(sitePosition, intersectedParabola.FocusPoint);
             ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge();
 
-            //hard coded the parabola toX point
             intersectedParabola.ToNextParabolaEdge = parabolaEdge;
+
+            Parabola intersectedParabolaCopy = intersectedParabola.Copy();
+            intersectedParabolaCopy.ToNextParabolaEdge = null;
+
+            intersectedParabolaCopy.FromNextParabolaEdge = parabolaEdge;
+            _parabolas.Add(intersectedParabolaCopy);
 
             parabola.ParabolaEdge = parabolaEdge;
             return parabola;

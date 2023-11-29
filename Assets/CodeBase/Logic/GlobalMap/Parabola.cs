@@ -18,13 +18,17 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         public UpperLineEdge UpperLineEdge { get; set; }
 
+        //parabola edge that is drawing next(down) parabola
         public ParabolaEdge ParabolaEdge { get; set; }
 
         public Vector2 FocusPoint { get; private set; }
 
         public Vector2 NextParabolaFocusPoint { get; private set; }
 
+        //Drawed parabola edges that is on this parabola
         public ParabolaEdge ToNextParabolaEdge { get; set; }
+
+        public ParabolaEdge FromNextParabolaEdge { get; set; }
 
         public void Construct(Vector2 focusPoint) =>
             FocusPoint = focusPoint;
@@ -135,5 +139,32 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private float XStep(float stepCount, float fromX, float toX) =>
             Mathf.Abs(toX - fromX) / (stepCount - 1);
+
+        public Parabola Copy()
+        {
+            GameObject copy = new GameObject(gameObject.name);
+            LineRenderer lineRenderer = copy.AddComponent<LineRenderer>();
+
+            Parabola parabola = copy.AddComponent<Parabola>();
+
+            parabola._lineRenderer = lineRenderer;
+            parabola._lineRenderer.positionCount = _lineRenderer.positionCount;
+            parabola._lineRenderer.widthMultiplier = 0.1f;
+            parabola.Construct(FocusPoint, NextParabolaFocusPoint);
+
+            parabola.ParabolaStart = ParabolaStart;
+            parabola.ParabolaEnd = ParabolaEnd;
+
+            parabola.FirstIntersectionPoint = FirstIntersectionPoint;
+            parabola.SecondIntersectionPoint = SecondIntersectionPoint;
+
+            parabola.UpperLineEdge = UpperLineEdge;
+            parabola.ParabolaEdge = ParabolaEdge;
+
+            parabola.ToNextParabolaEdge = ToNextParabolaEdge;
+            parabola.FromNextParabolaEdge = FromNextParabolaEdge;
+
+            return parabola;
+        }
     }
 }
