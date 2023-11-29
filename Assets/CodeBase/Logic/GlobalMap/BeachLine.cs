@@ -24,13 +24,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
             _eventQueue.CircleEventHappened += CircleEventHappened;
         }
 
-        private void CircleEventHappened(float bottomPointOfCircle, Parabola secondParabola)
-        {
-            _parabolas.Remove(secondParabola);
-            Destroy(secondParabola.gameObject);
-            SortParabolasFromLeftToRight();
-        }
-
         private void OnDestroy()
         {
             _eventQueue.SiteEventHappened -= SiteEventHappened;
@@ -40,7 +33,41 @@ namespace Assets.CodeBase.Logic.GlobalMap
         private void Update()
         {
             UpdateParabolaIntersectionPoints();
+
+            UpdateEdgePositions();
+
             UpdateParabolaDrawing();
+        }
+
+        private void UpdateParabolaIntersectionPoints()
+        {
+            for (int i = 0; i < _parabolas.Count; i++)
+            {
+                Parabola parabola = _parabolas[i];
+
+                parabola.FindIntersectionPointsWithNextParabola();
+            }
+        }
+
+        private void UpdateEdgePositions()
+        {
+            for (int i = 0; i < _parabolas.Count; i++)
+            {
+                Parabola parabola = _parabolas[i];
+
+                if (parabola.ParabolaEdge)
+                {
+                    Vector2 firstIntersectionPoint = parabola.FirstIntersectionPoint;
+                    Vector2 secondIntersectionPoint = parabola.SecondIntersectionPoint;
+
+                    parabola.ParabolaEdge.SetParabolaEdgeStartAndEndPosition(firstIntersectionPoint, secondIntersectionPoint);
+                }
+                if (parabola.UpperLineEdge)
+                {
+                    parabola.UpperLineEdge.SetUpperLineStartAndEndPosition(parabola.FocusPoint);
+                }
+            }
+
         }
 
         private void UpdateParabolaDrawing()
@@ -53,19 +80,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
                     parabola.DrawParabolaByOtherParabolaIntersection();
 
                 if (parabola.UpperLineEdge)
-                {
                     parabola.DrawParabolaByUpperLineEdgeIntersection(ScanningLine.Directrix);
-                }
-            }
-        }
-
-        private void UpdateParabolaIntersectionPoints()
-        {
-            for (int i = 0; i < _parabolas.Count; i++)
-            {
-                Parabola parabola = _parabolas[i];
-
-                parabola.FindIntersectionPointsWithNextParabola();
             }
         }
 
@@ -89,6 +104,13 @@ namespace Assets.CodeBase.Logic.GlobalMap
             SortParabolasFromLeftToRight();
 
             FindCircleEvents();
+        }
+
+        private void CircleEventHappened(float bottomPointOfCircle, Parabola secondParabola)
+        {
+            _parabolas.Remove(secondParabola);
+            Destroy(secondParabola.gameObject);
+            SortParabolasFromLeftToRight();
         }
 
         private void FindCircleEvents()
