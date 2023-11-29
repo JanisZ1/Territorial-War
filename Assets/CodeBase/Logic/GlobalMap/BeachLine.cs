@@ -65,10 +65,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
                     Vector2 firstIntersectionPoint = parabola.FirstIntersectionPoint;
                     Vector2 secondIntersectionPoint = parabola.SecondIntersectionPoint;
 
-                    Vector2 firstlimitedPoint = LimitByBeachLineBoundaries(firstIntersectionPoint);
-                    Vector2 secondlimitedPoint = LimitByBeachLineBoundaries(secondIntersectionPoint);
-
-                    parabola.ParabolaEdge.SetParabolaEdgeStartAndEndPosition(firstlimitedPoint, secondlimitedPoint);
+                    parabola.ParabolaEdge.SetParabolaEdgeStartAndEndPosition(firstIntersectionPoint, secondIntersectionPoint);
                 }
                 if (parabola.UpperLineEdge)
                 {
