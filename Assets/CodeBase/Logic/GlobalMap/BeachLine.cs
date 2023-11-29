@@ -104,6 +104,15 @@ namespace Assets.CodeBase.Logic.GlobalMap
                     {
                         float fromX = parabola.UpperLineEdge.StartPosition.x;
                         float toX = parabola.ToNextParabolaEdge.StartPosition.x;
+
+                        if (toX < fromX)
+                        {
+                            _parabolas.Remove(parabola);
+                            Destroy(parabola.gameObject);
+
+                            SortParabolasFromLeftToRight();
+                        }
+
                         parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
                     }
                     continue;
@@ -114,6 +123,15 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 {
                     float fromX = parabola.FromNextParabolaEdge.EndPosition.x;
                     float toX = parabola.ParabolaEnd.x;
+
+                    if (toX < fromX)
+                    {
+                        _parabolas.Remove(parabola);
+                        Destroy(parabola.gameObject);
+
+                        SortParabolasFromLeftToRight();
+                    }
+
                     parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
                     continue;
                 }
