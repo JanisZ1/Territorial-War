@@ -46,13 +46,9 @@ namespace Assets.CodeBase.Logic.GlobalMap
             Gizmos.DrawSphere(new Vector3(SecondIntersectionPoint.x, 0, SecondIntersectionPoint.y), 0.5f);
         }
 
-        public void DrawParabolaByUpperLineEdgeIntersection(Vector2 directrix)
+        public void DrawParabola(Vector2 directrix, float fromX, float toX)
         {
             int stepCount = _lineRenderer.positionCount;
-
-            float fromX = UpperLineEdge.StartPosition.x;
-
-            float toX = UpperLineEdge.EndPosition.x;
 
             float xStep = XStep(stepCount, fromX, toX);
 
@@ -116,24 +112,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 FirstIntersectionPoint = new Vector2(secondX, secondY);
                 SecondIntersectionPoint = new Vector2(firstX, firstY);
                 return new Vector2(secondX, secondY);
-            }
-        }
-
-        public void DrawParabolaByOtherParabolaIntersection()
-        {
-            int stepCount = _lineRenderer.positionCount;
-
-            float xStep = XStep(stepCount, fromX: FirstIntersectionPoint.x, toX: SecondIntersectionPoint.x);
-
-            List<float> xPositions = UpdateXPositions(stepCount, fromX: FirstIntersectionPoint.x, xStep);
-            for (int i = 0; i < xPositions.Count; i++)
-            {
-                float x = xPositions[i];
-                float y = CalculateY(FocusPoint, ScanningLine.Directrix, x);
-
-                Vector3 segmentPosition = new Vector3(x, 0, y);
-
-                _lineRenderer.SetPosition(i, segmentPosition);
             }
         }
 

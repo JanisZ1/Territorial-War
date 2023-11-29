@@ -77,10 +77,20 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 Parabola parabola = _parabolas[i];
 
                 if (parabola.ParabolaEdge)
-                    parabola.DrawParabolaByOtherParabolaIntersection();
+                {
+                    float fromX = parabola.FirstIntersectionPoint.x;
+                    float toX = parabola.SecondIntersectionPoint.x;
+
+                    parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
+                }
 
                 if (parabola.UpperLineEdge)
-                    parabola.DrawParabolaByUpperLineEdgeIntersection(ScanningLine.Directrix);
+                {
+                    float fromX = parabola.UpperLineEdge.StartPosition.x;
+                    float tox = parabola.UpperLineEdge.EndPosition.x;
+
+                    parabola.DrawParabola(ScanningLine.Directrix, fromX, tox);
+                }
             }
         }
 
@@ -121,6 +131,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 Parabola secondParabola = _parabolas[i + 1];
                 Parabola thirdParabola = _parabolas[i + 2];
 
+                //check to dont add to circle event list twice
                 if (firstParabola.FocusPoint.x == secondParabola.FocusPoint.x
                     || secondParabola.FocusPoint.x == thirdParabola.FocusPoint.x
                     || firstParabola.FocusPoint.x == thirdParabola.FocusPoint.x)
