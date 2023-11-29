@@ -45,7 +45,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
             {
                 Parabola parabola = _parabolas[i];
 
-                parabola.FindIntersectionPointsWithNextParabola();
+                parabola.UpdateIntersectionPointsWithNextParabola();
             }
         }
 
@@ -82,6 +82,15 @@ namespace Assets.CodeBase.Logic.GlobalMap
                     float toX = parabola.SecondIntersectionPoint.x;
 
                     parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
+                }
+
+                //first parabola dissecting by other parabola only the one left to right case coded
+                if (parabola.ToNextParabolaEdge)
+                {
+                    float fromX = parabola.FirstIntersectionPoint.x;
+                    float toX = parabola.ToNextParabolaEdge.StartPosition.x;
+                    parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
+                    continue;
                 }
 
                 if (parabola.UpperLineEdge)
@@ -155,6 +164,10 @@ namespace Assets.CodeBase.Logic.GlobalMap
         {
             Parabola parabola = _parabolaFactory.CreateParabola(sitePosition, intersectedParabola.FocusPoint);
             ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge();
+
+            //hard coded the parabola toX point
+            intersectedParabola.ToNextParabolaEdge = parabolaEdge;
+
             parabola.ParabolaEdge = parabolaEdge;
             return parabola;
         }

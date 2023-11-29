@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.CodeBase.Logic.GlobalMap
@@ -8,9 +7,9 @@ namespace Assets.CodeBase.Logic.GlobalMap
     {
         [SerializeField] private LineRenderer _lineRenderer;
 
-        public Vector3 ParabolaStart { get; set; }
+        public Vector3 ParabolaStart { get; private set; }
 
-        public Vector3 ParabolaEnd { get; set; }
+        public Vector3 ParabolaEnd { get; private set; }
 
         //intersection points with other parabola
         public Vector2 FirstIntersectionPoint { get; private set; }
@@ -24,6 +23,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
         public Vector2 FocusPoint { get; private set; }
 
         public Vector2 NextParabolaFocusPoint { get; private set; }
+
+        public ParabolaEdge ToNextParabolaEdge { get; set; }
 
         public void Construct(Vector2 focusPoint) =>
             FocusPoint = focusPoint;
@@ -65,7 +66,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
             }
         }
 
-        public Vector2 FindIntersectionPointsWithNextParabola()
+        public Vector2 UpdateIntersectionPointsWithNextParabola()
         {
             float b1md = FocusPoint.y - ScanningLine.Directrix.y;
             float b2md = NextParabolaFocusPoint.y - ScanningLine.Directrix.y;
