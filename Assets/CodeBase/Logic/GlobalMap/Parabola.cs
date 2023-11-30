@@ -47,8 +47,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private void OnDrawGizmos()
         {
-            Gizmos.DrawSphere(new Vector3(FirstIntersectionPoint.x, 0, FirstIntersectionPoint.y), 0.5f);
-            Gizmos.DrawSphere(new Vector3(SecondIntersectionPoint.x, 0, SecondIntersectionPoint.y), 0.5f);
+            //Gizmos.DrawSphere(new Vector3(FirstIntersectionPoint.x, 0, FirstIntersectionPoint.y), 0.5f);
+            //Gizmos.DrawSphere(new Vector3(SecondIntersectionPoint.x, 0, SecondIntersectionPoint.y), 0.5f);
         }
 
         public void DrawParabola(Vector2 directrix, float fromX, float toX)

@@ -90,17 +90,86 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
                 if (parabola.ParabolaEdge)
                 {
-                    float fromX = parabola.FirstIntersectionPoint.x;
-                    float toX = parabola.SecondIntersectionPoint.x;
+                    if (parabola.FromNextParabolaEdge && parabola.ToNextParabolaEdge)
+                    {
+                        float fromX = parabola.FromNextParabolaEdge.EndPosition.x;
+                        float toX = parabola.ToNextParabolaEdge.StartPosition.x;
 
-                    parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
+                        if (toX < fromX)
+                        {
+                            _parabolas.Remove(parabola);
+                            Destroy(parabola.gameObject);
+
+                            SortParabolasFromLeftToRight();
+                        }
+
+                        parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
+                        continue;
+                    }
+
+                    //first parabola dissecting by other parabola from right to left
+                    if (parabola.FromNextParabolaEdge)
+                    {
+                        float fromX = parabola.FromNextParabolaEdge.EndPosition.x;
+                        float toX = parabola.ParabolaEnd.x;
+
+                        if (toX < fromX)
+                        {
+                            _parabolas.Remove(parabola);
+                            Destroy(parabola.gameObject);
+
+                            SortParabolasFromLeftToRight();
+                        }
+
+                        parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
+                        continue;
+                    }
+                    if (parabola.ToNextParabolaEdge)
+                    {
+                        float fromX = parabola.ParabolaStart.x;
+                        float toX = parabola.ToNextParabolaEdge.StartPosition.x;
+
+                        if (toX < fromX)
+                        {
+                            _parabolas.Remove(parabola);
+                            Destroy(parabola.gameObject);
+
+                            SortParabolasFromLeftToRight();
+                        }
+
+                        parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
+                        continue;
+                    }
+                    else
+                    {
+                        float fromX = parabola.FirstIntersectionPoint.x;
+                        float toX = parabola.SecondIntersectionPoint.x;
+
+                        parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
+                        continue;
+                    }
                 }
 
-                //first parabola dissecting by other parabola from left to right
-                if (parabola.ToNextParabolaEdge)
+                if (parabola.UpperLineEdge)
                 {
-                    Debug.Log("ToNextParabolaEdge");
-                    if (parabola.UpperLineEdge)
+                    //parabola draw if its intersected second times
+                    if (parabola.FromNextParabolaEdge && parabola.ToNextParabolaEdge)
+                    {
+                        float fromX = parabola.FromNextParabolaEdge.EndPosition.x;
+                        float toX = parabola.ToNextParabolaEdge.StartPosition.x;
+
+                        if (toX < fromX)
+                        {
+                            _parabolas.Remove(parabola);
+                            Destroy(parabola.gameObject);
+
+                            SortParabolasFromLeftToRight();
+                        }
+
+                        parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
+                        continue;
+                    }
+                    if (parabola.ToNextParabolaEdge)
                     {
                         float fromX = parabola.UpperLineEdge.StartPosition.x;
                         float toX = parabola.ToNextParabolaEdge.StartPosition.x;
@@ -114,34 +183,32 @@ namespace Assets.CodeBase.Logic.GlobalMap
                         }
 
                         parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
+                        continue;
                     }
-                    continue;
-                }
 
-                //first parabola dissecting by other parabola from right to left
-                if (parabola.FromNextParabolaEdge)
-                {
-                    float fromX = parabola.FromNextParabolaEdge.EndPosition.x;
-                    float toX = parabola.ParabolaEnd.x;
-
-                    if (toX < fromX)
+                    if (parabola.FromNextParabolaEdge)
                     {
-                        _parabolas.Remove(parabola);
-                        Destroy(parabola.gameObject);
+                        float fromX = parabola.FromNextParabolaEdge.EndPosition.x;
+                        float toX = parabola.UpperLineEdge.EndPosition.x;
 
-                        SortParabolasFromLeftToRight();
+                        if (toX < fromX)
+                        {
+                            _parabolas.Remove(parabola);
+                            Destroy(parabola.gameObject);
+
+                            SortParabolasFromLeftToRight();
+                        }
+
+                        parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
+                        continue;
                     }
+                    else
+                    {
+                        float fromX = parabola.UpperLineEdge.StartPosition.x;
+                        float tox = parabola.UpperLineEdge.EndPosition.x;
 
-                    parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
-                    continue;
-                }
-
-                if (parabola.UpperLineEdge)
-                {
-                    float fromX = parabola.UpperLineEdge.StartPosition.x;
-                    float tox = parabola.UpperLineEdge.EndPosition.x;
-
-                    parabola.DrawParabola(ScanningLine.Directrix, fromX, tox);
+                        parabola.DrawParabola(ScanningLine.Directrix, fromX, tox);
+                    }
                 }
             }
         }
@@ -208,10 +275,18 @@ namespace Assets.CodeBase.Logic.GlobalMap
             Parabola parabola = _parabolaFactory.CreateParabola(sitePosition, intersectedParabola.FocusPoint);
             ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge();
 
+            Parabola intersectedParabolaCopy = intersectedParabola.Copy();
+
+            //if parabola dissected first time
+            if (!intersectedParabola.ToNextParabolaEdge)
+                intersectedParabolaCopy.ToNextParabolaEdge = null;
+            else
+            {
+                intersectedParabolaCopy.FromNextParabolaEdge = parabola.ParabolaEdge;
+            }
+
             intersectedParabola.ToNextParabolaEdge = parabolaEdge;
 
-            Parabola intersectedParabolaCopy = intersectedParabola.Copy();
-            intersectedParabolaCopy.ToNextParabolaEdge = null;
 
             intersectedParabolaCopy.FromNextParabolaEdge = parabolaEdge;
             _parabolas.Add(intersectedParabolaCopy);
