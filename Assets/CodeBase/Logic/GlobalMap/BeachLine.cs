@@ -90,10 +90,15 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
                 if (parabola.ParabolaEdge)
                 {
+                    float fromX = parabola.FirstIntersectionPoint.x;
+                    float toX = parabola.SecondIntersectionPoint.x;
+
+                    parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
+
                     if (parabola.FromNextParabolaEdge && parabola.ToNextParabolaEdge)
                     {
-                        float fromX = parabola.FromNextParabolaEdge.EndPosition.x;
-                        float toX = parabola.ToNextParabolaEdge.StartPosition.x;
+                        fromX = parabola.FromNextParabolaEdge.EndPosition.x;
+                        toX = parabola.ToNextParabolaEdge.StartPosition.x;
 
                         if (toX < fromX)
                         {
@@ -110,8 +115,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
                     //first parabola dissecting by other parabola from right to left
                     if (parabola.FromNextParabolaEdge)
                     {
-                        float fromX = parabola.FromNextParabolaEdge.EndPosition.x;
-                        float toX = parabola.ParabolaEnd.x;
+                        fromX = parabola.FromNextParabolaEdge.EndPosition.x;
+                        toX = parabola.SecondIntersectionPoint.x;
 
                         if (toX < fromX)
                         {
@@ -126,8 +131,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
                     }
                     if (parabola.ToNextParabolaEdge)
                     {
-                        float fromX = parabola.ParabolaStart.x;
-                        float toX = parabola.ToNextParabolaEdge.StartPosition.x;
+                        fromX = parabola.FirstIntersectionPoint.x;
+                        toX = parabola.ToNextParabolaEdge.StartPosition.x;
 
                         if (toX < fromX)
                         {
@@ -136,14 +141,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
                             SortParabolasFromLeftToRight();
                         }
-
-                        parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
-                        continue;
-                    }
-                    else
-                    {
-                        float fromX = parabola.FirstIntersectionPoint.x;
-                        float toX = parabola.SecondIntersectionPoint.x;
 
                         parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
                         continue;
