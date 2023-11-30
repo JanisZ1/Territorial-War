@@ -241,6 +241,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private void FindCircleEvents()
         {
+            Debug.Log("_parabolas count" + _parabolas.Count);
             for (int i = 0; i < _parabolas.Count - 2; i++)
             {
                 Parabola firstParabola = _parabolas[i];
@@ -255,9 +256,12 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
                 Vector2 ab = (firstParabola.FocusPoint + secondParabola.FocusPoint) / 2;
                 Vector2 bc = (secondParabola.FocusPoint + thirdParabola.FocusPoint) / 2;
-                Vector2 ca = (thirdParabola.FocusPoint + firstParabola.FocusPoint) / 2;
 
-                Vector2 middlePoint = (ab + bc + ca) / 3;
+                Vector2 firstPerpendicular = Vector2.Perpendicular(ab);
+                Vector2 secondPerpendicular = Vector2.Perpendicular(bc);
+
+                Vector2 middlePoint = secondPerpendicular - firstPerpendicular;
+                Debug.Log("middlePoint = " + middlePoint);
                 float radius = Vector2.Distance(middlePoint, firstParabola.FocusPoint);
 
                 float circleEventPosition = middlePoint.y - radius;
@@ -317,7 +321,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
         }
 
         private void SortParabolasFromLeftToRight() =>
-            _parabolas.Sort((x1, x2) => x1.FocusPoint.x.CompareTo(x2.FocusPoint.x));
+            _parabolas.Sort((x1, x2) => x1.FirstIntersectionPoint.x.CompareTo(x2.SecondIntersectionPoint.x));
     }
 }
 
