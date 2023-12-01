@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.CodeBase.Logic.GlobalMap
@@ -105,7 +106,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
                             _parabolas.Remove(parabola);
                             Destroy(parabola.gameObject);
 
-                            SortParabolasFromLeftToRight();
+                            StartCoroutine(SortParabolasFromLeftToRight());
                         }
 
                         parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
@@ -123,7 +124,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
                             _parabolas.Remove(parabola);
                             Destroy(parabola.gameObject);
 
-                            SortParabolasFromLeftToRight();
+                            StartCoroutine(SortParabolasFromLeftToRight());
                         }
 
                         parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
@@ -139,7 +140,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
                             _parabolas.Remove(parabola);
                             Destroy(parabola.gameObject);
 
-                            SortParabolasFromLeftToRight();
+                            StartCoroutine(SortParabolasFromLeftToRight());
                         }
 
                         parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
@@ -160,7 +161,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
                             _parabolas.Remove(parabola);
                             Destroy(parabola.gameObject);
 
-                            SortParabolasFromLeftToRight();
+                            StartCoroutine(SortParabolasFromLeftToRight());
                         }
 
                         parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
@@ -176,7 +177,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
                             _parabolas.Remove(parabola);
                             Destroy(parabola.gameObject);
 
-                            SortParabolasFromLeftToRight();
+                            StartCoroutine(SortParabolasFromLeftToRight());
                         }
 
                         parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
@@ -193,7 +194,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
                             _parabolas.Remove(parabola);
                             Destroy(parabola.gameObject);
 
-                            SortParabolasFromLeftToRight();
+                            StartCoroutine(SortParabolasFromLeftToRight());
                         }
 
                         parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
@@ -227,21 +228,25 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
             Debug.Log(intersectedParabola?.FocusPoint);
 
-            SortParabolasFromLeftToRight();
 
-            FindCircleEvents();
+            StartCoroutine(SortParabolasFromLeftToRight());
+
+            StartCoroutine(FindCircleEvents());
         }
 
         private void CircleEventHappened(float bottomPointOfCircle, Parabola secondParabola)
         {
             _parabolas.Remove(secondParabola);
             Destroy(secondParabola.gameObject);
-            SortParabolasFromLeftToRight();
+            StartCoroutine(SortParabolasFromLeftToRight());
         }
 
-        private void FindCircleEvents()
+        private IEnumerator FindCircleEvents()
         {
-            Debug.Log("_parabolas count" + _parabolas.Count);
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame(); 
+            yield return new WaitForEndOfFrame();
+            //Debug.Log("_parabolas count" + _parabolas.Count);
             for (int i = 0; i < _parabolas.Count - 2; i++)
             {
                 Parabola firstParabola = _parabolas[i];
@@ -257,11 +262,37 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 Vector2 ab = (firstParabola.FocusPoint + secondParabola.FocusPoint) / 2;
                 Vector2 bc = (secondParabola.FocusPoint + thirdParabola.FocusPoint) / 2;
 
-                Vector2 firstPerpendicular = Vector2.Perpendicular(ab);
-                Vector2 secondPerpendicular = Vector2.Perpendicular(bc);
+                //Debug.Log("firstParabola = " + firstParabola.FocusPoint);
+                //Debug.Log("secondParabola = " + secondParabola.FocusPoint);
+                //Debug.Log("thirdParabola = " + thirdParabola.FocusPoint);
 
-                Vector2 middlePoint = secondPerpendicular - firstPerpendicular;
-                Debug.Log("middlePoint = " + middlePoint);
+                Vector2 firstParabolaFocus = firstParabola.FocusPoint;
+                Vector2 secondParabolaFocus = secondParabola.FocusPoint;
+                Vector2 thirdParabolaFocus = thirdParabola.FocusPoint;
+
+                //slope coefficient between first and second focuses
+                float k1 = (firstParabolaFocus.y - secondParabolaFocus.y) / (firstParabolaFocus.x - secondParabolaFocus.x);
+
+                //slope coefficient between second and third focuses
+                float k2 = (secondParabolaFocus.y - thirdParabolaFocus.y) / (secondParabolaFocus.x - thirdParabolaFocus.x);
+
+                float perpendicularK1 = -1 / k1;
+                float perpendicularK2 = -1 / k2;
+
+                float xK1AndK2 = perpendicularK1 - perpendicularK2;
+
+                //unknown y second addend
+                float y3 = ab.y + perpendicularK1 * (-ab.x);
+
+                // second equation unknown y second addend
+                float y4 = bc.y + perpendicularK2 * (-bc.x);
+
+                //calculating x by dividing by x expressed from y
+                float x = (-y3 + y4) / xK1AndK2;
+                float y = perpendicularK1 * x + y3;
+
+                Vector2 middlePoint = new Vector2(x, y);
+
                 float radius = Vector2.Distance(middlePoint, firstParabola.FocusPoint);
 
                 float circleEventPosition = middlePoint.y - radius;
@@ -320,8 +351,16 @@ namespace Assets.CodeBase.Logic.GlobalMap
             return null;
         }
 
-        private void SortParabolasFromLeftToRight() =>
-            _parabolas.Sort((x1, x2) => x1.FirstIntersectionPoint.x.CompareTo(x2.SecondIntersectionPoint.x));
+        private IEnumerator SortParabolasFromLeftToRight()
+        {
+            //crutched the parabolasorting timing beacuse parabolaend coordinates updating in next frame
+
+            //TODO: Sorting by parabola secondIntersection point - fix the rightest parabola dont have that point
+            //now sorting by parabola end of drawing points
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+            _parabolas.Sort((x1, x2) => x1.ParabolaEnd.x.CompareTo(x2.ParabolaEnd.x));
+        }
     }
 }
 
