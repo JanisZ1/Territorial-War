@@ -6,7 +6,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
     {
         public readonly Vector2 Position;
 
-        public Vertex(Vector2 position) =>
-            Position = position;
+        public Vertex(float x, float y) =>
+            Position = new Vector2(x, y);
     }
 }

@@ -120,7 +120,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
             }
         }
 
-        private float CalculateY(Vector2 focusPoint, Vector2 directrix, float x) =>
+        public float CalculateY(Vector2 focusPoint, Vector2 directrix, float x) =>
             //parabola equation
             Mathf.Pow(x - focusPoint.x, 2) / (2 * (focusPoint.y - directrix.y)) + ((focusPoint.y + directrix.y) / 2);
 

@@ -283,6 +283,11 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private Parabola CreateIntersectedParabola(Vector2 sitePosition, Parabola intersectedParabola)
         {
+            float x = sitePosition.x;
+            float y = intersectedParabola.CalculateY(intersectedParabola.FocusPoint, ScanningLine.Directrix, sitePosition.x);
+
+            Vertex vertex = new Vertex(x, y);
+            Debug.Log("y = " + y);
             Parabola parabola = _parabolaFactory.CreateParabola(sitePosition, intersectedParabola.FocusPoint);
             ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge();
             _edges.Add(parabolaEdge);
