@@ -17,6 +17,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private List<Parabola> _parabolas = new List<Parabola>();
 
+        private List<ParabolaEdge> _edges = new List<ParabolaEdge>();
+
         public void Construct(EventQueue eventQueue, IParabolaFactory parabolaFactory, IEdgeFactory edgeFactory)
         {
             _eventQueue = eventQueue;
@@ -298,6 +300,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
         {
             Parabola parabola = _parabolaFactory.CreateParabola(sitePosition, intersectedParabola.FocusPoint);
             ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge();
+            _edges.Add(parabolaEdge);
 
             Parabola intersectedParabolaCopy = intersectedParabola.Copy();
 
