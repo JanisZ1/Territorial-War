@@ -237,7 +237,12 @@ namespace Assets.CodeBase.Logic.GlobalMap
         private void CircleEventHappened(float bottomPointOfCircle, Parabola secondParabola)
         {
             _parabolas.Remove(secondParabola);
+
+            Destroy(secondParabola.FromNextParabolaEdge);
+            Destroy(secondParabola.ToNextParabolaEdge);
+
             Destroy(secondParabola.gameObject);
+
             StartCoroutine(SortParabolasFromLeftToRight());
         }
 
