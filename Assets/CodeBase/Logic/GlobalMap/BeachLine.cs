@@ -38,6 +38,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
         private void Update()
         {
+            SortParabolasFromLeftToRight();
+
             UpdateParabolaIntersectionPoints();
 
             UpdateEdgePositions();
@@ -105,8 +107,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
                         {
                             _parabolas.Remove(parabola);
                             Destroy(parabola.gameObject);
-
-                            StartCoroutine(SortParabolasFromLeftToRight());
                         }
 
                         parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
@@ -123,8 +123,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
                         {
                             _parabolas.Remove(parabola);
                             Destroy(parabola.gameObject);
-
-                            StartCoroutine(SortParabolasFromLeftToRight());
                         }
 
                         parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
@@ -139,8 +137,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
                         {
                             _parabolas.Remove(parabola);
                             Destroy(parabola.gameObject);
-
-                            StartCoroutine(SortParabolasFromLeftToRight());
                         }
 
                         parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
@@ -160,8 +156,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
                         {
                             _parabolas.Remove(parabola);
                             Destroy(parabola.gameObject);
-
-                            StartCoroutine(SortParabolasFromLeftToRight());
                         }
 
                         parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
@@ -176,8 +170,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
                         {
                             _parabolas.Remove(parabola);
                             Destroy(parabola.gameObject);
-
-                            StartCoroutine(SortParabolasFromLeftToRight());
                         }
 
                         parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
@@ -193,8 +185,6 @@ namespace Assets.CodeBase.Logic.GlobalMap
                         {
                             _parabolas.Remove(parabola);
                             Destroy(parabola.gameObject);
-
-                            StartCoroutine(SortParabolasFromLeftToRight());
                         }
 
                         parabola.DrawParabola(ScanningLine.Directrix, fromX, toX);
@@ -229,9 +219,9 @@ namespace Assets.CodeBase.Logic.GlobalMap
             Debug.Log(intersectedParabola?.FocusPoint);
 
 
-            StartCoroutine(SortParabolasFromLeftToRight());
+            SortParabolasFromLeftToRight();
 
-            StartCoroutine(FindCircleEvents());
+            FindCircleEvents();
         }
 
         private void CircleEventHappened(float bottomPointOfCircle, Parabola secondParabola)
@@ -243,14 +233,11 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
             Destroy(secondParabola.gameObject);
 
-            StartCoroutine(SortParabolasFromLeftToRight());
+            SortParabolasFromLeftToRight();
         }
 
-        private IEnumerator FindCircleEvents()
+        private void FindCircleEvents()
         {
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForEndOfFrame(); 
-            yield return new WaitForEndOfFrame();
             //Debug.Log("_parabolas count" + _parabolas.Count);
             for (int i = 0; i < _parabolas.Count - 2; i++)
             {
@@ -356,14 +343,10 @@ namespace Assets.CodeBase.Logic.GlobalMap
             return null;
         }
 
-        private IEnumerator SortParabolasFromLeftToRight()
+        private void SortParabolasFromLeftToRight()
         {
-            //crutched the parabolasorting timing beacuse parabolaend coordinates updating in next frame
-
             //TODO: Sorting by parabola secondIntersection point - fix the rightest parabola dont have that point
             //now sorting by parabola end of drawing points
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForEndOfFrame();
             _parabolas.Sort((x1, x2) => x1.ParabolaEnd.x.CompareTo(x2.ParabolaEnd.x));
         }
     }

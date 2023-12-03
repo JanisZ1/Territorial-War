@@ -14,6 +14,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
         {
             Parabola parabola = _assets.Instantiate(AssetPath.ParabolaPath).GetComponent<Parabola>();
 
+            parabola.ParabolaStart = new Vector3(focusPointPosition.x, 0, focusPointPosition.y);
+            parabola.ParabolaEnd = new Vector3(focusPointPosition.x, 0, focusPointPosition.y);
             parabola.Construct(focusPointPosition);
 
             return parabola;
@@ -22,6 +24,9 @@ namespace Assets.CodeBase.Logic.GlobalMap
         public Parabola CreateParabola(Vector2 focusPointPosition, Vector2 nextParabolaFocusPointPosition)
         {
             Parabola parabola = _assets.Instantiate(AssetPath.ParabolaPath).GetComponent<Parabola>();
+
+            parabola.ParabolaStart = new Vector3(focusPointPosition.x, 0, focusPointPosition.y);
+            parabola.ParabolaEnd = new Vector3(focusPointPosition.x, 0, focusPointPosition.y);
 
             parabola.Construct(focusPointPosition, nextParabolaFocusPointPosition);
 

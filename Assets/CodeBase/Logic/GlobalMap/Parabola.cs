@@ -7,9 +7,9 @@ namespace Assets.CodeBase.Logic.GlobalMap
     {
         [SerializeField] private LineRenderer _lineRenderer;
 
-        public Vector3 ParabolaStart { get; private set; }
+        public Vector3 ParabolaStart { get; set; }
 
-        public Vector3 ParabolaEnd { get; private set; }
+        public Vector3 ParabolaEnd { get; set; }
 
         //intersection points with other parabola
         public Vector2 FirstIntersectionPoint { get; private set; }
