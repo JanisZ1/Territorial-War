@@ -67,10 +67,9 @@ namespace Assets.CodeBase.Logic.GlobalMap
 
                 if (parabola.ParabolaEdge)
                 {
-                    Vector2 firstIntersectionPoint = parabola.FirstIntersectionPoint;
                     Vector2 secondIntersectionPoint = parabola.SecondIntersectionPoint;
 
-                    parabola.ParabolaEdge.SetParabolaEdgeStartAndEndPosition(firstIntersectionPoint, secondIntersectionPoint);
+                    parabola.ParabolaEdge.SetParabolaEdgeEndPosition(secondIntersectionPoint);
                 }
                 if (parabola.UpperLineEdge)
                 {
@@ -287,9 +286,12 @@ namespace Assets.CodeBase.Logic.GlobalMap
             float y = intersectedParabola.CalculateY(intersectedParabola.FocusPoint, ScanningLine.Directrix, sitePosition.x);
 
             Vertex vertex = new Vertex(x, y);
-            Debug.Log("y = " + y);
-            Parabola parabola = _parabolaFactory.CreateParabola(sitePosition, intersectedParabola.FocusPoint);
-            ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge();
+
+            Parabola newParabola = _parabolaFactory.CreateParabola(sitePosition, intersectedParabola.FocusPoint);
+
+            ParabolaEdge parabolaEdge = _edgeFactory.CreateParabolaEdge(vertex);
+            parabolaEdge.StartVertex = vertex;
+
             _edges.Add(parabolaEdge);
 
             Parabola intersectedParabolaCopy = intersectedParabola.Copy();
@@ -299,7 +301,7 @@ namespace Assets.CodeBase.Logic.GlobalMap
                 intersectedParabolaCopy.ToNextParabolaEdge = null;
             else
             {
-                intersectedParabolaCopy.FromNextParabolaEdge = parabola.ParabolaEdge;
+                intersectedParabolaCopy.FromNextParabolaEdge = newParabola.ParabolaEdge;
             }
 
             intersectedParabola.ToNextParabolaEdge = parabolaEdge;
@@ -308,8 +310,8 @@ namespace Assets.CodeBase.Logic.GlobalMap
             intersectedParabolaCopy.FromNextParabolaEdge = parabolaEdge;
             _parabolas.Add(intersectedParabolaCopy);
 
-            parabola.ParabolaEdge = parabolaEdge;
-            return parabola;
+            newParabola.ParabolaEdge = parabolaEdge;
+            return newParabola;
         }
 
         private Parabola CreateUpperLineParabola(Vector2 sitePosition)
